@@ -1,13 +1,17 @@
 {
   "presets": [
-    ["es2015", { "modules": false }],
-    "stage-2"
+    "@babel/preset-env"
   ],
-  "plugins": ["transform-runtime"],
+  "plugins": [
+    "@babel/plugin-transform-runtime",
+    "@babel/plugin-syntax-dynamic-import"
+  ],
   "comments": false,
   "env": {
     "test": {
-      "plugins": [ "istanbul" ]
+      "plugins": [
+        "istanbul"
+      ]
     }
   }
 }
