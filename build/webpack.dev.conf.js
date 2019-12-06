@@ -12,6 +12,7 @@ Object.keys(baseWebpackConfig.entry).forEach(function (name) {
   baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name])
 })
 
+process.traceDeprecation = true;
 module.exports = merge(baseWebpackConfig, {
   mode: 'development',
   // cheap-module-eval-source-map is faster for development
