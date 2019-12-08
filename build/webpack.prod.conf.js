@@ -7,6 +7,7 @@ const baseWebpackConfig = require('./webpack.base.conf')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 
 const env = config.build.env
 
@@ -36,6 +37,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       chunkFilename: '[id].css',
       ignoreOrder: false, // Enable to remove warnings about conflicting order
     }),
+    new FaviconsWebpackPlugin(path.resolve(__dirname, '../src/assets/favicon.png')),
     // generate dist index.html with correct asset hash for caching.
     // you can customize output by editing /index.html
     // see https://github.com/ampedandwired/html-webpack-plugin
