@@ -19,7 +19,7 @@ export default {
   methods: {
     handleClick() {
       this.count++;
-      console.log('clicked', this.count);
+      // console.log('clicked', this.count);
     },
   },
 };

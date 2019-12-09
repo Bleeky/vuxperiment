@@ -1,6 +1,11 @@
+const purgecss = require('@fullhuman/postcss-purgecss');
+
 module.exports = {
-    plugins: [
-      require('autoprefixer'), // eslint-disable-line
-    ]
-  };
-  
+  plugins: [
+    require('tailwindcss'),
+    require('autoprefixer'),
+    purgecss({
+      content: ['./src/**/*.vue'],
+    }),
+  ],
+};

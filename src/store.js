@@ -6,6 +6,7 @@ const store = new Vuex.Store({
   state: {
     count: 0,
   },
+  strict: process.env.NODE_ENV !== 'production',
   // mutations: {
   //   increment(state) {
   //     state.count++;
