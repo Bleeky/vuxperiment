@@ -1,8 +1,8 @@
-const path = require('path');
-const webpack = require('webpack');
 const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const TerserJSPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const baseWebpackConfig = require('./webpack.base.conf');
 const config = require('../config');
 const utils = require('./utils');
@@ -15,16 +15,17 @@ const webpackConfig = merge(baseWebpackConfig, {
     filename: utils.assetsPath('js/[name].[chunkhash].js'),
     chunkFilename: utils.assetsPath('js/[name].[chunkhash].js'),
   },
-  // optimization: {
-  //       splitChunks: {
-  //         chunks: 'all',
-  //       },
-  //     },
+  optimization: {
+    minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
+    // splitChunks: {
+    //   chunks: 'all',
+    // },
+  },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFilename: '[id].css',
-      ignoreOrder: false, // Enable to remove warnings about conflicting order
+      filename: utils.assetsPath('css/[name].css'),
+      chunkFilename: utils.assetsPath('css/[name].[id].css'),
+      ignoreOrder: false,
     }),
     new HtmlWebpackPlugin({
       filename: config.build.index,

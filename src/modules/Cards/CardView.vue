@@ -6,11 +6,17 @@
     >
       <slot />(clicked - {{ count }})
     </button>
+    <card-form />
   </p>
 </template>
 
 <script>
+import CardForm from './CardForm';
+
 export default {
+  components: {
+    CardForm,
+  },
   data() {
     return {
       count: 0,

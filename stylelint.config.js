@@ -1,4 +1,5 @@
 module.exports = {
+  ignoreFiles: ['node_modules', './**/*.js', '.*.js'],
   extends: 'stylelint-config-recommended',
   processors: [['@mapbox/stylelint-processor-arbitrary-tags', { fileFilterRegex: [/\.vue$/] }]],
   plugins: [
