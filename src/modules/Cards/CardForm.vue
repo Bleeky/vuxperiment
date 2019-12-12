@@ -89,16 +89,6 @@ extend('required', {
   ...required,
   message: 'This field is required',
 });
-// extend('positive', (value) => value >= 0);
-// extend('required', {
-//   validate(value) {
-//     return {
-//       required: true,
-//       valid: ['', null, undefined].indexOf(value) === -1,
-//     };
-//   },
-//   computesRequired: true,
-// });
 
 export default {
   name: 'CardForm',
@@ -117,23 +107,6 @@ export default {
   methods: {
     handleSubmit() {
 
-    },
-    checkForm(e) {
-      if (this.name && this.age) {
-        return true;
-      }
-
-      this.formErrors = [];
-
-      if (!this.name) {
-        this.formErrors.push('Name required.');
-      }
-      if (!this.age) {
-        this.formErrors.push('Age required.');
-      }
-
-      e.preventDefault();
-      return this.formErrors;
     },
   },
 };
