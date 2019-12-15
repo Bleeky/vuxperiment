@@ -4,7 +4,6 @@
       id="app"
       action="https://vuejs.org/"
       method="post"
-      @submit="checkForm"
       @submit.prevent="handleSubmit(onSubmit)"
     >
       <div class="container mx-auto">
@@ -78,6 +77,7 @@
 </template>
 
 <script>
+import { Auth } from 'aws-amplify';
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
 import { required, email } from 'vee-validate/dist/rules';
 
@@ -105,8 +105,14 @@ export default {
     };
   },
   methods: {
-    handleSubmit() {
-
+    async onSubmit() {
+      console.error('form submitted');
+      try {
+        await Auth.signIn('bleeky@admin.com', '!79*KnfqyqBcKrzR');
+        alert('Logged in');
+      } catch (e) {
+        alert(e.message);
+      }
     },
   },
 };

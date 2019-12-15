@@ -22,7 +22,7 @@ module.exports = {
       : config.dev.assetsPublicPath,
   },
   resolve: {
-    extensions: ['.js', '.vue', '.json'],
+    extensions: ['.mjs', '.js', '.vue', '.json'],
     modules: [
       resolve('src'),
       resolve('node_modules'),
@@ -68,10 +68,6 @@ module.exports = {
           'postcss-loader',
           'sass-loader',
         ],
-      },
-      {
-        test: /\.json$/,
-        loader: 'json-loader',
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
