@@ -4,7 +4,7 @@ import VuexORM from '@vuex-orm/core';
 import Amplify from 'aws-amplify';
 
 import Card from 'models/Card';
-import config from './aws.config';
+import config from '../config/aws.config';
 
 Amplify.configure({
   Auth: {
