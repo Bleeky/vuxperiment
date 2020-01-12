@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import { Auth } from 'aws-amplify';
+import { Auth, API } from 'aws-amplify';
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
 import { required, email } from 'vee-validate/dist/rules';
 
@@ -104,11 +104,15 @@ export default {
       movie: null,
     };
   },
+  beforeCreate: () => {
+    API.get('cards', '/cards');
+  },
   methods: {
     async onSubmit() {
       console.error('form submitted');
       try {
         await Auth.signIn('bleeky@admin.com', '!79*KnfqyqBcKrzR');
+        API.get('cards', '/cards');
         alert('Logged in');
       } catch (e) {
         alert(e.message);
