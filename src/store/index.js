@@ -2,9 +2,20 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import VuexORM from '@vuex-orm/core';
 import Amplify from 'aws-amplify';
+import { VuexObservable, ofType } from 'vuex-observable-plugin';
+import {
+  mergeMap, flatMap, take, catchError,
+} from 'rxjs/operators';
+import {
+  of, race, empty, concat,
+} from 'rxjs';
+
 
 import Card from 'models/Card';
-import config from '../config/aws.config';
+import auth from 'store/modules/auth';
+import epicsRegistry from 'epics/index';
+
+import config from '../../config/aws.config';
 
 Amplify.configure({
   Auth: {
@@ -34,17 +45,17 @@ const database = new VuexORM.Database();
 database.register(Card);
 
 Vue.use(Vuex);
+
 const store = new Vuex.Store({
-  state: {
-    count: 0,
-  },
   strict: process.env.NODE_ENV !== 'production',
-  // mutations: {
-  //   increment(state) {
-  //     state.count++;
-  //   },
-  // },
-  plugins: [VuexORM.install(database)],
+  modules: {
+    auth,
+  },
+  plugins: [VuexORM.install(database), VuexObservable(epicsRegistry.getEpics(), {
+    dependencies: {
+      ofType, mergeMap, flatMap, take, catchError, of, race, empty, concat,
+    },
+  })],
 });
 
 export default store;

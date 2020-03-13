@@ -23,7 +23,7 @@
           <span class="text-gray-700">Name</span>
           <ValidationProvider
             v-slot="{ errors }"
-            rules="required|email"
+            rules="required"
           >
             <input
               id="name"
@@ -38,64 +38,43 @@
         </label>
         <label class="block">
           <span
-            for="age"
+            for="password"
             class="text-gray-700"
           >Age</span>
           <input
-            id="age"
+            id="password"
             v-model="age"
-            type="number"
-            name="age"
-            min="0"
+            type="text"
+            name="password"
             class="form-input mt-1 block w-full"
           >
         </label>
       </div>
 
-
-      <p>
-        <label for="movie">Favorite Movie</label>
-        <select
-          id="movie"
-          v-model="movie"
-          name="movie"
-        >
-          <option>Star Wars</option>
-          <option>Vanilla Sky</option>
-          <option>Atomic Blonde</option>
-        </select>
-      </p>
-
-      <p>
-        <input
-          type="submit"
-          value="Submit"
-        >
-      </p>
+      <button
+        type="submit"
+        class="bg-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded"
+      >
+        Submit
+      </button>
+      <button
+        class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+        type="button"
+        @click="test"
+      >
+        Test
+      </button>
+      </but>
     </form>
   </ValidationObserver>
 </template>
 
 <script>
-import { Auth, API } from 'aws-amplify';
-import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
-import { required, email } from 'vee-validate/dist/rules';
-
-// No message specified.
-extend('email', email);
-
-// Override the default message.
-extend('required', {
-  ...required,
-  message: 'This field is required',
-});
+import { Auth } from 'aws-amplify';
+import store from 'store';
 
 export default {
   name: 'CardForm',
-  components: {
-    ValidationObserver,
-    ValidationProvider,
-  },
   data() {
     return {
       formErrors: [],
@@ -104,15 +83,15 @@ export default {
       movie: null,
     };
   },
-  beforeCreate: () => {
-    API.get('cards', '/cards');
-  },
   methods: {
+    test: () => {
+      store.dispatch('test');
+    },
     async onSubmit() {
       console.error('form submitted');
       try {
-        await Auth.signIn('bleeky@admin.com', '!79*KnfqyqBcKrzR');
-        API.get('cards', '/cards');
+        await Auth.signIn('admin@example.com', 'Passw0rd!');
+        store.dispatch('getCards');
         alert('Logged in');
       } catch (e) {
         alert(e.message);

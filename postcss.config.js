@@ -4,8 +4,8 @@ module.exports = {
   plugins: [
     require('tailwindcss'),
     require('autoprefixer'),
-    purgecss({
-      content: ['./src/**/*.vue'],
-    }),
+    // purgecss({
+    //   content: ['./src/**/*.vue'],
+    // }),
   ],
 };

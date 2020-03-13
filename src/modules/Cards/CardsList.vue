@@ -4,12 +4,16 @@
     <ul>
       <li>
         One element
+        <router-link to="/cards-list">
+          All cards
+        </router-link>
         <router-link to="/cards-list/2">
           Go to this card
         </router-link>
       </li>
       <li>Two element</li>
     </ul>
+    <router-view />
   </div>
 </template>
 
