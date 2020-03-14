@@ -4,6 +4,9 @@
     <ul>
       <li>
         One element
+        <router-link to="/login">
+          Login
+        </router-link>
         <router-link to="/cards-list">
           All cards
         </router-link>

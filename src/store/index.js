@@ -2,19 +2,10 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import VuexORM from '@vuex-orm/core';
 import Amplify from 'aws-amplify';
-import { VuexObservable, ofType } from 'vuex-observable-plugin';
-import {
-  mergeMap, flatMap, take, catchError,
-} from 'rxjs/operators';
-import {
-  of, race, empty, concat,
-} from 'rxjs';
 
 
 import Card from 'models/Card';
 import auth from 'store/modules/auth';
-import epicsRegistry from 'epics/index';
-
 import config from '../../config/aws.config';
 
 Amplify.configure({
@@ -51,11 +42,7 @@ const store = new Vuex.Store({
   modules: {
     auth,
   },
-  plugins: [VuexORM.install(database), VuexObservable(epicsRegistry.getEpics(), {
-    dependencies: {
-      ofType, mergeMap, flatMap, take, catchError, of, race, empty, concat,
-    },
-  })],
+  plugins: [VuexORM.install(database)],
 });
 
 export default store;

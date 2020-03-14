@@ -7,7 +7,8 @@ const defaultState = {
 const actions = {
   login: (context, payload) => {
     console.error('lol you want to log-in', context, payload);
-    return context.dispatch('LOGIN_REQUEST', payload);
+    // return context.dispatch('LOGIN_REQUEST', payload);
+    return context.commit('LOGIN_FULFILLED', payload);
   },
 };
 
