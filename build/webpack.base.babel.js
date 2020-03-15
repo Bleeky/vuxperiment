@@ -1,10 +1,11 @@
-const path = require('path');
-const eslintFriendlyFormatter = require('eslint-friendly-formatter');
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const config = require('../config');
-const utils = require('./utils');
+import webpack from 'webpack';
+import path from 'path';
+import eslintFriendlyFormatter from 'eslint-friendly-formatter';
+import VueLoaderPlugin from 'vue-loader/lib/plugin';
+import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import config from '../config';
+import utils from './utils';
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir);
@@ -90,6 +91,9 @@ module.exports = {
     ],
   },
   plugins: [
+    new webpack.ProvidePlugin({
+      Payload: [path.resolve(__dirname, '../src/utils'), 'default'],
+    }),
     new VueLoaderPlugin(),
     new FaviconsWebpackPlugin({
       logo: path.resolve(__dirname, '../src/assets/favicon.png'),

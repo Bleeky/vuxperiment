@@ -11,14 +11,17 @@ module.exports = {
   plugins: [
     'html'
   ],
-  'settings': {
+  globals: {
+    Payload: true,
+  },
+  settings: {
     'import/resolver': {
       'webpack': {
-        'config': 'build/webpack.base.conf.js'
+        'config': 'build/webpack.base.babel.js'
       }
     }
   },
-  'rules': {
+  rules: {
     "no-plusplus": 0,
     'import/extensions': ['error', 'always', {
       'js': 'never',

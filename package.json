@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "check-dep": "npm-check -u",
-    "dev": "webpack-dev-server --config ./build/webpack.dev.conf.js",
+    "dev": "webpack-dev-server --config ./build/webpack.dev.babel.js",
     "build": "node build/build.js",
     "lint": "eslint --ext .js,.vue src"
   },
@@ -19,6 +19,7 @@
   "dependencies": {
     "@vuex-orm/core": "^0.34.1",
     "aws-amplify": "^2.2.0",
+    "uuid": "^7.0.2",
     "vee-validate": "^3.1.3",
     "vue": "^2.6.10",
     "vue-router": "^3.1.3",

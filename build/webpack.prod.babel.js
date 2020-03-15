@@ -1,11 +1,11 @@
-const merge = require('webpack-merge');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const TerserJSPlugin = require('terser-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const baseWebpackConfig = require('./webpack.base.conf');
-const config = require('../config');
-const utils = require('./utils');
+import merge from 'webpack-merge';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import TerserJSPlugin from 'terser-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
+import baseWebpackConfig from './webpack.base.babel';
+import config from '../config';
+import utils from './utils';
 
 const webpackConfig = merge(baseWebpackConfig, {
   mode: 'production',

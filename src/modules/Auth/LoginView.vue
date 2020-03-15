@@ -1,9 +1,6 @@
 <template>
   <div class="min-h-screen p-8 bg-gray-100">
     <div class="container mx-auto w-full sm:max-w-md">
-      <router-link to="/cards-list">
-        All cards
-      </router-link>
       <ValidationObserver v-slot="{ handleSubmit }">
         <form
           id="login"
@@ -94,7 +91,8 @@ export default {
   methods: {
     onSubmit() {
       store.dispatch('login', {
-        data: this.data,
+        username: this.username,
+        password: this.password,
       });
     },
   },

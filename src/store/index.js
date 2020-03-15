@@ -6,6 +6,7 @@ import Amplify from 'aws-amplify';
 
 import Card from 'models/Card';
 import auth from 'store/modules/auth';
+import loading from 'store/modules/loading';
 import config from '../../config/aws.config';
 
 Amplify.configure({
@@ -37,12 +38,23 @@ database.register(Card);
 
 Vue.use(Vuex);
 
+function loadingPlugin() {
+  return (store) => {
+    store.subscribe((mutation) => {
+      if (mutation.type.includes('Fulfilled')) {
+        store.commit('removeLoadingEntry', mutation.payload);
+      }
+    });
+  };
+}
+
 const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   modules: {
+    loading,
     auth,
   },
-  plugins: [VuexORM.install(database)],
+  plugins: [VuexORM.install(database), loadingPlugin()],
 });
 
 export default store;

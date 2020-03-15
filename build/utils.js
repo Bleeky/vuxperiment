@@ -1,5 +1,5 @@
-const path = require('path');
-const config = require('../config');
+import path from 'path';
+import config from '../config';
 
 exports.assetsPath = function (_path) {
   const assetsSubDirectory = process.env.NODE_ENV === 'production'

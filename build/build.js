@@ -1,15 +1,14 @@
-// https://github.com/shelljs/shelljs
+import ora from 'ora';
+import path from 'path';
+import chalk from 'chalk';
+import shell from 'shelljs';
+import webpack from 'webpack';
+import config from '../config';
+import webpackConfig from './webpack.prod.babel';
+
 require('./check-versions')();
 
 process.env.NODE_ENV = 'production';
-
-const ora = require('ora');
-const path = require('path');
-const chalk = require('chalk');
-const shell = require('shelljs');
-const webpack = require('webpack');
-const config = require('../config');
-const webpackConfig = require('./webpack.prod.conf');
 
 const spinner = ora('building for production...');
 spinner.start();

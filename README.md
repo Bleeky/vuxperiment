@@ -2,6 +2,13 @@
 
 > A Vue.js project
 
+Experimenting with
+- Vuex
+- Vee Validate
+- Vue ORM
+- Vue Router
+- Tailwind
+
 ## Build Setup
 
 ``` bash
