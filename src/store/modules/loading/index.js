@@ -1,4 +1,7 @@
+import Vue from 'vue';
+
 const defaultState = {
+  entries: {},
 };
 
 const actions = {
@@ -6,16 +9,17 @@ const actions = {
 
 const mutations = {
   removeLoadingEntry: (state, payload) => {
-    delete state[`${payload.uuid}`];
-    console.error('removing loading entry', payload);
+    const newEntries = { ...state.entries };
+    delete newEntries[`${payload.uuid}`];
+    Vue.set(state, 'entries', newEntries);
   },
   loading: (state, payload) => {
-    state[payload.uuid] = payload,
-    console.error('loading somethig', payload);
+    Vue.set(state, 'entries', { ...state.entries, [payload.uuid]: payload });
   },
 };
 
 const getters = {
+  entries: (state) => (req) => Object.keys(state.entries).find((key) => state.entries[key].req === req),
 };
 
 export default {

@@ -1,21 +1,6 @@
 <template>
   <div class="cards-list">
     <h2>Cards list</h2>
-    <ul>
-      <li>
-        One element
-        <router-link to="/login">
-          Login
-        </router-link>
-        <router-link to="/cards-list">
-          All cards
-        </router-link>
-        <router-link to="/cards-list/2">
-          Go to this card
-        </router-link>
-      </li>
-      <li>Two element</li>
-    </ul>
     <router-view />
   </div>
 </template>

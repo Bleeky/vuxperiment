@@ -6,17 +6,17 @@ const defaultState = {
 
 const actions = {
   login: async (context, payload) => {
+    console.error('Login initiated', context, payload);
     const p = new Payload('login');
     context.commit('loading', p.merge(payload));
+    await new Promise((r) => setTimeout(r, 2000));
     // await Auth.signIn(payload.username, payload.password);
-    console.error('lol you want to log-in', context, payload);
     context.commit('loginFulfilled', p.merge(payload));
   },
 };
 
 const mutations = {
   loginFulfilled: (state, token) => {
-    console.error('login has fullfiled', state, token);
     state.token = token;
   },
 };

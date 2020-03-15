@@ -1,7 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 
 export default class Payload {
-  constructor() {
+  constructor(req) {
+    this.req = req;
     this.uuid = uuidv4();
   }
 
@@ -9,6 +10,7 @@ export default class Payload {
     return {
       ...payload,
       uuid: this.uuid,
+      req: this.req,
     };
   }
 }

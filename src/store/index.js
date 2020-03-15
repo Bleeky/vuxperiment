@@ -54,7 +54,10 @@ const store = new Vuex.Store({
     loading,
     auth,
   },
-  plugins: [VuexORM.install(database), loadingPlugin()],
+  plugins: [
+    VuexORM.install(database),
+    loadingPlugin(),
+  ],
 });
 
 export default store;

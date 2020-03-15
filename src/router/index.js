@@ -1,21 +1,30 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import store from 'store';
-import Hello from 'components/Hello';
 
 Vue.use(Router);
 
 const router = new Router({
   routes: [
     {
-      path: '/',
-      name: 'Hello',
-      component: Hello,
-    },
-    {
       path: '/login',
       name: 'Login',
       component: () => import(/* webpackChunkName: "auth" */ 'modules/Auth/LoginView'),
+    },
+    {
+      path: '/create-card',
+      name: 'CreateCard',
+      component: () => import(/* webpackChunkName: "cards-list" */ 'modules/Cards/CardForm'),
+      meta: {
+        requiresAuth: true,
+        registerStoreModule: async () => {
+          if (!store._modules.root._children.cards) {
+            const module = await import(/* webpackChunkName: "cards-list" */ 'store/modules/cards');
+            console.error('registering cards module', module.default);
+            store.registerModule('cards', module.default);
+          }
+        },
+      },
     },
     {
       path: '/cards-list',
