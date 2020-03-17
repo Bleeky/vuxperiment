@@ -1,13 +1,17 @@
 # vuxperiment
 
+A personnal project to experiment with VueJS and its ecosystem, as well as using the API of another project (serverlessxperiment), which is made using AWS Lambda.
+
 > A Vue.js project
 
-Experimenting with
+Experimenting with:
 - Vuex
 - Vee Validate
 - Vue ORM
 - Vue Router
 - Tailwind
+
+Also experimenting with Hot Module loading.
 
 ## Build Setup
 

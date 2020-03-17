@@ -7,6 +7,7 @@ import Amplify from 'aws-amplify';
 import Card from 'models/Card';
 import auth from 'store/modules/auth';
 import loading from 'store/modules/loading';
+import errors from 'store/modules/errors';
 import config from '../../config/aws.config';
 
 Amplify.configure({
@@ -41,7 +42,7 @@ Vue.use(Vuex);
 function loadingPlugin() {
   return (store) => {
     store.subscribe((mutation) => {
-      if (mutation.type.includes('Fulfilled')) {
+      if (mutation.type.includes('Fulfilled') || mutation.type.includes('Failure')) {
         store.commit('removeLoadingEntry', mutation.payload);
       }
     });
@@ -51,6 +52,7 @@ function loadingPlugin() {
 const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   modules: {
+    errors,
     loading,
     auth,
   },

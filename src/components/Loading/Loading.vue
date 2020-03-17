@@ -5,12 +5,7 @@
         v-if="entry"
         key="loading"
       >
-        <div v-if="component">
-          <component :is="componentLoader" />
-        </div>
-        <div v-else>
-          <Spinner />
-        </div>
+        <component :is="componentLoader" />
       </div>
       <div
         v-else
@@ -23,26 +18,20 @@
 </template>
 
 <script>
-import Spinner from './Spinner';
-
 export default {
   name: 'Loading',
-  components: { Spinner },
   props: {
-    type: {
-      type: String,
-    },
-    req: {
-      type: String,
+    reqs: {
+      type: Array,
       required: true,
     },
     component: {
       type: String,
-      default: () => null,
+      default: 'Spinner',
     },
   },
   computed: {
-    entry() { return this.$store.getters.entries(this.req); },
+    entry() { return this.$store.getters.entries(this.reqs); },
     componentLoader() {
       return () => import(`./${this.component}`);
     },
@@ -51,15 +40,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.slide-fade-enter-active {
-  transition: all .5s ease;
-}
-.slide-fade-leave-active {
-  // transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
-.slide-fade-enter, .slide-fade-leave-to
-/* .slide-fade-leave-active below version 2.1.8 */ {
-  transform: translateY(10px);
-  opacity: 0;
-}
+
 </style>

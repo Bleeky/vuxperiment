@@ -11,7 +11,7 @@ function resolve(dir) {
   return path.join(__dirname, '..', dir);
 }
 
-module.exports = {
+export default {
   entry: {
     app: './src/main.js',
   },
@@ -65,6 +65,7 @@ module.exports = {
           'sass-loader?sourceMap=true',
         ] : [
           MiniCssExtractPlugin.loader,
+          'vue-style-loader',
           'css-loader',
           'postcss-loader',
           'sass-loader',

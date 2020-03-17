@@ -6,7 +6,7 @@ import FriendlyErrorsPlugin from 'friendly-errors-webpack-plugin';
 import baseWebpackConfig from './webpack.base.babel';
 
 process.traceDeprecation = true;
-module.exports = merge(baseWebpackConfig, {
+export default merge(baseWebpackConfig, {
   mode: 'development',
   devtool: '#cheap-module-eval-source-map',
   devServer: {

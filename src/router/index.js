@@ -10,36 +10,33 @@ const router = new Router({
       path: '/login',
       name: 'Login',
       component: () => import(/* webpackChunkName: "auth" */ 'modules/Auth/LoginView'),
+      props: { status: 'login' },
     },
     {
-      path: '/create-card',
-      name: 'CreateCard',
-      component: () => import(/* webpackChunkName: "cards-list" */ 'modules/Cards/CardForm'),
-      meta: {
-        requiresAuth: true,
-        registerStoreModule: async () => {
-          if (!store._modules.root._children.cards) {
-            const module = await import(/* webpackChunkName: "cards-list" */ 'store/modules/cards');
-            console.error('registering cards module', module.default);
-            store.registerModule('cards', module.default);
-          }
-        },
-      },
+      path: '/signup',
+      name: 'Signup',
+      component: () => import(/* webpackChunkName: "auth" */ 'modules/Auth/LoginView'),
+      props: { status: 'signup' },
     },
     {
-      path: '/cards-list',
+      path: '/verify',
+      name: 'Verify',
+      component: () => import(/* webpackChunkName: "auth" */ 'modules/Auth/LoginView'),
+      props: { status: 'verify' },
+    },
+    {
+      path: '/cards',
       name: 'CardsList',
       meta: {
         requiresAuth: true,
-        registerStoreModule: async () => {
-          if (!store._modules.root._children.cards) {
-            const module = await import(/* webpackChunkName: "cards-list" */ 'store/modules/cards');
-            console.error('registering cards module', module.default);
-            store.registerModule('cards', module.default);
-          }
-        },
       },
-      component: () => import(/* webpackChunkName: "cards-list" */ 'modules/Cards/CardsList'),
+      component: async () => {
+        if (!store._modules.root._children.cards) {
+          const module = await import(/* webpackChunkName: "cards-module" */ 'store/modules/cards');
+          store.registerModule('cards', module.default);
+        }
+        return import(/* webpackChunkName: "cards-list" */ 'modules/Cards/CardsList');
+      },
       children: [
         {
           path: ':id',
@@ -48,30 +45,35 @@ const router = new Router({
         },
       ],
     },
+    {
+      path: '/create-card',
+      name: 'CreateCard',
+      component: async () => {
+        if (!store._modules.root._children.cards) {
+          const module = await import(/* webpackChunkName: "cards-module" */ 'store/modules/cards');
+          store.registerModule('cards', module.default);
+        }
+        return import(/* webpackChunkName: "cards-create" */ 'modules/Cards/CardForm');
+      },
+      meta: {
+        requiresAuth: true,
+      },
+    },
   ],
 });
 
 router.beforeEach((to, from, next) => {
-  const registerStoreModuleRoute = to.matched.find((record) => record.meta.registerStoreModule);
-  if (registerStoreModuleRoute) {
-    try {
-      registerStoreModuleRoute.meta.registerStoreModule();
-    } catch (e) {
-      console.error(e);
-    }
-  }
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!store.getters.isLoggedIn) {
       next({
         path: '/login',
         query: { redirect: to.fullPath },
       });
-    } else {
-      next();
+      return;
     }
     next();
   } else {
-    next(); // make sure to always call next()!
+    next();
   }
 });
 

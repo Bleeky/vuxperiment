@@ -5,15 +5,12 @@ const defaultState = {
 };
 
 const actions = {
-  test: () => {
-    console.error('test 2');
-  },
   getCards: (context) => {
-    console.error('get cards', context);
+    const p = new Payload('checkSession');
     API.get('cards', '/cards')
       .then((response) => {
         console.error('get Cards success', response);
-        context.commit('CARDS_UPDATED', response);
+        context.commit('getCardsFulfilled', p.merge(response));
       })
       .catch((error) => {
         console.error(error);
@@ -22,7 +19,7 @@ const actions = {
 };
 
 const mutations = {
-  CARDS_UPDATED: (state, cards) => {
+  getCardsFulfilled: (state, cards) => {
     state.cards = cards;
   },
 };

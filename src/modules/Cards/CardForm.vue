@@ -7,6 +7,9 @@
       @submit.prevent="handleSubmit(onSubmit)"
     >
       <div class="container mx-auto">
+        <div class="text-xl">
+          Add a new card
+        </div>
         <p v-if="formErrors.length">
           <b>Please correct the following error(s):</b>
           <ul>
@@ -57,22 +60,11 @@
       >
         Submit
       </button>
-      <button
-        class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
-        type="button"
-        @click="test"
-      >
-        Test
-      </button>
-      </but>
     </form>
   </ValidationObserver>
 </template>
 
 <script>
-import { Auth } from 'aws-amplify';
-import store from 'store';
-
 export default {
   name: 'CardForm',
   data() {
@@ -84,18 +76,8 @@ export default {
     };
   },
   methods: {
-    test: () => {
-      store.dispatch('test');
-    },
     async onSubmit() {
       console.error('form submitted');
-      try {
-        await Auth.signIn('admin@example.com', 'Passw0rd!');
-        store.dispatch('getCards');
-        alert('Logged in');
-      } catch (e) {
-        alert(e.message);
-      }
     },
   },
 };

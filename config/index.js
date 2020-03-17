@@ -1,7 +1,6 @@
-// see http://vuejs-templates.github.io/webpack for documentation.
 import path from 'path';
 
-module.exports = {
+export default {
   build: {
     env: require('./prod.env'),
     index: path.resolve(__dirname, '../dist/index.html'),

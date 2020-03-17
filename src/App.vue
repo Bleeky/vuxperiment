@@ -24,7 +24,7 @@
         <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
           <div class="text-sm lg:flex-grow">
             <router-link
-              to="/cards-list"
+              to="/cards"
             >
               <div
                 class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
@@ -43,15 +43,22 @@
             </router-link>
           </div>
           <div>
-            <a
-              href="#"
+            <button
               class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
-            >Logout</a>
+              @click="signout"
+            >
+              Logout
+            </button>
           </div>
         </div>
       </nav>
     </div>
-    <router-view />
+    <Loading
+      :reqs="['checkSession']"
+      component="Spinner"
+    >
+      <router-view />
+    </Loading>
   </div>
 </template>
 
@@ -61,14 +68,24 @@ import { mapState } from 'vuex';
 export default {
   name: 'App',
   computed: mapState({
-    loggedIn: (state) => state.auth.token,
+    loggedIn: (state) => state.auth.loggedIn,
   }),
   watch: {
     loggedIn(newValue, oldValue) {
       if (!oldValue && newValue) {
         if (this.$route.query.redirect) this.$router.push(this.$route.query.redirect);
-        else this.$router.push('/cards-list');
+        else this.$router.push('/cards');
+      } else if (oldValue && !newValue) {
+        this.$router.push('/login');
       }
+    },
+  },
+  beforeCreate() {
+    this.$store.dispatch('checkSession');
+  },
+  methods: {
+    signout() {
+      this.$store.dispatch('signout');
     },
   },
 };

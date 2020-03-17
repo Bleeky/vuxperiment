@@ -34,18 +34,16 @@ $color-grey-dark: #302D2D;
   display: flex;
   height: 20rem;
   position: relative;
-  // transition: width 0.3s 0.1s ease, height 0.3s 0.3s ease;
 
   &-divider {
     align-self: center;
     background-color: $color-grey-dark;
     height: 2.8rem;
-    // transition: width 0.3s 0.1s ease, height 0.3s 0.3s ease;
     width: 100%;
   }
 
   &-circle {
-    animation: color_change 1s infinite alternate;
+    animation: color_change 0.3s infinite alternate;
     background-color: $color-white;
     border: 1.2rem solid $color-grey-dark;
     border-radius: 2000rem;
@@ -53,7 +51,6 @@ $color-grey-dark: #302D2D;
     left: calc(50% - 3rem);
     position: absolute;
     top: calc(50% - 3rem);
-    // transition: all 0.3s ease;
     width: 6rem;
   }
 }

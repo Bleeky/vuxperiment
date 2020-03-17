@@ -7,7 +7,7 @@
   "scripts": {
     "check-dep": "npm-check -u",
     "dev": "webpack-dev-server --config ./build/webpack.dev.babel.js",
-    "build": "node build/build.js",
+    "build": "node -r esm build/build.js",
     "lint": "eslint --ext .js,.vue src"
   },
   "browserslist": [
@@ -49,6 +49,7 @@
     "eslint-plugin-html": "^6.0.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-vue": "^6.0.1",
+    "esm": "^3.2.25",
     "express": "^4.14.1",
     "favicons-webpack-plugin": "^1.0.2",
     "file-loader": "^5.0.2",

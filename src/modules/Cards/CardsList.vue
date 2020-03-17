@@ -8,6 +8,12 @@
 <script>
 export default {
   name: 'CardsList',
+  beforeCreate() {
+    console.error(
+      'getCards',
+    );
+    this.$store.dispatch('getCards');
+  },
 };
 </script>
 
