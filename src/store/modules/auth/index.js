@@ -11,10 +11,8 @@ const actions = {
     try {
       await Auth.currentSession();
       await Auth.currentAuthenticatedUser({});
-      console.error('check session finished');
       context.commit('loginFulfilled', p.merge({}));
     } catch (e) {
-      console.error(e);
       context.commit('error', p.merge(e));
       context.commit('removeLoadingEntry', p.merge({}));
     }

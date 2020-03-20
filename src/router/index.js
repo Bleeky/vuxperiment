@@ -2,7 +2,37 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import store from 'store';
 
+import { Spinner } from 'components/Loading';
+import Errors from 'components/Errors';
+
 Vue.use(Router);
+
+async function lazyLoadView(AsyncView, AsyncModule, moduleName) {
+  const AsyncHandler = () => ({
+    component: new Promise(((resolve, reject) => {
+      const promiseComponent = AsyncView;
+      let promiseModule;
+      if (AsyncModule && moduleName && !store._modules.root._children[moduleName]) {
+        promiseModule = AsyncModule;
+      }
+      Promise.all([promiseComponent, promiseModule || null]).then((r) => {
+        if (r[1]) store.registerModule('cards', r[1].default);
+        resolve(r[0]);
+      }).catch((e) => reject(e));
+    })),
+    loading: Spinner,
+    error: Errors,
+    delay: 200,
+    timeout: 10000,
+  });
+
+  return Promise.resolve({
+    functional: true,
+    render(h, { data, children }) {
+      return h(AsyncHandler, data, children);
+    },
+  });
+}
 
 const router = new Router({
   routes: [
@@ -34,13 +64,11 @@ const router = new Router({
       meta: {
         requiresAuth: true,
       },
-      component: async () => {
-        if (!store._modules.root._children.cards) {
-          const module = await import(/* webpackChunkName: "cards-module" */ 'store/modules/cards');
-          store.registerModule('cards', module.default);
-        }
-        return import(/* webpackChunkName: "cards-list" */ 'modules/Cards/CardsList');
-      },
+      component: () => lazyLoadView(
+        import(/* webpackChunkName: "cards-list" */ 'modules/Cards/CardsList'),
+        import(/* webpackChunkName: "cards-module" */ 'store/modules/cards'),
+        'cards',
+      ),
       children: [
         {
           path: ':id',
@@ -52,13 +80,11 @@ const router = new Router({
     {
       path: '/add-card',
       name: 'AddCard',
-      component: async () => {
-        if (!store._modules.root._children.cards) {
-          const module = await import(/* webpackChunkName: "cards-module" */ 'store/modules/cards');
-          store.registerModule('cards', module.default);
-        }
-        return import(/* webpackChunkName: "cards-add" */ 'modules/Cards/AddCard');
-      },
+      component: () => lazyLoadView(
+        import(/* webpackChunkName: "cards-add" */ 'modules/Cards/AddCard'),
+        import(/* webpackChunkName: "cards-module" */ 'store/modules/cards'),
+        'cards',
+      ),
       meta: {
         requiresAuth: true,
       },
@@ -66,13 +92,11 @@ const router = new Router({
     {
       path: '/create-card',
       name: 'CreateCard',
-      component: async () => {
-        if (!store._modules.root._children.cards) {
-          const module = await import(/* webpackChunkName: "cards-module" */ 'store/modules/cards');
-          store.registerModule('cards', module.default);
-        }
-        return import(/* webpackChunkName: "cards-create" */ 'modules/Cards/CreateCard');
-      },
+      component: () => lazyLoadView(
+        import(/* webpackChunkName: "cards-create" */ 'modules/Cards/CreateCard'),
+        import(/* webpackChunkName: "cards-module" */ 'store/modules/cards'),
+        'cards',
+      ),
       meta: {
         requiresAuth: true,
       },
@@ -81,20 +105,16 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  console.error('beforeEach route', to, from);
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!store.getters.isLoggedIn) {
-      console.error('not connected, redirecting to login...');
       next({
         path: '/login',
         query: { redirect: to.fullPath },
       });
     } else {
-      console.error('route need authentification, but user is connected...', to.fullPath);
       next();
     }
   } else {
-    console.error('route doesn\'t need authentification, continuing redirection ...', to.fullPath);
     next();
   }
 });

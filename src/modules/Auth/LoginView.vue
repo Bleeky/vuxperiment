@@ -209,7 +209,6 @@ export default {
       immediate: true,
       handler(newValue, oldValue) {
         if (!oldValue && newValue) {
-          console.error('switched to connected', this.$route);
           if (this.$route.query.redirect) this.$router.push(this.$route.query.redirect);
           else this.$router.push('/cards');
         }

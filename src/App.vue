@@ -115,14 +115,6 @@ export default {
       }
     },
     loggedIn(newValue, oldValue) {
-      // if (!oldValue && newValue) {
-      //   console.error('switched to connected', this.$route);
-      //   if (this.$route.query.redirect) this.$router.push(this.$route.query.redirect);
-      //   else this.$router.push('/cards');
-      // } else if (oldValue && !newValue) {
-      //   console.error('is not connected anymore, redirecting to login');
-      //   this.$router.push('/login');
-      // }
       if (oldValue && !newValue) {
         console.error('is not connected anymore, redirecting to login');
         this.$router.push('/login');
@@ -130,8 +122,6 @@ export default {
     },
   },
   beforeCreate() {
-    console.error('launching check of session');
-    // this.$store.dispatch('checkSession');
     this.leaveOnEscape = (event) => {
       if (event.keyCode === 27) {
         this.$store.dispatch('setCreationMode', false);
