@@ -14,6 +14,7 @@ export default merge(baseWebpackConfig, {
     watchOptions: {
       poll: true,
     },
+    compress: true,
     contentBase: path.join(__dirname, 'src'),
     port: 9000,
   },

@@ -1,0 +1,29 @@
+<template>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 30 30"
+  ><defs><linearGradient
+    id="a"
+    x1="50%"
+    x2="50%"
+    y1="0%"
+    y2="98.711%"
+  ><stop
+    offset="0%"
+    stop-color="#EDD53E"
+  /><stop
+    offset="100%"
+    stop-color="#FBE273"
+  /></linearGradient></defs><g
+    fill="none"
+    fill-rule="evenodd"
+  ><rect
+    width="30"
+    height="30"
+    fill="#EDD53E"
+    rx="15"
+  /><path
+    fill="#FFF"
+    d="M12.379 9h4.707a.44.44 0 01.42.31l2.318 7.487a.44.44 0 01-.42.57h-2.882a.22.22 0 00-.211.28l1.443 5.08a.44.44 0 01-.775.384l-6.45-8.577a.44.44 0 01.352-.704h2.243a.22.22 0 00.208-.292l-1.369-3.954A.44.44 0 0112.38 9z"
+  /></g></svg>
+</template>

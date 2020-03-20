@@ -7,6 +7,10 @@ Vue.use(Router);
 const router = new Router({
   routes: [
     {
+      path: '*',
+      name: 'NotFound',
+    },
+    {
       path: '/login',
       name: 'Login',
       component: () => import(/* webpackChunkName: "auth" */ 'modules/Auth/LoginView'),
@@ -46,6 +50,20 @@ const router = new Router({
       ],
     },
     {
+      path: '/add-card',
+      name: 'AddCard',
+      component: async () => {
+        if (!store._modules.root._children.cards) {
+          const module = await import(/* webpackChunkName: "cards-module" */ 'store/modules/cards');
+          store.registerModule('cards', module.default);
+        }
+        return import(/* webpackChunkName: "cards-add" */ 'modules/Cards/AddCard');
+      },
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
       path: '/create-card',
       name: 'CreateCard',
       component: async () => {
@@ -53,7 +71,7 @@ const router = new Router({
           const module = await import(/* webpackChunkName: "cards-module" */ 'store/modules/cards');
           store.registerModule('cards', module.default);
         }
-        return import(/* webpackChunkName: "cards-create" */ 'modules/Cards/CardForm');
+        return import(/* webpackChunkName: "cards-create" */ 'modules/Cards/CreateCard');
       },
       meta: {
         requiresAuth: true,
@@ -63,16 +81,20 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
+  console.error('beforeEach route', to, from);
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!store.getters.isLoggedIn) {
+      console.error('not connected, redirecting to login...');
       next({
         path: '/login',
         query: { redirect: to.fullPath },
       });
-      return;
+    } else {
+      console.error('route need authentification, but user is connected...', to.fullPath);
+      next();
     }
-    next();
   } else {
+    console.error('route doesn\'t need authentification, continuing redirection ...', to.fullPath);
     next();
   }
 });

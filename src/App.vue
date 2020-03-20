@@ -1,89 +1,147 @@
 <template>
   <div id="app">
-    <div v-if="loggedIn">
-      <nav class="flex items-center justify-between flex-wrap bg-teal-500 p-6">
-        <div class="flex items-center flex-shrink-0 text-white mr-6">
-          <svg
-            class="fill-current h-8 w-8 mr-2"
-            width="54"
-            height="54"
-            viewBox="0 0 54 54"
-            xmlns="http://www.w3.org/2000/svg"
-          ><path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z" /></svg>
-          <span class="font-semibold text-xl tracking-tight">Tailwind CSS</span>
-        </div>
-        <div class="block lg:hidden">
-          <button class="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
-            <svg
-              class="fill-current h-3 w-3"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            ><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" /></svg>
-          </button>
-        </div>
-        <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-          <div class="text-sm lg:flex-grow">
-            <router-link
-              to="/cards"
-            >
-              <div
-                class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
-              >
-                My cards
-              </div>
-            </router-link>
-            <router-link
-              to="/create-card"
-            >
-              <li
-                class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
-              >
-                Add a card
-              </li>
-            </router-link>
-          </div>
-          <div>
-            <button
-              class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
-              @click="signout"
-            >
-              Logout
-            </button>
-          </div>
-        </div>
-      </nav>
-    </div>
     <Loading
       :reqs="['checkSession']"
       component="Spinner"
     >
-      <router-view />
+      <div v-if="loggedIn">
+        <nav class="flex items-center justify-between flex-wrap p-6">
+          <router-link to="/cards">
+            <Logo :class="'cursor-pointer mr-6'" />
+          </router-link>
+          <template v-if="creationMode">
+            <div class="flex justify-between items-center ">
+              <span
+                class="cursor-pointer p-3 border rounded border-blue-900 hover:text-white hover:border-transparent hover:bg-blue-900"
+                @click.once="closeCreationMode"
+              >
+                <svg
+                  class="fill-current h-6 w-6"
+                  role="button"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                ><title>Close</title>
+                  <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" /></svg>
+              </span>
+            </div>
+          </template>
+          <template v-else>
+            <div class="block lg:hidden">
+              <button class="flex items-center px-3 py-2 border rounded text-blue-900 border-blue-900 hover:text-blue-900 hover:border-white">
+                <svg
+                  class="fill-current h-3 w-3"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                ><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" /></svg>
+              </button>
+            </div>
+            <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+              <div class="text-m font-bold lg:flex-grow text-center text-gray-700">
+                <router-link
+                  to="/cards"
+                >
+                  <div
+                    class="block mt-4 lg:inline-block lg:mt-0 hover:text-blue-900 mr-5"
+                  >
+                    My cards
+                  </div>
+                </router-link>
+                <router-link
+                  to="/add-card"
+                >
+                  <li
+                    class="block mt-4 lg:inline-block lg:mt-0 hover:text-blue-900 mr-5"
+                  >
+                    Add a card
+                  </li>
+                </router-link>
+                <router-link
+                  to="/create-card"
+                >
+                  <li
+                    class="block mt-4 lg:inline-block lg:mt-0 hover:text-blue-900 mr-5"
+                  >
+                    Create a card
+                  </li>
+                </router-link>
+              </div>
+              <div>
+                <button
+                  class="inline-block text-sm px-4 py-2 leading-none border rounded text-blue-900 border-blue-900 hover:border-transparent hover:text-white hover:bg-blue-900 mt-4 lg:mt-0"
+                  @click="signout"
+                >
+                  Logout
+                </button>
+              </div>
+            </div>
+          </template>
+        </nav>
+      </div>
+      <div
+        :class="[
+          darkMode ? 'dark-theme' : 'light-theme',
+          loggedIn ? 'container mx-auto w-full' : '',
+          creationMode ? 'container mx-auto max-w-md' : '',
+        ]"
+      >
+        <router-view />
+      </div>
     </Loading>
   </div>
 </template>
 
 <script>
+import Logo from 'components/Logo';
 import { mapState } from 'vuex';
 
 export default {
   name: 'App',
+  components: { Logo },
+  data() {
+    return {
+      darkMode: false,
+    };
+  },
   computed: mapState({
     loggedIn: (state) => state.auth.loggedIn,
+    creationMode: (state) => (state.cards ? state.cards.creationMode : false),
   }),
   watch: {
+    creationMode(newValue) {
+      if (newValue === true) window.addEventListener('keydown', this.leaveOnEscape);
+      else {
+        this.$router.push('/cards');
+        window.removeEventListener('keydown', this.leaveOnEscape);
+      }
+    },
     loggedIn(newValue, oldValue) {
-      if (!oldValue && newValue) {
-        if (this.$route.query.redirect) this.$router.push(this.$route.query.redirect);
-        else this.$router.push('/cards');
-      } else if (oldValue && !newValue) {
+      // if (!oldValue && newValue) {
+      //   console.error('switched to connected', this.$route);
+      //   if (this.$route.query.redirect) this.$router.push(this.$route.query.redirect);
+      //   else this.$router.push('/cards');
+      // } else if (oldValue && !newValue) {
+      //   console.error('is not connected anymore, redirecting to login');
+      //   this.$router.push('/login');
+      // }
+      if (oldValue && !newValue) {
+        console.error('is not connected anymore, redirecting to login');
         this.$router.push('/login');
       }
     },
   },
   beforeCreate() {
-    this.$store.dispatch('checkSession');
+    console.error('launching check of session');
+    // this.$store.dispatch('checkSession');
+    this.leaveOnEscape = (event) => {
+      if (event.keyCode === 27) {
+        this.$store.dispatch('setCreationMode', false);
+      }
+    };
   },
   methods: {
+    closeCreationMode() {
+      this.$store.dispatch('setCreationMode', false);
+    },
     signout() {
       this.$store.dispatch('signout');
     },

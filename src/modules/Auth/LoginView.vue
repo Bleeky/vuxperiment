@@ -1,17 +1,17 @@
 <template>
   <div class="min-h-screen p-8 bg-gray-200">
     <div class="container mx-auto w-full sm:max-w-md">
+      <Logo :class="'mb-6 justify-center'" />
       <ValidationObserver v-slot="{ handleSubmit }">
         <Errors
-          :reqs="['login', 'signup']"
+          :reqs="['login', 'signup', 'verify']"
           :max="1"
         />
         <Loading
-          :reqs="['login', 'signup']"
+          :reqs="['login', 'signup', 'verify']"
           component="Pokeball"
         >
           <form
-            id="login"
             class="bg-white shadow-md rounded px-8 pt-6 pb-8"
             @submit.prevent="handleSubmit(onSubmit)"
           >
@@ -181,7 +181,12 @@
 </template>
 
 <script>
+import Logo from 'components/Logo';
+import store from 'store';
+import { mapState } from 'vuex';
+
 export default {
+  components: { Logo },
   props: {
     status: {
       type: String,
@@ -190,12 +195,30 @@ export default {
   },
   data() {
     return {
-      formErrors: [],
       username: null,
       password: null,
       passwordConfirm: null,
       code: null,
     };
+  },
+  computed: mapState({
+    loggedIn: (state) => state.auth.loggedIn,
+  }),
+  watch: {
+    loggedIn: {
+      immediate: true,
+      handler(newValue, oldValue) {
+        if (!oldValue && newValue) {
+          console.error('switched to connected', this.$route);
+          if (this.$route.query.redirect) this.$router.push(this.$route.query.redirect);
+          else this.$router.push('/cards');
+        }
+      },
+    },
+  },
+  beforeRouteEnter(to, from, next) {
+    store.dispatch('checkSession');
+    next();
   },
   methods: {
     onSubmit() {
@@ -207,7 +230,7 @@ export default {
         if (this.status === 'signup' && !this.$store.getters.error) {
           this.$router.push({ path: '/verify' });
         }
-      });
+      }).catch(() => {});
     },
   },
 };

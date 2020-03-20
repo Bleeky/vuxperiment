@@ -1,15 +1,13 @@
 <template>
   <p class="demo">
-    <card-form />
+    Vue of card
   </p>
 </template>
 
 <script>
-import CardForm from './CardForm';
 
 export default {
   components: {
-    CardForm,
   },
 };
 </script>
