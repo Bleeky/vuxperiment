@@ -13,7 +13,11 @@ export default {
   },
   computed: {
     iconLoader() {
-      return () => import(`./${this.icon}`);
+      return () => ({
+        component: import(/* webpackChunkName: "[request]" */ `./${this.icon}`),
+        delay: 200,
+        timeout: 3000,
+      });
     },
   },
 };

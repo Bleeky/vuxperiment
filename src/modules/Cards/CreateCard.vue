@@ -3,171 +3,226 @@
     :reqs="['createCard']"
     component="Spinner"
   >
-    <template v-if="currentStep===0">
-      <ValidationObserver
-        v-slot="{ handleSubmit }"
-        tag="form"
+    <div
+      ref="formWrapper"
+    >
+      <transition
+        appear
+        name="fade"
+        leave-active-class="fade-leave"
       >
-        <form
-          @submit.prevent="handleSubmit(onSubmit)"
+        <div
+          v-if="currentStep===0"
+          key="nameStep"
+        >
+          <ValidationObserver
+            v-slot="{ handleSubmit }"
+          >
+            <form
+              @submit.prevent="handleSubmit(onSubmit)"
+            >
+              <div class="text-4xl font-extrabold text-blue-900 mb-8">
+                Let's create a new Pokemon card !
+              </div>
+              <div class="mb-6">
+                <label
+                  class="block text-gray-700 font-bold mb-2"
+                >
+                  What is the name of your Pokemon ?
+                </label>
+                <ValidationProvider
+                  v-slot="{ errors }"
+                  rules="required"
+                >
+                  <input
+                    id="name"
+                    v-model="name"
+                    type="text"
+                    name="name"
+                    placeholder="Name"
+                    class="py-2 px-3 rounded mt-1 block w-full border focus:outline-none focus:border-blue-900"
+                  >
+                  <p class="text-red-500 text-xs mt-2">
+                    {{ errors[0] }}
+                  </p>
+                </ValidationProvider>
+              </div>
+              <div class="flex justify-center">
+                <button
+                  type="submit"
+                  class="flex items-center bg-transparent hover:bg-blue-900 text-blue-900 font-semibold hover:text-white py-2 px-4 border border-blue-900 hover:border-transparent rounded"
+                >
+                  Continue
+                  <Icon
+                    icon="RightArrow"
+                    :class="'fill-current h-3 w-3 ml-2'"
+                  />
+                </button>
+              </div>
+            </form>
+          </ValidationObserver>
+        </div>
+        <div
+          v-else-if="currentStep===1"
+          key="typeStep"
         >
           <div class="text-4xl font-extrabold text-blue-900 mb-8">
-            Let's create a new card !
+            Let's select a type.
           </div>
-          <div class="mb-6">
-            <label
-              class="block text-gray-700 font-bold mb-2"
-            >
-              What is the name of the card ?
-            </label>
-            <ValidationProvider
-              v-slot="{ errors }"
-              rules="required"
-            >
-              <input
-                id="name"
-                v-model="name"
-                type="text"
-                name="name"
-                placeholder="Name"
-                class="form-input mt-1 block w-full"
+          <Loading
+            :reqs="['getTypes']"
+            component="Spinner"
+          >
+            <div class="grid grid-cols-4 gap-2">
+              <div
+                v-for="type in types"
+                :key="type.id"
+                :class="['flex items-center cursor-pointer border-gray-400 border-2 rounded p-4 flex flex-col justify-between leading-normal', selectedtype && selectedtype.name === type.name ? 'border-blue-900 bg-gray-200 text-blue-900' : 'text-gray-900']"
+                @click="selectedtype = type"
               >
-              <p class="text-red-500 text-xs mt-2">
-                {{ errors[0] }}
-              </p>
-            </ValidationProvider>
+                <div class="font-bold text-xl capitalize">
+                  {{ type.name }}
+                </div>
+                <Icon
+                  :icon="type.icon"
+                  custom-chunk="pokemon-icons"
+                  :class="'mt-4 h-12 w-12'"
+                />
+              </div>
+            </div>
+          </Loading>
+        </div>
+        <div
+          v-else-if="currentStep===2"
+          key="habitatStep"
+        >
+          <div class="text-4xl font-extrabold text-blue-900 mb-8">
+            Where does your Pokemon lives?
           </div>
-          <div class="flex justify-center">
-            <button
-              type="submit"
-              class="flex items-center bg-transparent hover:bg-blue-900 text-blue-900 font-semibold hover:text-white py-2 px-4 border border-blue-900 hover:border-transparent rounded"
+          <Loading
+            :reqs="['getTypes']"
+            component="Spinner"
+          >
+            <div
+              v-for="habitat in habitats"
+              :key="habitat.id"
+              :class="['font-bold cursor-pointer text-xl capitalize flex items-center flex-row border-gray-400 border-2 rounded p-4 mb-2', selectedHabitat && selectedHabitat.name === habitat.name ? 'border-blue-900 text-blue-900' : 'text-gray-900']"
+              @click="selectedHabitat = habitat"
             >
-              Continue
-              <svg
-                class="fill-current h-3 w-3 ml-2"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 16 24"
-              ><path
-                d="M-4 0h24v24H-4z"
-                opacity="0"
-              /><path
-                d="M1.5 24a1.001 1.001 0 01-.646-1.764L12.951 12 .854 1.764A1.002 1.002 0 01.736.354a1.002 1.002 0 011.41-.118l13 11a1.001 1.001 0 010 1.528l-13 11A1.003 1.003 0 011.5 24"
-              /></svg>
-            </button>
-          </div>
-        </form>
-      </ValidationObserver>
-    </template>
-    <template v-if="currentStep===1">
-      <div class="text-4xl font-extrabold text-blue-900 mb-8">
-        Let's select a type.
-      </div>
-      <div class="grid grid-cols-3 gap-4">
-        <div
-          :class="['flex items-center cursor-pointer border-gray-400 border-2 bg-white rounded p-4 flex flex-col justify-between leading-normal', type === 1 ? 'border-blue-900 bg-gray-200 text-blue-900' : 'text-gray-900']"
-          @click="type = 1"
-        >
-          <div class="font-bold text-xl">
-            Poison
-          </div>
-          <Icon
-            icon="IconPoison"
-            :class="'h-10 w-10'"
-          />
+              {{ habitat.name }}
+            </div>
+          </Loading>
         </div>
         <div
-          :class="['flex items-center cursor-pointer border-gray-400 border-2 bg-white rounded p-4 flex flex-col justify-between leading-normal', type === 2 ? 'border-blue-900 bg-gray-200 text-blue-900' : 'text-gray-900']"
-          @click="type = 2"
+          v-else-if="currentStep===3"
+          key="abilitiesStep"
         >
-          <div class="font-bold text-xl">
-            Fire
+          <div class="text-4xl font-extrabold text-blue-900 mb-8">
+            What are your Pokemon abilities?
           </div>
-          <Icon
-            icon="IconFire"
-            :class="'h-10 w-10'"
-          />
+          <Loading
+            :reqs="['getTypes']"
+            component="Spinner"
+          >
+            <input
+              id="name"
+              v-model="name"
+              type="text"
+              name="name"
+              placeholder="Name"
+              class="py-2 px-3 rounded mt-1 block w-full border focus:outline-none focus:border-blue-900"
+            >
+            <multiselect
+              v-model="value"
+              :options="abilities"
+              :searchable="true"
+              :close-on-select="false"
+              :show-labels="false"
+              :multiple="true"
+              :taggable="true"
+              tag-placeholder="Add this as new tag"
+              placeholder="Pick a value"
+            />
+          </Loading>
         </div>
         <div
-          :class="['flex items-center cursor-pointer border-gray-400 border-2 bg-white rounded p-4 flex flex-col justify-between leading-normal', type === 3 ? 'border-blue-900 bg-gray-200 text-blue-900' : 'text-gray-900']"
-          @click="type = 3"
+          v-else-if="currentStep===4"
+          key="pictureStep"
         >
-          <div class="font-bold text-xl">
-            Electric
+          <div class="text-4xl font-extrabold text-blue-900 mb-8">
+            What does your pokemon look like?
           </div>
-          <Icon
-            icon="IconElectric"
-            :class="'h-10 w-10'"
-          />
+          <Loading
+            :reqs="['getTypes']"
+            component="Spinner"
+          >
+            Form here
+          </Loading>
         </div>
-      </div>
-    </template>
-    <div
-      v-if="currentStep > 0"
-      class="steps-nav fixed bottom-0 left-0 w-full p-10 flex items-center justify-between"
-    >
-      <div class="absolute bottom-0 left-0 h-2 bg-gray-300 w-full" />
-      <div
-        class="steps-nav-progress-bar absolute bottom-0 left-0 h-2 bg-yellow-500 rounded-r-md"
-        :style="`width:${progress}%`"
-      />
-      <div
-        ref="progress"
-        class="absolute text-sm"
-        :style="`bottom: 0.5rem; left: calc(${progress}% - ${currentStep === 0 ? 0 : (progressWidth / 2)}px)`"
-      >
-        {{ progress }}%
-      </div>
-      <button
-        class="flex items-center bg-transparent hover:bg-blue-900 text-blue-900 font-semibold hover:text-white py-2 px-4 border border-blue-900 hover:border-transparent rounded"
-        @click.prevent="currentStep > 0 ? currentStep -= 1 : 0"
-      >
-        <svg
-          viewBox="0 0 16 24"
-          class="fill-current h-3 w-3 mr-2"
-          xmlns="http://www.w3.org/2000/svg"
-        ><path
-          d="M-4 0h24v24H-4z"
-          opacity="0"
-        /><path d="M14.5 24a1 1 0 01-.646-.236l-13-11a1.001 1.001 0 010-1.528l13-11a1 1 0 011.293 1.528L3.048 12l12.098 10.236A1 1 0 0114.498 24" /></svg>
-        Back
-      </button>
-      <button
-        class="flex items-center bg-transparent hover:bg-blue-900 text-blue-900 font-semibold hover:text-white py-2 px-4 border border-blue-900 hover:border-transparent rounded"
-        @click.prevent="onSubmit"
-      >
-        Continue
-        <svg
-          class="fill-current h-3 w-3 ml-2"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 16 24"
-        ><path
-          d="M-4 0h24v24H-4z"
-          opacity="0"
-        /><path
-          d="M1.5 24a1.001 1.001 0 01-.646-1.764L12.951 12 .854 1.764A1.002 1.002 0 01.736.354a1.002 1.002 0 011.41-.118l13 11a1.001 1.001 0 010 1.528l-13 11A1.003 1.003 0 011.5 24"
-        /></svg>
-      </button>
+        <div
+          v-else-if="currentStep===5"
+          key="recapStep"
+        >
+          <div class="text-4xl font-extrabold text-blue-900 mb-8">
+            Here is what your new Pokemon will look like!
+          </div>
+          <Loading
+            :reqs="['getTypes']"
+            component="Spinner"
+          >
+            Form here
+          </Loading>
+        </div>
+      </transition>
     </div>
+    <transition name="slide-fade">
+      <div
+        v-if="currentStep > 0"
+        ref="bottomNav"
+        class="steps-nav bg-white fixed bottom-0 left-0 w-full p-10 flex items-center justify-between"
+      >
+        <div class="absolute bottom-0 left-0 h-2 bg-gray-300 w-full" />
+        <div
+          ref="progressBar"
+          class="steps-nav-progress-bar absolute bottom-0 left-0 h-2 bg-yellow-500 rounded-r-md"
+        />
+        <div
+          ref="progress"
+          class="steps-nav-progress-bar-number absolute text-sm font-bold"
+          :style="`bottom: 0.5rem`"
+        >
+          {{ progress }}%
+        </div>
+        <button
+          class="flex items-center bg-transparent hover:bg-blue-900 text-blue-900 font-semibold hover:text-white py-2 px-4 border border-blue-900 hover:border-transparent rounded"
+          @click.prevent="currentStep > 0 ? currentStep -= 1 : 0"
+        >
+          <Icon
+            icon="LeftArrow"
+            :class="'fill-current h-3 w-3 mr-2'"
+          />
+          Back
+        </button>
+        <button
+          :disabled="!isStepValid"
+          :class="['flex items-center bg-transparent hover:bg-blue-900 text-blue-900 font-semibold hover:text-white py-2 px-4 border border-blue-900 hover:border-transparent rounded', !isStepValid && 'opacity-50 cursor-not-allowed']"
+          @click.prevent="onSubmit"
+        >
+          Continue
+          <Icon
+            icon="RightArrow"
+            :class="'fill-current h-3 w-3 ml-2'"
+          />
+        </button>
+      </div>
+    </transition>
   </Loading>
 </template>
 
 <script>
+import { Type, Habitat } from 'models';
+
 import { API } from 'aws-amplify';
-import req from 'utils/req';
-
-const loadData = req((fetch) => async (url) => {
-  const response = await fetch(url);
-  const data1 = await response.json();
-
-  // const data2 = await API.get('cards', '/cards');
-  // const data2 = await getSomeOtherData();
-  // updateUI(data1, data2);
-  console.error(data1);
-});
-
-// loadData('https://pokeapi.co/api/v2/evolution-chain/?limit=20&offset=20');
-// loadData('https://pokeapi.co/api/v2/evolution-chain/?limit=20&offset=20');
-// loadData('https://pokeapi.co/api/v2/evolution-chain/?limit=20&offset=20');
 
 export default {
   name: 'CreateCard',
@@ -175,36 +230,62 @@ export default {
     return {
       formErrors: [],
       name: null,
-      type: null,
+      value: null,
+      selectedtype: null,
+      selectedHabitat: null,
       currentStep: 0,
-      progressWidth: 0,
+      steps: [{}, {}, {}, {}, {}, {}],
+      stepValid: false,
     };
   },
   computed: {
+    abilities() {
+      return ['Select option', 'options', 'selected', 'mulitple', 'label', 'searchable', 'clearOnSelect', 'hideSelected', 'maxHeight', 'allowEmpty', 'showLabels', 'onChange', 'touched'];
+    },
+    types() {
+      return Type.all();
+    },
+    habitats() {
+      return Habitat.all();
+    },
     progress() {
-      return (100 / 4) * this.currentStep;
+      return Math.round((100 / (this.steps.length - 1)) * this.currentStep);
+    },
+    isStepValid() {
+      if (this.currentStep === 1 && !this.selectedtype) return false;
+      if (this.currentStep === 2 && !this.selectedHabitat) return false;
+      return true;
+    },
+  },
+  watch: {
+    currentStep(newValue) {
+      if (newValue === 1) {
+        this.$store.dispatch('getTypes');
+      } else if (newValue === 2) {
+        this.$store.dispatch('getHabitats');
+      }
     },
   },
   updated() {
     this.$nextTick(function () {
-      this.getProgressWidth();
+      if (this.$refs.progress && this.$refs.progressBar) {
+        let progressFromLeft = this.$refs.progress.clientWidth / 2;
+        if (this.currentStep === 0) progressFromLeft = 0;
+        else if (this.currentStep === 5) progressFromLeft = this.$refs.progress.clientWidth + 10;
+        this.$refs.progress.style.left = `calc(${this.progress}% - ${progressFromLeft}px)`;
+        this.$refs.progressBar.style.width = `${this.progress}%`;
+      }
+      if (this.$refs.bottomNav && this.$refs.formWrapper) {
+        this.$refs.formWrapper.style.marginBottom = `${this.$refs.bottomNav.clientHeight + 40}px`;
+      }
     });
   },
   beforeCreate() {
     this.$store.dispatch('setCreationMode', true);
   },
   methods: {
-    getProgressWidth() {
-      if (this.$refs.progress) {
-        this.progressWidth = this.$refs.progress.clientWidth;
-      }
-    },
     onSubmit() {
-      if (this.currentStep === 1 && !this.type) {
-        this.typeError = true;
-      } else {
-        this.currentStep += 1;
-      }
+      this.currentStep += 1;
     },
   },
 };
@@ -215,7 +296,13 @@ export default {
   box-shadow: 0px 0 30px rgba(42, 67, 101, .2);
 
   .steps-nav-progress-bar {
-    background-color: #f60a49
+    background-color: #f60a49;
+    transition: width 0.3s ease-out;
+  }
+  .steps-nav-progress-bar-number {
+    color: #f60a49;
+    transition: left 0.3s ease-out;
   }
 }
+
 </style>

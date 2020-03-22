@@ -4,6 +4,46 @@
 
 @import "tailwindcss/utilities";
 
+@import "~vue-multiselect/dist/vue-multiselect.min.css";
+
+.multiselect {
+  color: inherit;
+  @apply mt-1;
+  &.multiselect--active {
+    @apply border-blue-900;
+  }
+  .multiselect__tags {
+    border-color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    @apply py-2 px-3 rounded block w-full border;
+    input {
+      margin-bottom: 0;
+      padding-left: 0;
+      vertical-align: inherit;
+    }
+    .multiselect__tags-wrap {
+      display: inline-flex;
+      flex-wrap: wrap;
+      .multiselect__tag {
+        @apply mb-2;
+      }
+    }
+    .multiselect__placeholder, .multiselect__single {
+      font-family: inherit;
+      font-size: inherit;
+      margin-bottom: 0;
+      padding-top: 0;
+      @apply text-gray-500;
+    }
+    .multiselect__single {
+      color: inherit;
+      padding-left: 0;
+      vertical-align: inherit;
+    }
+  }
+}
+
 /* purgecss start ignore */
 html {
   box-sizing: border-box;
@@ -12,8 +52,8 @@ html {
   box-sizing: inherit;
 }
 
-.fade-enter-active {
-  transition: opacity .5s;
+.fade-enter-active, .fade-leave {
+  transition: opacity .5s ease;
 }
 .fade-enter, .fade-leave-to  {
   opacity: 0;

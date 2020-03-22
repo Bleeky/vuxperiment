@@ -1,0 +1,63 @@
+<template>
+  <svg viewBox="0 0 30 30">
+    <defs>
+      <linearGradient
+        id="gradient-unknown"
+        x1="50%"
+        y1="0%"
+        x2="50%"
+        y2="98.71071%"
+      >
+        <stop
+          stop-color="#68A090"
+          offset="0%"
+        />
+        <stop
+          stop-color="#7BBFAC"
+          offset="100%"
+        />
+      </linearGradient>
+    </defs>
+    <g
+      fill="none"
+      fill-rule="evenodd"
+    >
+      <rect
+        fill="url(#gradient-unknown)"
+        width="30"
+        height="30"
+        rx="15"
+      />
+      <text
+        font-family="ArialRoundedMTBold, Arial Rounded MT Bold"
+        font-size="20"
+        fill="#FFF"
+      >
+        <tspan
+          x="10"
+          y="21"
+        >?</tspan>
+      </text>
+      <text
+        font-family="ArialRoundedMTBold, Arial Rounded MT Bold"
+        font-size="10"
+        fill="#FFF"
+      >
+        <tspan
+          x="20"
+          y="21"
+        >?</tspan>
+      </text>
+      <text
+        font-family="ArialRoundedMTBold, Arial Rounded MT Bold"
+        font-size="10"
+        fill="#FFF"
+      >
+        <tspan
+          x="5"
+          y="21"
+        >?</tspan>
+      </text>
+    </g>
+  </svg>
+</template>

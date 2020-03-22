@@ -1,0 +1,37 @@
+<template>
+  <svg viewBox="0 0 30 30">
+    <defs>
+      <linearGradient
+        id="gradient-steel"
+        x1="50%"
+        y1="0%"
+        x2="50%"
+        y2="100%"
+      >
+        <stop
+          stop-color="#52869D"
+          offset="0%"
+        />
+        <stop
+          stop-color="#58A6AA"
+          offset="100%"
+        />
+      </linearGradient>
+    </defs>
+    <g
+      fill="none"
+      fill-rule="evenodd"
+    >
+      <rect
+        fill="url(#gradient-steel)"
+        width="30"
+        height="30"
+        rx="15"
+      />
+      <path
+        d="M18.5772 9a.37252.37252 0 01.32239.18589l3.54909 6.13103a.37252.37252 0 01-.0001.37341l-3.54896 6.12394a.37252.37252 0 01-.3223.18573h-7.11648a.37252.37252 0 01-.3214-.18419L7.5511 15.69188a.37252.37252 0 01-.0001-.3765l3.58846-6.13103A.37252.37252 0 0111.46097 9zM15 12c-1.933 0-3.5 1.567-3.5 3.5S13.067 19 15 19s3.5-1.567 3.5-3.5S16.933 12 15 12z"
+        fill="#FFF"
+      />
+    </g>
+  </svg>
+</template>

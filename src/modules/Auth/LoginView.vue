@@ -32,7 +32,7 @@
                     id="code"
                     v-model="code"
                     :class="{ 'border border-red-500': errors[0]}"
-                    class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-900"
                     type="text"
                     placeholder="Verification code"
                   >
@@ -46,7 +46,7 @@
             <template v-else>
               <div class="mb-4">
                 <label
-                  class="block text-gray-700 text-sm font-bold mb-2"
+                  class="block text-blue-900 text-sm font-bold mb-2"
                   for="username"
                 >
                   Username
@@ -60,7 +60,7 @@
                     id="username"
                     v-model="username"
                     :class="{ 'border border-red-500': errors[0]}"
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-900"
                     type="text"
                     placeholder="Username"
                   >
@@ -71,7 +71,7 @@
               </div>
               <div class="mb-6">
                 <label
-                  class="block text-gray-700 text-sm font-bold mb-2"
+                  class="block text-blue-900 text-sm font-bold mb-2"
                   for="password"
                 >
                   Password
@@ -85,7 +85,7 @@
                     id="password"
                     v-model="password"
                     :class="{ 'border border-red-500': errors[0]}"
-                    class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-900"
                     type="password"
                     placeholder="******************"
                   >
@@ -98,7 +98,7 @@
                 <template v-if="status==='signup'">
                   <div class="mb-6">
                     <label
-                      class="block text-gray-700 text-sm font-bold mb-2"
+                      class="block text-blue-900 text-sm font-bold mb-2"
                       for="passwordConfirm"
                     >
                       Password confirm
@@ -113,7 +113,7 @@
                         id="passwordConfirm"
                         v-model="passwordConfirm"
                         :class="{ 'border border-red-500': errors[0]}"
-                        class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-900"
                         type="password"
                         placeholder="******************"
                       >
@@ -158,7 +158,7 @@
               </template>
               <template v-else>
                 <button
-                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline whitespace-no-wrap"
+                  class="focus:outline-none bg-blue-900 hover:bg-gray-700 text-white font-semibold hover:text-white py-2 px-4 border border-blue-900 hover:border-gray-700 rounded"
                   type="submit"
                 >
                   Sign In
@@ -166,7 +166,7 @@
                 <router-link to="/signup">
                   <button
                     type="button"
-                    class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+                    class="focus:outline-none inline-block align-baseline font-bold text-sm text-blue-900 hover:text-gray-700"
                   >
                     Don't have an account ? Create one here.
                   </button>

@@ -1,0 +1,37 @@
+<template>
+  <svg viewBox="0 0 30 30">
+    <defs>
+      <linearGradient
+        id="gradient-normal"
+        x1="50%"
+        y1="0%"
+        x2="50%"
+        y2="98.71071%"
+      >
+        <stop
+          stop-color="#9298A4"
+          offset="0%"
+        />
+        <stop
+          stop-color="#A3A49E"
+          offset="100%"
+        />
+      </linearGradient>
+    </defs>
+    <g
+      fill="none"
+      fill-rule="evenodd"
+    >
+      <rect
+        fill="url(#gradient-normal)"
+        width="30"
+        height="30"
+        rx="15"
+      />
+      <path
+        d="M15 8c3.866 0 7 3.134 7 7s-3.134 7-7 7-7-3.134-7-7 3.134-7 7-7zm0 3c-2.20914 0-4 1.79086-4 4s1.79086 4 4 4 4-1.79086 4-4-1.79086-4-4-4z"
+        fill="#FFF"
+      />
+    </g>
+  </svg>
+</template>

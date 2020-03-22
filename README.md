@@ -7,9 +7,9 @@ A personnal project to experiment with VueJS and its ecosystem, as well as using
 Experimenting with:
 - Vuex
 - Vee Validate
-- Vue ORM
+- Vuex ORM
 - Vue Router
-- Tailwind
+- TailwindCSS
 
 Also experimenting with Hot Module loading.
 

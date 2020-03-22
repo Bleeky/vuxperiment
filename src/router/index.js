@@ -3,7 +3,7 @@ import Router from 'vue-router';
 import store from 'store';
 
 import { Spinner } from 'components/Loading';
-import Errors from 'components/Errors';
+import { ErrorLazy } from 'components/Errors';
 
 Vue.use(Router);
 
@@ -21,7 +21,7 @@ async function lazyLoadView(AsyncView, AsyncModule, moduleName) {
       }).catch((e) => reject(e));
     })),
     loading: Spinner,
-    error: Errors,
+    error: ErrorLazy,
     delay: 200,
     timeout: 10000,
   });

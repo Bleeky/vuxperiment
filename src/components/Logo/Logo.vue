@@ -1,20 +1,15 @@
 <template>
   <div class="logo flex items-center flex-shrink-0 text-black">
     <svg
-      width="50px"
-      height="50px"
+      width="50"
+      height="50"
       viewBox="0 0 330 300"
-      version="1.1"
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
     >
       <defs>
-        <path
-          id="path-1"
-          d="M279,133 C279,59.5461283 216.543723,0 139.5,0 C62.4562774,0 1.48780195e-13,59.5461283 1.42108547e-13,133 C139,133 139,133 279,133 Z"
-        />
         <filter
-          id="filter-2"
+          id="b"
           x="-6.5%"
           y="-13.5%"
           width="112.9%"
@@ -37,8 +32,7 @@
           />
           <feColorMatrix
             color-interpolation-filters="sRGB"
-            values="0 0 0 0 0.847005208   0 0 0 0 0.0443515685   0 0 0 0 0.262020352  0 0 0 1 0"
-            type="matrix"
+            values="0 0 0 0 0.847005208 0 0 0 0 0.0443515685 0 0 0 0 0.262020352 0 0 0 1 0"
             in="shadowInnerInner1"
             result="shadowMatrixInner1"
           />
@@ -58,8 +52,7 @@
           />
           <feColorMatrix
             color-interpolation-filters="sRGB"
-            values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 0.6 0"
-            type="matrix"
+            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0"
             in="shadowInnerInner2"
             result="shadowMatrixInner2"
           />
@@ -70,7 +63,6 @@
           />
           <feOffset
             dx="-10"
-            dy="0"
             in="shadowBlurInner3"
             result="shadowOffsetInner3"
           />
@@ -84,8 +76,7 @@
           />
           <feColorMatrix
             color-interpolation-filters="sRGB"
-            values="0 0 0 0 0.744197237   0 0 0 0 0.0275670623   0 0 0 0 0.223329452  0 0 0 1 0"
-            type="matrix"
+            values="0 0 0 0 0.744197237 0 0 0 0 0.0275670623 0 0 0 0 0.223329452 0 0 0 1 0"
             in="shadowInnerInner3"
             result="shadowMatrixInner3"
           />
@@ -95,12 +86,8 @@
             <feMergeNode in="shadowMatrixInner3" />
           </feMerge>
         </filter>
-        <path
-          id="path-3"
-          d="M279,282.5 C279,209.046128 216.543723,149.5 139.5,149.5 C62.4562774,149.5 1.48780195e-13,209.046128 1.42108547e-13,282.5 C139,282.5 139,282.5 279,282.5 Z"
-        />
         <filter
-          id="filter-4"
+          id="d"
           x="-6.5%"
           y="-13.5%"
           width="112.9%"
@@ -123,8 +110,7 @@
           />
           <feColorMatrix
             color-interpolation-filters="sRGB"
-            values="0 0 0 0 0.894117647   0 0 0 0 0.91372549   0 0 0 0 0.937254902  0 0 0 1 0"
-            type="matrix"
+            values="0 0 0 0 0.894117647 0 0 0 0 0.91372549 0 0 0 0 0.937254902 0 0 0 1 0"
             in="shadowInnerInner1"
             result="shadowMatrixInner1"
           />
@@ -144,8 +130,7 @@
           />
           <feColorMatrix
             color-interpolation-filters="sRGB"
-            values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 1 0"
-            type="matrix"
+            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"
             in="shadowInnerInner2"
             result="shadowMatrixInner2"
           />
@@ -170,8 +155,7 @@
           />
           <feColorMatrix
             color-interpolation-filters="sRGB"
-            values="0 0 0 0 0.763682291   0 0 0 0 0.78005653   0 0 0 0 0.799705616  0 0 0 1 0"
-            type="matrix"
+            values="0 0 0 0 0.763682291 0 0 0 0 0.78005653 0 0 0 0 0.799705616 0 0 0 1 0"
             in="shadowInnerInner3"
             result="shadowMatrixInner3"
           />
@@ -181,18 +165,12 @@
             <feMergeNode in="shadowMatrixInner3" />
           </feMerge>
         </filter>
-        <circle
-          id="path-5"
-          cx="126.5"
-          cy="43.5"
-          r="43.5"
-        />
         <filter
-          id="filter-6"
+          id="f"
           x="-15.5%"
           y="-15.5%"
-          width="131.0%"
-          height="131.0%"
+          width="131%"
+          height="131%"
           filterUnits="objectBoundingBox"
         >
           <feOffset
@@ -211,8 +189,7 @@
           />
           <feColorMatrix
             color-interpolation-filters="sRGB"
-            values="0 0 0 0 0.908910779   0 0 0 0 0.908910779   0 0 0 0 0.908910779  0 0 0 1 0"
-            type="matrix"
+            values="0 0 0 0 0.908910779 0 0 0 0 0.908910779 0 0 0 0 0.908910779 0 0 0 1 0"
             in="shadowInnerInner1"
             result="shadowMatrixInner1"
           />
@@ -232,8 +209,7 @@
           />
           <feColorMatrix
             color-interpolation-filters="sRGB"
-            values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 1 0"
-            type="matrix"
+            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"
             in="shadowInnerInner2"
             result="shadowMatrixInner2"
           />
@@ -242,17 +218,10 @@
             <feMergeNode in="shadowMatrixInner2" />
           </feMerge>
         </filter>
-        <ellipse
-          id="path-7"
-          cx="127.011765"
-          cy="43.5124821"
-          rx="20.4705882"
-          ry="19.9713056"
-        />
         <filter
-          id="filter-8"
+          id="g"
           x="-14.7%"
-          y="-15.0%"
+          y="-15%"
           width="134.2%"
           height="145.1%"
           filterUnits="objectBoundingBox"
@@ -277,14 +246,13 @@
           />
           <feColorMatrix
             color-interpolation-filters="sRGB"
-            values="0 0 0 0 0.807843137   0 0 0 0 0.831372549   0 0 0 0 0.862745098  0 0 0 1 0"
-            type="matrix"
+            values="0 0 0 0 0.807843137 0 0 0 0 0.831372549 0 0 0 0 0.862745098 0 0 0 1 0"
             in="shadowOffsetOuter1"
           />
         </filter>
         <filter
-          id="filter-9"
-          x="-22.0%"
+          id="i"
+          x="-22%"
           y="-22.5%"
           width="148.9%"
           height="160.1%"
@@ -306,8 +274,7 @@
           />
           <feColorMatrix
             color-interpolation-filters="sRGB"
-            values="0 0 0 0 0.894117647   0 0 0 0 0.91372549   0 0 0 0 0.937254902  0 0 0 1 0"
-            type="matrix"
+            values="0 0 0 0 0.894117647 0 0 0 0 0.91372549 0 0 0 0 0.937254902 0 0 0 1 0"
             in="shadowInnerInner1"
             result="shadowMatrixInner1"
           />
@@ -327,8 +294,7 @@
           />
           <feColorMatrix
             color-interpolation-filters="sRGB"
-            values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 1 0"
-            type="matrix"
+            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"
             in="shadowInnerInner2"
             result="shadowMatrixInner2"
           />
@@ -337,158 +303,137 @@
             <feMergeNode in="shadowMatrixInner2" />
           </feMerge>
         </filter>
+        <path
+          id="a"
+          d="M279 133C279 59.546 216.544 0 139.5 0S0 59.546 0 133h279z"
+        />
+        <path
+          id="c"
+          d="M279 282.5c0-73.454-62.456-133-139.5-133S0 209.046 0 282.5h279z"
+        />
+        <ellipse
+          id="h"
+          cx="127.012"
+          cy="43.512"
+          rx="20.471"
+          ry="19.971"
+        />
+        <circle
+          id="e"
+          cx="126.5"
+          cy="43.5"
+          r="43.5"
+        />
       </defs>
       <g
-        id="Page-1"
-        stroke="none"
-        stroke-width="1"
+        transform="translate(23 3)"
         fill="none"
         fill-rule="evenodd"
       >
-        <g
-          id="pokeball"
-          transform="translate(-258.000000, -159.000000)"
-        >
+        <ellipse
+          fill="#D7E6EE"
+          cx="139.5"
+          cy="281"
+          rx="127.5"
+          ry="31"
+        />
+        <g class="ball">
           <g
-            id="Group-7"
-            transform="translate(281.000000, 162.000000)"
+            stroke-linecap="round"
+            stroke-linejoin="round"
           >
-            <ellipse
-              id="Oval"
-              fill="#D7E6EE"
-              cx="139.5"
-              cy="281"
-              rx="127.5"
-              ry="31"
+            <use
+              fill="#F60A4A"
+              xlink:href="#a"
             />
-            <g class="ball">
-              <g id="Group-3">
-                <g
-                  id="Group-2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <g id="Oval-Copy-4">
-                    <use
-                      fill="#F60A4A"
-                      fill-rule="evenodd"
-                      xlink:href="#path-1"
-                    />
-                    <use
-                      fill="black"
-                      fill-opacity="1"
-                      filter="url(#filter-2)"
-                      xlink:href="#path-1"
-                    />
-                    <use
-                      stroke="#25253F"
-                      stroke-width="6"
-                      xlink:href="#path-1"
-                    />
-                  </g>
-                  <g
-                    id="Oval-Copy-5"
-                    transform="translate(139.500000, 216.000000) scale(1, -1) translate(-139.500000, -216.000000) "
-                  >
-                    <use
-                      fill="#F5F5F5"
-                      fill-rule="evenodd"
-                      xlink:href="#path-3"
-                    />
-                    <use
-                      fill="black"
-                      fill-opacity="1"
-                      filter="url(#filter-4)"
-                      xlink:href="#path-3"
-                    />
-                    <use
-                      stroke="#25253F"
-                      stroke-width="6"
-                      xlink:href="#path-3"
-                    />
-                  </g>
-                </g>
-                <g
-                  id="Group"
-                  transform="translate(13.000000, 98.000000)"
-                >
-                  <g id="Oval-Copy-6">
-                    <use
-                      fill="#F5F5F5"
-                      fill-rule="evenodd"
-                      xlink:href="#path-5"
-                    />
-                    <use
-                      fill="black"
-                      fill-opacity="1"
-                      filter="url(#filter-6)"
-                      xlink:href="#path-5"
-                    />
-                    <use
-                      stroke="#25253F"
-                      stroke-width="16"
-                      xlink:href="#path-5"
-                    />
-                  </g>
-                  <g class="button">
-                    <use
-                      fill="black"
-                      fill-opacity="1"
-                      filter="url(#filter-8)"
-                      xlink:href="#path-7"
-                    />
-                    <use
-                      fill="#F5F5F5"
-                      fill-rule="evenodd"
-                      xlink:href="#path-7"
-                    />
-                    <use
-                      fill="black"
-                      fill-opacity="1"
-                      filter="url(#filter-9)"
-                      xlink:href="#path-7"
-                    />
-                    <use
-                      stroke="#25253F"
-                      stroke-width="6"
-                      xlink:href="#path-7"
-                    />
-                  </g>
-                  <path
-                    id="Line-Copy-3"
-                    d="M76,43.5 L0,43.5"
-                    stroke="#25253F"
-                    stroke-width="23"
-                    stroke-linecap="square"
-                  />
-                  <path
-                    id="Line-Copy-4"
-                    d="M253,43.5 L177,43.5"
-                    stroke="#25253F"
-                    stroke-width="22"
-                    stroke-linecap="square"
-                  />
-                </g>
-              </g>
-              <g
-                id="Group-5"
-                transform="translate(70.778174, 63.297986) rotate(3.000000) translate(-70.778174, -63.297986) translate(22.278174, 7.797986)"
-                fill-opacity="0.6"
-              >
-                <path
-                  id="Oval"
-                  d="M54.1658922,99.4142136 C65.2115872,99.4142136 57.9024362,76.0974866 57.9024362,48.2071068 C57.9024362,20.3167269 72.282655,-3 61.23696,-3 C50.191265,-3 32.0445718,21.7309405 32.0445718,49.6213203 C32.0445718,77.5117002 43.1201972,99.4142136 54.1658922,99.4142136 Z"
-                  fill="#FFFFFF"
-                  transform="translate(48.726918, 48.207107) rotate(45.000000) translate(-48.726918, -48.207107) "
-                />
-                <path
-                  id="Rectangle-Copy-3"
-                  d="M12.5,96.9801889 C12.5,96.9801889 12.5,96.9801889 12.5,96.9801889 C12.5,96.9801889 12.5,96.9801889 12.5,96.9801889 L12.5,96.9801889 C15.5375676,96.9801889 18.0000027,99.442624 18.0000027,102.480192 L18.0000005,103.806115 C18.0000005,106.004081 16.2813007,107.818374 14.0865503,107.937228 C13.5577003,107.965869 13.0288502,107.980189 12.5,107.980189 C11.97115,107.980189 11.4423,107.965869 10.91345,107.93723 L10.9134502,107.937227 C8.71870004,107.818373 7.00000051,106.004081 7.00000051,103.806115 L6.99999773,102.480191 C6.99999773,99.4426238 9.46243262,96.9801889 12.5,96.9801889 Z"
-                  fill="#F9F9F9"
-                  transform="translate(12.500001, 102.480189) rotate(-45.000000) translate(-12.500001, -102.480189) "
-                />
-              </g>
+            <use
+              fill="#000"
+              filter="url(#b)"
+              xlink:href="#a"
+            />
+            <use
+              stroke="#25253F"
+              stroke-width="6"
+              xlink:href="#a"
+            />
+            <g transform="matrix(1 0 0 -1 0 432)">
+              <use
+                fill="#F5F5F5"
+                xlink:href="#c"
+              />
+              <use
+                fill="#000"
+                filter="url(#d)"
+                xlink:href="#c"
+              />
+              <use
+                stroke="#25253F"
+                stroke-width="6"
+                xlink:href="#c"
+              />
             </g>
+          </g>
+          <g transform="translate(13 98)">
+            <use
+              fill="#F5F5F5"
+              xlink:href="#e"
+            />
+            <use
+              fill="#000"
+              filter="url(#f)"
+              xlink:href="#e"
+            />
+            <use
+              stroke="#25253F"
+              stroke-width="16"
+              xlink:href="#e"
+            />
+          </g>
+          <g
+            class="button"
+            transform="translate(13 98)"
+          >
+            <use
+              fill="#000"
+              filter="url(#g)"
+              xlink:href="#h"
+            />
+            <use
+              fill="#F5F5F5"
+              xlink:href="#h"
+            />
+            <use
+              fill="#000"
+              filter="url(#i)"
+              xlink:href="#h"
+            />
+            <use
+              stroke="#25253F"
+              stroke-width="6"
+              xlink:href="#h"
+            />
+          </g>
+          <path
+            d="M89 141.5H13"
+            stroke="#25253F"
+            stroke-width="23"
+            stroke-linecap="square"
+          />
+          <path
+            d="M266 141.5h-76"
+            stroke="#25253F"
+            stroke-width="22"
+            stroke-linecap="square"
+          />
+          <g fill-opacity=".6">
+            <path
+              d="M36.972 94.333c7.39 8.209 19.827-12.825 40.554-31.487 20.727-18.663 47.677-23.578 40.286-31.787-7.391-8.208-37.913-5.145-58.64 13.517-20.726 18.662-29.591 41.549-22.2 49.757z"
+              fill="#FFF"
+            />
+            <path
+              d="M28.689 104.242a5.5 5.5 0 017.767.407l.887.986a4.137 4.137 0 01-.144 5.688 29.333 29.333 0 01-2.358 2.124 4.137 4.137 0 01-5.672-.452l-.888-.985a5.5 5.5 0 01.408-7.768z"
+              fill="#F9F9F9"
+            />
           </g>
         </g>
       </g>

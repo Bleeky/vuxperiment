@@ -30,9 +30,12 @@ const cancelFetchOnReentrySync = (wrappedFunc) => {
   };
 };
 
-const swallowCancellation = (wrappedFunc) => async (...args) => {
+const swallowCancellation = (wrappedFunc, settings = { json: true }) => async (...args) => {
   try {
-    await wrappedFunc(...args);
+    let r;
+    r = await wrappedFunc(...args);
+    if (settings.json) r = await r.json();
+    return r;
   } catch (ex) {
     if (ex.name === 'AbortError') {
       return;

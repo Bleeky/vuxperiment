@@ -1,8 +1,10 @@
 <template>
   <div class="cards-list">
-    <h2>Cards list</h2>
-    <div class="flex">
-      <div class="card">
+    <div class="flex flex-wrap justify-center">
+      <div
+        v-for="card in cards"
+        class="m-2 card py-2 px-4 border rounded hover:bg-gray-100"
+      >
         <div
           id="pokeName"
           class="card__title"
@@ -37,6 +39,11 @@
 <script>
 export default {
   name: 'CardsList',
+  data() {
+    return {
+      cards: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
+    };
+  },
   beforeCreate() {
     console.error(
       'getCards',
@@ -71,14 +78,16 @@ $primaryColor: #43A047;
 
 .card {
   align-items: center;
-  background-color: whitesmoke;
-  border-radius: 20px;
-  box-shadow: 12px 12px 24px rgba(grey, .2), -12px -12px 12px rgba(white, 1);
+  // background-color: whitesmoke;
+  // border-radius: 20px;
+  // box-shadow: 12px 12px 24px rgba(grey, .2), -12px -12px 12px rgba(white, 1);
 
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 1.5rem 1.5rem 0rem 1.5rem;
+  // transition: opacity 0.5 ease;
+  // transition: all 500ms linear;
+  // padding: 1.5rem 1.5rem 0rem 1.5rem;
 
   &:hover {
     animation: wiggle .3s;
