@@ -4,7 +4,9 @@ import VuexORM from '@vuex-orm/core';
 import Amplify from 'aws-amplify';
 
 
-import { Card, Type, Habitat } from 'models';
+import {
+  Card, Type, Habitat, Ability,
+} from 'models';
 
 import auth from 'store/modules/auth';
 import loading from 'store/modules/loading';
@@ -39,6 +41,7 @@ const database = new VuexORM.Database();
 database.register(Card);
 database.register(Type);
 database.register(Habitat);
+database.register(Ability);
 
 Vue.use(Vuex);
 

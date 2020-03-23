@@ -1,7 +1,7 @@
 import { API } from 'aws-amplify';
 import req from 'utils/req';
 
-import { Type, Habitat } from 'models';
+import { Type, Habitat, Ability } from 'models';
 
 const localAPI = {
   getTypes: req((fetch) => async () => fetch('https://pokeapi.co/api/v2/type')),
@@ -83,8 +83,8 @@ const mutations = {
     Habitat.insert({ data: payload.types });
   },
   getAbilitiesFulfilled: (state, payload) => {
-    // Habitat.deleteAll();
-    // Habitat.insert({ data: payload.types });
+    Ability.deleteAll();
+    Ability.insert({ data: payload.types });
   },
   getCardsFulfilled: (state, cards) => {
     state.cards = cards;

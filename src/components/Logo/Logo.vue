@@ -438,7 +438,7 @@
         </g>
       </g>
     </svg>
-    <span class="ml-2 font-semibold text-xl text-blue-900 tracking-tight">Pokelib</span>
+    <span class="ml-2 font-semibold text-xl text-blue-900 dark:text-white tracking-tight">Pokelib</span>
   </div>
 </template>
 

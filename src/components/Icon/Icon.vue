@@ -11,13 +11,28 @@ export default {
       default: '',
     },
   },
-  computed: {
-    iconLoader() {
-      return () => ({
-        component: import(/* webpackChunkName: "[request]" */ `./${this.icon}`),
-        delay: 200,
-        timeout: 3000,
-      });
+  // computed: {
+  //   iconLoader() {
+  //     return () => ({
+  //       component: import(/* webpackChunkName: "[request]" */ `./${this.icon}`),
+  //       delay: 200,
+  //       timeout: 3000,
+  //     });
+  //   },
+  // },
+  watch: {
+    icon: {
+      immediate: true,
+      handler(newValue, oldValue) {
+        if (newValue !== oldValue || !oldValue) {
+          this.iconLoader = () => ({
+            component: import(/* webpackChunkName: "[request]" */ `./${this.icon}`),
+            delay: 200,
+            timeout: 3000,
+          });
+          this.$forceUpdate();
+        }
+      },
     },
   },
 };
