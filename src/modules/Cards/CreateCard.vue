@@ -100,7 +100,7 @@
             Where does your Pokemon lives?
           </div>
           <Loading
-            :reqs="['getTypes']"
+            :reqs="['getHabitats']"
             component="Spinner"
           >
             <div
@@ -124,7 +124,7 @@
             You can chose up to five abilities.
           </div>
           <Loading
-            :reqs="['getTypes']"
+            :reqs="['getAbilities']"
             component="Spinner"
           >
             <multiselect
@@ -134,13 +134,13 @@
               :close-on-select="false"
               :show-labels="true"
               :multiple="true"
-              :taggable="true"
               :hide-selected="true"
               track-by="name"
               label="name"
+              :max="5"
               placeholder="Search for abilities"
-              tag-placeholder="Add this as new tag"
               :class="'dark:border-transparent dark:rounded dark:border'"
+              @select="getHabitat"
             >
               <template
                 slot="tag"
@@ -172,16 +172,16 @@
               </template>
             </multiselect>
             <div
-              v-for="selectedHability in selectedHabilities"
-              :key="selectedHability.id"
+              v-for="ability in abilitiesDetailed"
+              :key="ability.id"
               class="mt-4 flex items-center flex-row"
             >
               <div class="mb-2">
                 <div class="font-bold text-xl mb-1 dark:text-white">
-                  {{ selectedHability.name }}
+                  {{ ability.name }}
                 </div>
                 <div class="dark:text-gray-500">
-                  Text describing the ability here. Will need to be fetched on created.
+                  {{ ability.effect }}
                 </div>
               </div>
             </div>
@@ -198,7 +198,30 @@
             :reqs="['getTypes']"
             component="Spinner"
           >
-            Form here
+            <vue-dropzone
+              id="pokemon-upload-image"
+              :options="dropzoneOptions"
+              :use-custom-slot="true"
+            >
+              <div class="dropzone-custom-content">
+                <div class="relative w-16 h-auto mx-auto z-10 m-8">
+                  <Icon
+                    icon="IconPicture"
+                    :class="'test-main'"
+                  >
+                    <div class="absolute w-12 h-auto mx-auto test-left bottom-0 z-0">
+                      <Icon icon="IconPicture" />
+                    </div>
+                    <div class="absolute w-12 h-auto mx-auto test-right bottom-0 z-0">
+                      <Icon icon="IconPicture" />
+                    </div>
+                  </Icon>
+                </div>
+                <div class="dark:text-gray-600">
+                  Drop your image here, or <span class="font-semibold text-blue-900 dark:text-gray-300">browse</span>
+                </div>
+              </div>
+            </vue-dropzone>
           </Loading>
         </div>
         <div
@@ -212,7 +235,7 @@
             :reqs="['getTypes']"
             component="Spinner"
           >
-            Form here
+            Test
           </Loading>
         </div>
       </transition>
@@ -263,11 +286,15 @@
 
 <script>
 import { Type, Habitat, Ability } from 'models';
+import vue2Dropzone from 'vue2-dropzone';
 
 import { API } from 'aws-amplify';
 
 export default {
   name: 'CreateCard',
+  components: {
+    vueDropzone: vue2Dropzone,
+  },
   data() {
     return {
       formErrors: [],
@@ -275,12 +302,20 @@ export default {
       selectedHabilities: [],
       selectedtype: null,
       selectedHabitat: null,
-      currentStep: 0,
+      currentStep: 4,
       steps: [{}, {}, {}, {}, {}, {}],
       stepValid: false,
+      dropzoneOptions: {
+        url: 'https://httpbin.org/post',
+        thumbnailWidth: 200,
+        addRemoveLinks: true,
+      },
     };
   },
   computed: {
+    abilitiesDetailed() {
+      return Ability.findIn(this.selectedHabilities.map((hability) => hability.url));
+    },
     abilities() {
       return Ability.all();
     },
@@ -305,7 +340,7 @@ export default {
         this.$store.dispatch('getTypes');
       } else if (newValue === 2) {
         this.$store.dispatch('getHabitats');
-      } else if (newValue === 3) {
+      } else if (newValue === 3 && this.abilities.length === 0) {
         this.$store.dispatch('getAbilities');
       }
     },
@@ -328,6 +363,9 @@ export default {
     this.$store.dispatch('setCreationMode', true);
   },
   methods: {
+    getHabitat(selectedOption) {
+      this.$store.dispatch('getAbility', selectedOption);
+    },
     clearAll() {
       this.selectedHabilities = [];
     },

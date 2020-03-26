@@ -2,7 +2,7 @@ const createLinkedSignal = (...signals) => {
   signals = signals.filter((s) => !!s);
 
   if (signals.length === 1) {
-    return signals[0]; // Debugging is easier when we can avoid wrapping
+    return signals[0];
   }
 
   const controller = new AbortController();
@@ -16,7 +16,7 @@ const cancelFetchOnReentrySync = (wrappedFunc) => {
   let currentAbort = new AbortController();
 
   return (...args) => {
-    currentAbort.abort();
+    if ((args[1] && args[1].cancelOnReentry !== false) || !args) currentAbort.abort();
     currentAbort = new AbortController();
 
     const mySignal = currentAbort.signal;
@@ -30,7 +30,7 @@ const cancelFetchOnReentrySync = (wrappedFunc) => {
   };
 };
 
-const swallowCancellation = (wrappedFunc, settings = { json: true }) => async (...args) => {
+const swallowCancellation = (wrappedFunc, settings) => async (...args) => {
   try {
     let r;
     r = await wrappedFunc(...args);
@@ -45,9 +45,10 @@ const swallowCancellation = (wrappedFunc, settings = { json: true }) => async (.
   }
 };
 
-const req = (wrappedFunc) => cancelFetchOnReentrySync(
+const req = (wrappedFunc, settings = { json: true }) => cancelFetchOnReentrySync(
   (fetch) => swallowCancellation(
     wrappedFunc(fetch),
+    settings,
   ),
 );
 

@@ -7,6 +7,7 @@ const localAPI = {
   getTypes: req((fetch) => async () => fetch('https://pokeapi.co/api/v2/type')),
   getHabitats: req((fetch) => async () => fetch('https://pokeapi.co/api/v2/pokemon-habitat')),
   getAbilities: req((fetch) => async () => fetch('https://pokeapi.co/api/v2/ability?limit=500.')),
+  getAbility: req((fetch) => async (abilityID, params) => fetch(`https://pokeapi.co/api/v2/ability/${abilityID}`, params)),
 };
 
 const defaultState = {
@@ -30,7 +31,7 @@ const actions = {
   getHabitats: async (context) => {
     const p = new Payload('getHabitats');
     localAPI.getHabitats().then((response) => {
-      context.commit('getHabitatsFulfilled', p.merge({ types: response.results }));
+      context.commit('getHabitatsFulfilled', p.merge({ habitats: response.results }));
     }).catch((e) => {
       context.commit('error', p.merge(e));
       context.commit('removeLoadingEntry', p.merge({}));
@@ -39,7 +40,16 @@ const actions = {
   getAbilities: async (context) => {
     const p = new Payload('getAbilities');
     localAPI.getAbilities().then((response) => {
-      context.commit('getAbilitiesFulfilled', p.merge({ types: response.results }));
+      context.commit('getAbilitiesFulfilled', p.merge({ abilities: response.results }));
+    }).catch((e) => {
+      context.commit('error', p.merge(e));
+      context.commit('removeLoadingEntry', p.merge({}));
+    });
+  },
+  getAbility: async (context, payload) => {
+    const p = new Payload('getAbility');
+    localAPI.getAbility(payload.id, { cancelOnReentry: false }).then((response) => {
+      context.commit('getAbilityFulfilled', p.merge({ ability: response, payload }));
     }).catch((e) => {
       context.commit('error', p.merge(e));
       context.commit('removeLoadingEntry', p.merge({}));
@@ -80,11 +90,16 @@ const mutations = {
   },
   getHabitatsFulfilled: (state, payload) => {
     Habitat.deleteAll();
-    Habitat.insert({ data: payload.types });
+    Habitat.insert({ data: payload.habitats });
   },
   getAbilitiesFulfilled: (state, payload) => {
-    Ability.deleteAll();
-    Ability.insert({ data: payload.types });
+    Ability.insertOrUpdate({ data: payload.abilities });
+  },
+  getAbilityFulfilled: (state, payload) => {
+    Ability.update({
+      where: payload.payload.url,
+      data: { effect: payload.ability.effect_entries[0].short_effect },
+    });
   },
   getCardsFulfilled: (state, cards) => {
     state.cards = cards;

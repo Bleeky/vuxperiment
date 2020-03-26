@@ -1,5 +1,7 @@
 <template>
-  <component :is="iconLoader" />
+  <component :is="iconLoader">
+    <slot />
+  </component>
 </template>
 
 <script>
@@ -11,15 +13,6 @@ export default {
       default: '',
     },
   },
-  // computed: {
-  //   iconLoader() {
-  //     return () => ({
-  //       component: import(/* webpackChunkName: "[request]" */ `./${this.icon}`),
-  //       delay: 200,
-  //       timeout: 3000,
-  //     });
-  //   },
-  // },
   watch: {
     icon: {
       immediate: true,

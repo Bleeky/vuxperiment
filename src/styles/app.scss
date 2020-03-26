@@ -6,6 +6,86 @@
 
 @import "~vue-multiselect/dist/vue-multiselect.min.css";
 
+@import '~vue2-dropzone/dist/vue2Dropzone.min.css';
+
+// vue-dropzone
+.dropzone {
+  @apply bg-transparent m-0;
+  .dz-message {
+    @apply m-0;
+  }
+}
+.vue-dropzone {
+  background-clip: padding-box;
+  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='25' ry='25' stroke='%234A5568FF' stroke-width='5' stroke-dasharray='6%2c 14' stroke-dashoffset='13' stroke-linecap='square'/%3e%3c/svg%3e");
+  border-radius: 23px;  
+  @apply flex items-center justify-center border-none;
+  
+  .test-left {
+    bottom: 10px;
+    left: -10px;
+    transform-origin: bottom left;
+    transition: visibility 0.1s, opacity .1s, transform 0.1s;
+    transition-timing-function: linear;
+    visibility: hidden;
+    z-index: -1;
+  }
+  .test-right {
+    bottom: 10px;
+    right: -10px;
+    transform-origin: bottom right;
+    transition: visibility 0.1s, opacity .1s, transform 0.1s;
+    transition-timing-function: linear;
+    visibility: hidden;
+    z-index: -1;
+  }
+  .test-main > svg {
+    transform-origin: middle;
+    transition: transform .1s;
+    transition-delay: 0.2s;
+    transition-timing-function: linear;
+  }
+  &:hover {
+  
+    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='25' ry='25' stroke='%232A4365FF' stroke-width='5' stroke-dasharray='6%2c 14' stroke-dashoffset='13' stroke-linecap='square'/%3e%3c/svg%3e");
+    @apply bg-gray-300;
+    .test-main > svg {
+      transform: translate(0, -10px) ;
+      transform-origin: middle;
+      transition: transform .3s;
+      transition-timing-function: cubic-bezier(.21,1.04,.49,1.23);
+    }
+
+    .test-left {
+      opacity: 0.6;
+      transform: rotate(-10deg) translate(-50%) ;
+      transform-origin: bottom left;
+      transition: visibility 0.2s, opacity 0.3s, transform 0.3s;
+      transition-timing-function: ease-out;
+      visibility: visible;
+    }
+    .test-right {
+      opacity: 0.6;
+
+      transform: rotate(10deg) translate(50%) ;
+      transform-origin: bottom right;
+      transition: visibility 0.2s, opacity 0.3s, transform 0.3s;
+      transition-timing-function: ease-out;
+      visibility: visible;
+    }  
+  
+  }
+}
+.mode-dark {
+  .vue-dropzone {
+    &:hover {
+      background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='25' ry='25' stroke='%23CBD5E0FF' stroke-width='5' stroke-dasharray='6%2c 14' stroke-dashoffset='13' stroke-linecap='square'/%3e%3c/svg%3e");
+      @apply bg-gray-800;
+    }
+  }
+}
+
+// Multiselect
 .multiselect {
   color: inherit;
   &.multiselect--active {
@@ -58,6 +138,11 @@
   }
   .multiselect__option--highlight, .multiselect__option--highlight:after {
     @apply bg-gray-200 text-blue-900
+  ;}
+  .multiselect__content-wrapper {
+    .multiselect__option {
+      white-space: normal;
+    }
   }
 }
 .mode-dark {
@@ -95,6 +180,7 @@ html {
 }
 
 
+// Transitions
 .fade-enter-active, .fade-leave {
   transition: opacity .5s ease;
 }

@@ -76,7 +76,7 @@
                   <Icon
                     :v-if="!darkmode"
                     :icon="darkmode ? 'IconNight' : 'IconSun'"
-                    :class="'ml-4 text-blue-900 dark:text-white stroke-current h-6 w-6 cursor-pointer'"
+                    :class="'ml-4 text-blue-900 dark:text-white stroke-current h-6 w-6 cursor-pointer hover:text-gray-600 dark-hover:text-gray-500'"
                     @click.native="toggleMode"
                   />
                 </div>
@@ -124,7 +124,7 @@ export default {
   watch: {
     creationMode(newValue) {
       if (newValue === true) window.addEventListener('keydown', this.leaveOnEscape);
-      else {
+      else if (this.$route.path !== '/cards') {
         this.$router.push('/cards');
         window.removeEventListener('keydown', this.leaveOnEscape);
       }
