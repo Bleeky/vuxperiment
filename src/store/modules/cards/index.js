@@ -21,6 +21,7 @@ const actions = {
   },
   getTypes: async (context) => {
     const p = new Payload('getTypes');
+    context.commit('loading', p.merge({}));
     localAPI.getTypes().then((response) => {
       context.commit('getTypesFulfilled', p.merge({ types: response.results }));
     }).catch((e) => {
@@ -30,6 +31,7 @@ const actions = {
   },
   getHabitats: async (context) => {
     const p = new Payload('getHabitats');
+    context.commit('loading', p.merge({}));
     localAPI.getHabitats().then((response) => {
       context.commit('getHabitatsFulfilled', p.merge({ habitats: response.results }));
     }).catch((e) => {
@@ -39,6 +41,7 @@ const actions = {
   },
   getAbilities: async (context) => {
     const p = new Payload('getAbilities');
+    context.commit('loading', p.merge({}));
     localAPI.getAbilities().then((response) => {
       context.commit('getAbilitiesFulfilled', p.merge({ abilities: response.results }));
     }).catch((e) => {
@@ -48,6 +51,7 @@ const actions = {
   },
   getAbility: async (context, payload) => {
     const p = new Payload('getAbility');
+    context.commit('loading', p.merge({}));
     localAPI.getAbility(payload.id, { cancelOnReentry: false }).then((response) => {
       context.commit('getAbilityFulfilled', p.merge({ ability: response, payload }));
     }).catch((e) => {
@@ -57,6 +61,7 @@ const actions = {
   },
   getCards: (context) => {
     const p = new Payload('getCards');
+    context.commit('loading', p.merge({}));
     API.get('cards', '/cards')
       .then((response) => {
         context.commit('getCardsFulfilled', p.merge(response));

@@ -1,5 +1,5 @@
 <template>
-  <div class="loading">
+  <div class="loading dark:text-white">
     Loading
   </div>
 </template>

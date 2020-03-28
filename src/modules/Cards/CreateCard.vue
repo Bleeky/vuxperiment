@@ -128,7 +128,7 @@
             component="Spinner"
           >
             <multiselect
-              v-model="selectedHabilities"
+              v-model="selectedAbilities"
               :options="abilities"
               :searchable="true"
               :close-on-select="false"
@@ -157,12 +157,11 @@
               </template>
               <template
                 slot="clear"
-                slot-scope="props"
               >
                 <div
-                  :v-if="selectedHabilities.length"
+                  :v-if="selectedAbilities.length"
                   class="multiselect__clear"
-                  @mousedown.prevent.stop="clearAll(props.search)"
+                  @mousedown.prevent.stop="selectedAbilities = []"
                 >
                   <Icon
                     icon="IconCross"
@@ -198,45 +197,62 @@
             :reqs="['getTypes']"
             component="Spinner"
           >
-            <vue-dropzone
-              id="pokemon-upload-image"
-              :options="dropzoneOptions"
-              :use-custom-slot="true"
+            <ValidationObserver
+              ref="imageForm"
+              v-slot="{ handleSubmit }"
             >
-              <div class="dropzone-custom-content">
-                <div class="relative w-16 h-auto mx-auto z-10 m-8">
-                  <Icon
-                    icon="IconPicture"
-                    :class="'test-main'"
+              <form
+                @submit.prevent="handleSubmit(onSubmit)"
+              >
+                <keep-alive>
+                  <ValidationProvider
+                    v-slot="{ errors }"
+                    rules="required"
                   >
-                    <div class="absolute w-12 h-auto mx-auto test-left bottom-0 z-0">
-                      <Icon icon="IconPicture" />
-                    </div>
-                    <div class="absolute w-12 h-auto mx-auto test-right bottom-0 z-0">
-                      <Icon icon="IconPicture" />
-                    </div>
-                  </Icon>
-                </div>
-                <div class="dark:text-gray-600">
-                  Drop your image here, or <span class="font-semibold text-blue-900 dark:text-gray-300">browse</span>
-                </div>
-              </div>
-            </vue-dropzone>
+                    <dropzone
+                      v-model="image"
+                      label="File"
+                      :errors="errors"
+                      :name="'image'"
+                    />
+                  </ValidationProvider>
+                </keep-alive>
+              </form>
+            </ValidationObserver>
           </Loading>
         </div>
         <div
           v-else-if="currentStep===5"
           key="recapStep"
         >
-          <div class="text-4xl font-extrabold text-blue-900 mb-8">
+          <div class="text-4xl font-extrabold text-blue-900 dark:text-white mb-8">
             Here is what your new Pokemon will look like!
           </div>
-          <Loading
-            :reqs="['getTypes']"
-            component="Spinner"
+          <div
+            class="m-2 card py-2 px-4 border rounded hover:bg-gray-100"
           >
-            Test
-          </Loading>
+            <div
+              id="pokeName"
+              class="card__title"
+            >
+              {{ name }}
+            </div>
+            <p
+              id="pokeID"
+              class="card__id"
+            >
+              #6
+            </p>
+            <div
+              id="pokeTag"
+              class="card__tag"
+            >
+              Fire
+            </div>
+            <div class="card__img">
+              <img :src="image.files.file">
+            </div>
+          </div>
         </div>
       </transition>
     </div>
@@ -273,7 +289,12 @@
           :class="['flex items-center bg-transparent dark-hover:bg-white hover:bg-blue-900 text-blue-900 dark:text-white font-semibold hover:text-white dark-hover:text-blue-900 py-2 px-4 border dark:border-white border-blue-900 hover:border-transparent rounded', !isStepValid && 'opacity-50 cursor-not-allowed']"
           @click.prevent="onSubmit"
         >
-          Continue
+          <template v-if="currentStep === Object.keys(this.steps).length">
+            Create
+          </template>
+          <template v-else>
+            Continue
+          </template>
           <Icon
             icon="RightArrow"
             :class="'fill-current h-3 w-3 ml-2'"
@@ -286,35 +307,38 @@
 
 <script>
 import { Type, Habitat, Ability } from 'models';
-import vue2Dropzone from 'vue2-dropzone';
+import { Dropzone } from 'components/Inputs';
 
 import { API } from 'aws-amplify';
 
 export default {
   name: 'CreateCard',
   components: {
-    vueDropzone: vue2Dropzone,
+    Dropzone,
   },
   data() {
     return {
       formErrors: [],
+      image: null,
       name: null,
-      selectedHabilities: [],
+      selectedAbilities: [],
       selectedtype: null,
       selectedHabitat: null,
-      currentStep: 4,
-      steps: [{}, {}, {}, {}, {}, {}],
-      stepValid: false,
-      dropzoneOptions: {
-        url: 'https://httpbin.org/post',
-        thumbnailWidth: 200,
-        addRemoveLinks: true,
+      currentStep: 0,
+      steps: {
+        name: null,
+        type: () => !this.selectedtype,
+        habitat: () => !this.selectedHabitat,
+        abilities: () => !this.selectedAbilities.length,
+        image: () => !this.image,
       },
+      // steps: [{}, {}, {}, {}, {}, {}],
+      stepValid: false,
     };
   },
   computed: {
     abilitiesDetailed() {
-      return Ability.findIn(this.selectedHabilities.map((hability) => hability.url));
+      return Ability.findIn(this.selectedAbilities.map((hability) => hability.url));
     },
     abilities() {
       return Ability.all();
@@ -326,11 +350,13 @@ export default {
       return Habitat.all();
     },
     progress() {
-      return Math.round((100 / (this.steps.length - 1)) * this.currentStep);
+      return Math.round((100 / (Object.keys(this.steps).length)) * this.currentStep);
     },
     isStepValid() {
       if (this.currentStep === 1 && !this.selectedtype) return false;
       if (this.currentStep === 2 && !this.selectedHabitat) return false;
+      if (this.currentStep === 3 && !this.selectedAbilities.length) return false;
+      if (this.currentStep === 4 && !this.image) return false;
       return true;
     },
   },
@@ -366,11 +392,16 @@ export default {
     getHabitat(selectedOption) {
       this.$store.dispatch('getAbility', selectedOption);
     },
-    clearAll() {
-      this.selectedHabilities = [];
-    },
     onSubmit() {
-      this.currentStep += 1;
+      if (this.currentStep === Object.keys(this.steps).length) console.error(this);
+      else if (this.$refs.imageForm) {
+        this.$refs.imageForm.validate().then((success) => {
+          if (!success) {
+            return;
+          }
+          this.currentStep += 1;
+        });
+      } else this.currentStep += 1;
     },
   },
 };
@@ -379,7 +410,6 @@ export default {
 <style lang="scss" scoped>
 .steps-nav {
   box-shadow: 0px 0 30px rgba(42, 67, 101, .2);
-
   .steps-nav-progress-bar {
     background-color: #f60a49;
     transition: width 0.3s ease-out;
@@ -389,5 +419,4 @@ export default {
     transition: left 0.3s ease-out;
   }
 }
-
 </style>

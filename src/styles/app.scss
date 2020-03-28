@@ -8,165 +8,9 @@
 
 @import '~vue2-dropzone/dist/vue2Dropzone.min.css';
 
-// vue-dropzone
-.dropzone {
-  @apply bg-transparent m-0;
-  .dz-message {
-    @apply m-0;
-  }
-}
-.vue-dropzone {
-  background-clip: padding-box;
-  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='25' ry='25' stroke='%234A5568FF' stroke-width='5' stroke-dasharray='6%2c 14' stroke-dashoffset='13' stroke-linecap='square'/%3e%3c/svg%3e");
-  border-radius: 23px;  
-  @apply flex items-center justify-center border-none;
-  
-  .test-left {
-    bottom: 10px;
-    left: -10px;
-    transform-origin: bottom left;
-    transition: visibility 0.1s, opacity .1s, transform 0.1s;
-    transition-timing-function: linear;
-    visibility: hidden;
-    z-index: -1;
-  }
-  .test-right {
-    bottom: 10px;
-    right: -10px;
-    transform-origin: bottom right;
-    transition: visibility 0.1s, opacity .1s, transform 0.1s;
-    transition-timing-function: linear;
-    visibility: hidden;
-    z-index: -1;
-  }
-  .test-main > svg {
-    transform-origin: middle;
-    transition: transform .1s;
-    transition-delay: 0.2s;
-    transition-timing-function: linear;
-  }
-  &:hover {
-  
-    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='25' ry='25' stroke='%232A4365FF' stroke-width='5' stroke-dasharray='6%2c 14' stroke-dashoffset='13' stroke-linecap='square'/%3e%3c/svg%3e");
-    @apply bg-gray-300;
-    .test-main > svg {
-      transform: translate(0, -10px) ;
-      transform-origin: middle;
-      transition: transform .3s;
-      transition-timing-function: cubic-bezier(.21,1.04,.49,1.23);
-    }
+@import 'dropzone';
 
-    .test-left {
-      opacity: 0.6;
-      transform: rotate(-10deg) translate(-50%) ;
-      transform-origin: bottom left;
-      transition: visibility 0.2s, opacity 0.3s, transform 0.3s;
-      transition-timing-function: ease-out;
-      visibility: visible;
-    }
-    .test-right {
-      opacity: 0.6;
-
-      transform: rotate(10deg) translate(50%) ;
-      transform-origin: bottom right;
-      transition: visibility 0.2s, opacity 0.3s, transform 0.3s;
-      transition-timing-function: ease-out;
-      visibility: visible;
-    }  
-  
-  }
-}
-.mode-dark {
-  .vue-dropzone {
-    &:hover {
-      background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='25' ry='25' stroke='%23CBD5E0FF' stroke-width='5' stroke-dasharray='6%2c 14' stroke-dashoffset='13' stroke-linecap='square'/%3e%3c/svg%3e");
-      @apply bg-gray-800;
-    }
-  }
-}
-
-// Multiselect
-.multiselect {
-  color: inherit;
-  &.multiselect--active {
-    @apply border-blue-900;
-  }
-  .multiselect__select {
-    height: 42px;
-    width: 40px;
-    @apply top-0 right-0 border-blue-900;
-    &:before {
-      border-top-color: inherit;
-    }
-  }
-  .multiselect__clear {
-    height: 42px;
-    right: 41px;
-    z-index: 2;
-    @apply cursor-pointer absolute;
-  }
-  .multiselect__tags {
-    background-color: inherit;
-    border-color: inherit;
-    font-family: inherit;
-    font-size: inherit;
-    padding-right: 81px;
-    @apply py-2 pl-3 rounded block w-full border text-gray-500;
-    input {
-      background: inherit;
-      color: inherit;
-      vertical-align: inherit;
-      @apply mb-0 pl-0;
-    }
-    .multiselect__tags-wrap {
-      @apply inline-flex flex-wrap;
-      .multiselect__tag {
-        @apply mb-1 mt-1;
-      }
-    }
-    .multiselect__placeholder, .multiselect__single {
-      color: inherit;
-      font-family: inherit;
-      font-size: inherit;
-      @apply mb-0 pt-0;
-    }
-    .multiselect__single {
-      color: inherit;
-      vertical-align: inherit;
-      @apply pl-0;
-    }
-  }
-  .multiselect__option--highlight, .multiselect__option--highlight:after {
-    @apply bg-gray-200 text-blue-900
-  ;}
-  .multiselect__content-wrapper {
-    .multiselect__option {
-      white-space: normal;
-    }
-  }
-}
-.mode-dark {
-  .multiselect {
-    &.multiselect--active {
-      @apply border-white;
-    }  
-  }
-  .multiselect__tags {
-    @apply bg-gray-700 text-gray-500;
-    input::placeholder {
-      @apply text-gray-100;
-    }
-  }
-  .multiselect__select {
-    @apply border-white;
-  }
-  .multiselect__content {
-    @apply bg-gray-700 text-white;
-  }
-  .multiselect__option--highlight, .multiselect__option--highlight:after {
-    @apply bg-blue-900 text-white;
-  }
-}
+@import 'multiselect';
 
 /* purgecss start ignore */
 html {
@@ -179,6 +23,40 @@ html {
   min-height: 100vh;
 }
 
+$primaryColor: #43A047;
+.card {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  &:hover {
+    animation: wiggle .3s;
+  }
+
+  &__title {
+    color: $primaryColor;
+    font-size: 1.2rem;
+    font-weight: 800;
+  }
+
+  &__tag {
+    background-color: $primaryColor;
+    border-radius: 50px;
+    color: white;
+    cursor: pointer;
+    font-size: .6rem;
+    margin: .5rem 1rem;
+    padding: .2rem .5rem;
+    text-transform: uppercase;
+  }
+
+  &__id {
+    color: #666;
+    font-size: .6rem;
+    margin-bottom: .5rem;
+  }
+
+}
 
 // Transitions
 .fade-enter-active, .fade-leave {
@@ -187,7 +65,6 @@ html {
 .fade-enter, .fade-leave-to  {
   opacity: 0;
 }
-
 .slide-fade-enter-active, .slide-top-fade-enter-active {
   transition: all .5s ease;
 }
@@ -198,6 +75,5 @@ html {
 .slide-top-fade-enter, .slide-top-fade-leave-to {
   transform: translateY(-10px);
 }
-
 
 /* purgecss end ignore */

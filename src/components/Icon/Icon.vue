@@ -1,7 +1,9 @@
 <template>
-  <component :is="iconLoader">
-    <slot />
-  </component>
+  <transition name="fade">
+    <component :is="iconLoader">
+      <slot />
+    </component>
+  </transition>
 </template>
 
 <script>
@@ -21,7 +23,7 @@ export default {
           this.iconLoader = () => ({
             component: import(/* webpackChunkName: "[request]" */ `./${this.icon}`),
             delay: 200,
-            timeout: 3000,
+            timeout: 5000,
           });
           this.$forceUpdate();
         }

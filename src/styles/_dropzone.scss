@@ -1,0 +1,177 @@
+.dropzone {
+  @apply bg-transparent m-0;
+  .dz-message {
+    @apply m-0;
+  }
+}
+.vue-dropzone {
+  background-clip: padding-box;
+  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='25' ry='25' stroke='%234A5568FF' stroke-width='5' stroke-dasharray='6%2c 14' stroke-dashoffset='13' stroke-linecap='square'/%3e%3c/svg%3e");
+  border-radius: 23px;
+  font-family: inherit;
+  @apply flex items-center justify-center border-none flex-wrap;
+  @mixin side-picture {
+    bottom: 10px;
+    transition: visibility 0.1s, opacity .1s, transform 0.1s;
+    transition-timing-function: linear;
+    z-index: -1;
+    @apply invisible;
+  }
+  .picture-left {
+    left: -10px;
+    @apply origin-bottom-left;
+    @include side-picture;
+  }
+  .picture-right {
+    right: -10px;
+    @apply origin-bottom-right;
+    @include side-picture;
+  }
+  .picture-center > svg {
+    transition: transform .1s;
+    transition-delay: 0.2s;
+    transition-timing-function: linear;
+    @apply origin-center;
+  }
+  &:hover {
+    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='25' ry='25' stroke='%232A4365FF' stroke-width='5' stroke-dasharray='6%2c 14' stroke-dashoffset='13' stroke-linecap='square'/%3e%3c/svg%3e");
+    @apply bg-gray-300;
+  
+    @mixin side-picture-hovered {
+      transition: visibility 0.2s, opacity 0.3s, transform 0.3s;
+      @apply visible ease-out opacity-50;
+    }
+    .picture-center > svg {
+      transform: translate(0, -10px) ;
+      transition: transform .3s;
+      transition-timing-function: cubic-bezier(.21,1.04,.49,1.23);
+    }
+    .picture-left {
+      transform: rotate(-10deg) translate(-50%) ;
+      @include side-picture-hovered;
+    }
+    .picture-right {
+      transform: rotate(10deg) translate(50%) ;
+      @include side-picture-hovered;
+    }  
+    
+  }
+}
+#preview-container {
+  $green: #48bb78;
+  $curve: cubic-bezier(0.650, 0.000, 0.450, 1.000);
+  
+  @keyframes stroke {
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
+  
+  @keyframes scale {
+    0%, 100% {
+      transform: none;
+    }
+    50% {
+      transform: scale3d(1.1, 1.1, 1);
+    }
+  }
+  
+  @keyframes fill {
+    100% {
+      box-shadow: inset 0px 0px 0px 30px $green;
+    }
+  }
+  
+  .checkmark {
+    animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+    border-radius: 50%;
+    box-shadow: inset 0px 0px 0px $green;
+    stroke-miterlimit: 10;
+    @apply text-white stroke-current stroke-2 h-6 w-6 hidden;
+  }
+  
+  .checkmark-circle {
+    animation: stroke .6s $curve forwards;
+    fill: none;
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-miterlimit: 10;
+    @apply text-green-500 stroke-current stroke-2;
+  }
+  
+  .checkmark-check {
+    animation: stroke .3s $curve .8s forwards;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    transform-origin: 50% 50%;
+  }
+  
+  .dz-preview {
+    border-radius: 23px;
+    height: 100px;
+    @apply mt-2 mb-2 w-full border-2 border-gray-700 p-4 overflow-hidden relative;
+  }
+  .dz-details {
+    transition: all 0.3s ease-in-out;
+    @apply relative text-gray-700 pb-2 flex justify-between items-center w-full h-full overflow-hidden px-1;
+  
+    @keyframes change {
+      from {
+        transform: translate(-100%);
+      }
+      to {
+        transform: translate(100%);
+      }
+    }
+    &.completed {
+      @apply pb-0;
+    }
+    .dz-name {
+      @apply font-bold;
+    }
+    .dz-counter { 
+      @apply font-light text-gray-600 text-sm;
+    }
+    .dz-progress-bar {
+      height: 2px;
+      transition: all 0.3s ease-in-out;
+      z-index: 1;
+      @apply bottom-0 absolute bg-gray-700 w-0;
+      &.completed:not(.finished) {
+        animation-direction: alternate;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+        animation-name: change;
+        transition: all 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+      }
+      &.completed.finished {
+        transform: translate(100%);
+        transition: all 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+      }
+    }
+  }
+  .dz-progress-bg {
+    transition: all 0.3s ease-in-out;
+    @apply absolute left-0 h-full top-0 w-0 bg-gray-500 opacity-25;
+  }
+}
+  
+.mode-dark {
+  #preview-container {
+    .dz-details {
+      @apply text-white;
+    }
+    .dz-progress-bar {
+      @apply bg-gray-100;
+    }
+    .dz-progress-bg {
+      @apply bg-gray-800;
+    }
+  }
+  .vue-dropzone {
+    &:hover {
+      background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='25' ry='25' stroke='%23CBD5E0FF' stroke-width='5' stroke-dasharray='6%2c 14' stroke-dashoffset='13' stroke-linecap='square'/%3e%3c/svg%3e");
+      @apply bg-gray-800;
+    }
+  }
+}
