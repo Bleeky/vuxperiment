@@ -289,7 +289,7 @@
           :class="['flex items-center bg-transparent dark-hover:bg-white hover:bg-blue-900 text-blue-900 dark:text-white font-semibold hover:text-white dark-hover:text-blue-900 py-2 px-4 border dark:border-white border-blue-900 hover:border-transparent rounded', !isStepValid && 'opacity-50 cursor-not-allowed']"
           @click.prevent="onSubmit"
         >
-          <template v-if="currentStep === Object.keys(this.steps).length">
+          <template v-if="currentStep === steps.length">
             Create
           </template>
           <template v-else>
@@ -325,14 +325,26 @@ export default {
       selectedtype: null,
       selectedHabitat: null,
       currentStep: 0,
-      steps: {
-        name: null,
-        type: () => !this.selectedtype,
-        habitat: () => !this.selectedHabitat,
-        abilities: () => !this.selectedAbilities.length,
-        image: () => !this.image,
-      },
-      // steps: [{}, {}, {}, {}, {}, {}],
+      steps: [
+        { validator: () => true },
+        {
+          validator: () => this.selectedtype,
+          action: () => { this.$store.dispatch('getTypes'); },
+        },
+        {
+          validator: () => this.selectedHabitat,
+          action: () => { this.$store.dispatch('getHabitats'); },
+        },
+        {
+          validator: () => this.selectedAbilities.length,
+          action: () => {
+            if (this.abilities.length === 0) {
+              this.$store.dispatch('getAbilities');
+            }
+          },
+        },
+        { validator: () => this.image },
+      ],
       stepValid: false,
     };
   },
@@ -350,24 +362,17 @@ export default {
       return Habitat.all();
     },
     progress() {
-      return Math.round((100 / (Object.keys(this.steps).length)) * this.currentStep);
+      return Math.round((100 / this.steps.length) * this.currentStep);
     },
     isStepValid() {
-      if (this.currentStep === 1 && !this.selectedtype) return false;
-      if (this.currentStep === 2 && !this.selectedHabitat) return false;
-      if (this.currentStep === 3 && !this.selectedAbilities.length) return false;
-      if (this.currentStep === 4 && !this.image) return false;
+      if (this.steps[this.currentStep] && !this.steps[this.currentStep].validator()) return false;
       return true;
     },
   },
   watch: {
     currentStep(newValue) {
-      if (newValue === 1) {
-        this.$store.dispatch('getTypes');
-      } else if (newValue === 2) {
-        this.$store.dispatch('getHabitats');
-      } else if (newValue === 3 && this.abilities.length === 0) {
-        this.$store.dispatch('getAbilities');
+      if (this.steps[newValue] && this.steps[newValue].action) {
+        this.steps[newValue].action();
       }
     },
   },
@@ -393,7 +398,7 @@ export default {
       this.$store.dispatch('getAbility', selectedOption);
     },
     onSubmit() {
-      if (this.currentStep === Object.keys(this.steps).length) console.error(this);
+      if (this.currentStep === this.steps.length) console.error(this);
       else if (this.$refs.imageForm) {
         this.$refs.imageForm.validate().then((success) => {
           if (!success) {

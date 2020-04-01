@@ -5,7 +5,7 @@ import Amplify from 'aws-amplify';
 
 
 import {
-  Card, Type, Habitat, Ability,
+  Card, Type, Habitat, Ability, Pokemon,
 } from 'models';
 
 import auth from 'store/modules/auth';
@@ -42,6 +42,7 @@ database.register(Card);
 database.register(Type);
 database.register(Habitat);
 database.register(Ability);
+database.register(Pokemon);
 
 Vue.use(Vuex);
 

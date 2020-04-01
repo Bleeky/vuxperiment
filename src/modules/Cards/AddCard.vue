@@ -1,45 +1,145 @@
 <template>
-  <Loading
-    :reqs="['addCard']"
-    component="Spinner"
-  >
-    <ValidationObserver v-slot="{ handleSubmit }">
+  <ValidationObserver v-slot="{ handleSubmit }">
+    <transition
+      appear
+      name="fade"
+      leave-active-class="fade-leave"
+    >
       <form
-        id="app"
-        action="https://vuejs.org/"
-        method="post"
         @submit.prevent="handleSubmit(onSubmit)"
       >
-        <div class="container mx-auto">
-          <div class="text-xl">
-            Add a new card
+        <div class="text-4xl font-extrabold text-blue-900 dark:text-white mb-8">
+          Let's add a new pre-existing Pokemon card to your deck.
+        </div>
+        <Loading
+          :reqs="['getPokemons']"
+          component="Spinner"
+        >
+          <div class="mb-6">
+            <label
+              class="block text-gray-700 font-bold mb-2 dark:text-gray-400"
+            >
+              What is the name of the Pokemon you wish to add ?
+            </label>
+            <multiselect
+              v-model="selectedPokemon"
+              :options="pokemons"
+              :searchable="true"
+              :show-labels="true"
+              :hide-selected="true"
+              track-by="name"
+              label="name"
+              placeholder="Search for pokemons"
+              :class="'dark:border-transparent dark:rounded dark:border'"
+              @select="getPokemon"
+            >
+              <template
+                slot="tag"
+                slot-scope="{ option, remove }"
+              >
+                <span
+                  class="multiselect__tag py-1 px-2 rounded flex items-center bg-blue-900 text-white"
+                ><span>{{ option.name }}</span>
+                  <Icon
+                    icon="IconCross"
+                    :class="'cursor-pointer fill-current h-5 w-5 text-white ml-2 hover:text-gray-500'"
+                    @click.native="remove(option)"
+                  /></span>
+              </template>
+              <template
+                slot="clear"
+              >
+                <div
+                  :v-if="selectedPokemon"
+                  class="multiselect__clear"
+                  @mousedown.prevent.stop="selectedPokemon = null"
+                >
+                  <Icon
+                    icon="IconCross"
+                    :class="'cursor-pointer fill-current text-blue-900 dark:text-white py-2 pl-1 h-full float-right'"
+                  />
+                </div>
+              </template>
+            </multiselect>
           </div>
-          Search input for card here. Don't forget to debounce search for live results.
+          <div v-if="pokemonDetailed">
+            <Loading
+              :reqs="['getPokemon']"
+              component="Spinner"
+            >
+              <div
+                class="card py-2 px-4 border rounded hover:bg-gray-100 mb-8"
+              >
+                <div
+                  id="pokeName"
+                  class="card__title"
+                >
+                  {{ pokemonDetailed.name }}
+                </div>
+                <p
+                  id="pokeID"
+                  class="card__id"
+                >
+                  #6
+                </p>
+                <div
+                  id="pokeTag"
+                  class="card__tag"
+                >
+                  Fire
+                </div>
+                <div class="card__img">
+                  <img :src="pokemonDetailed.image">
+                </div>
+              </div>
+            </Loading>
+          </div>
+        </Loading>
+        <div
+          v-if="selectedPokemon"
+          class="flex justify-center"
+        >
           <button
             type="submit"
-            class="bg-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded"
+            class="flex items-center bg-transparent hover:bg-blue-900 dark-hover:bg-white dark:text-white text-blue-900 font-semibold hover:text-white dark-hover:text-blue-900 py-2 px-4 border dark:border-white border-blue-900 hover:border-transparent rounded"
           >
-            Submit
+            Add
           </button>
         </div>
       </form>
-    </ValidationObserver>
-  </Loading>
+    </transition>
+  </ValidationObserver>
 </template>
 
 <script>
+import { Pokemon } from 'models';
+
 export default {
   name: 'AddCard',
   data() {
     return {
+      selectedPokemon: null,
       formErrors: [],
     };
   },
+  computed: {
+    pokemons() {
+      return Pokemon.all();
+    },
+    pokemonDetailed() {
+      return Pokemon.find(this.selectedPokemon?.url);
+    },
+  },
   beforeCreate() {
+    if (!this.pokemons) {
+      this.$store.dispatch('getPokemons');
+    }
     this.$store.dispatch('setCreationMode', true);
-    console.error('creation fullscreen mode');
   },
   methods: {
+    getPokemon(selectedOption) {
+      this.$store.dispatch('getPokemon', selectedOption);
+    },
     async onSubmit() {
       console.error('form submitted');
       this.$store.dispatch('addCard', {

@@ -45,7 +45,7 @@
     .multiselect__single {
       color: inherit;
       vertical-align: inherit;
-      @apply pl-0;
+      @apply pl-0 bg-transparent text-gray-800;
     }
   }
   .multiselect__option--highlight, .multiselect__option--highlight:after {
@@ -66,6 +66,9 @@
   .multiselect__tags {
     @apply bg-gray-700 text-gray-500;
     input::placeholder {
+      @apply text-gray-100;
+    }
+    .multiselect__single {
       @apply text-gray-100;
     }
   }
