@@ -1,16 +1,16 @@
 export default {
   s3: {
     REGION: 'eu-central-1',
-    BUCKET: 'cards-app-api-dev-attachmentsbucket-splf6r689qlm',
+    BUCKET: 'cards-uploads-dev',
   },
   apiGateway: {
     REGION: 'eu-central-1',
-    URL: 'https://nu06ombini.execute-api.eu-central-1.amazonaws.com/dev',
+    URL: 'https://1gusmkov8i.execute-api.eu-central-1.amazonaws.com/dev',
   },
   cognito: {
     REGION: 'eu-central-1',
-    USER_POOL_ID: 'eu-central-1_319q5F6Mz',
-    APP_CLIENT_ID: '5nh9ggb5aoktunf1mkds55eu8l',
-    IDENTITY_POOL_ID: 'eu-central-1:71b4713f-aed5-4396-8694-2a3b7c816a05',
+    USER_POOL_ID: 'eu-central-1_qRbjpUN6k',
+    APP_CLIENT_ID: '6sq42sl1dhk6lk6u4ps7uqp83j',
+    IDENTITY_POOL_ID: 'eu-central-1:98d04473-1347-47c2-8e79-9184c5bdb7b3',
   },
 };

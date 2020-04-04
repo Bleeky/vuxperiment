@@ -17,7 +17,7 @@
       "at-rules",
     ],
     "at-rule-no-unknown": [true, {
-      "ignoreAtRules": ["mixin", "include", "if", "else", "extend", "function", "return", "for"]
+      "ignoreAtRules": ["mixin", "include", "if", "else", "extend", "function", "return", "for", "each"]
     }],
     "block-no-empty": true,
     "no-empty-source": null,

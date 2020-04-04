@@ -9,11 +9,11 @@
         y2="100%"
       >
         <stop
-          stop-color="#4A90DD"
+          class="water"
           offset="0%"
         />
         <stop
-          stop-color="#6CBDE4"
+          class="water-2"
           offset="100%"
         />
       </linearGradient>

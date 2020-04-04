@@ -1,19 +1,20 @@
 <template>
   <div>
-    <transition name="slide-fade">
-      <div
-        v-if="entry"
-        key="loading"
+    <template
+      v-if="entry"
+    >
+      <transition
+        appear
+        name="fade"
       >
-        <component :is="componentLoader" />
-      </div>
-      <div
-        v-else
-        key="not-loading"
-      >
-        <slot />
-      </div>
-    </transition>
+        <component :is="componentLoader"/>
+      </transition>
+    </template>
+    <template
+      v-else
+    >
+      <slot />
+    </template>
   </div>
 </template>
 
@@ -33,12 +34,11 @@ export default {
   computed: {
     entry() { return this.$store.getters.entries(this.reqs); },
     componentLoader() {
-      return () => import(`./${this.component}`);
+      return () => import(/* webpackChunkName: "[request]" */ `./${this.component}`);
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-
 </style>

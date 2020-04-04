@@ -9,15 +9,11 @@
         y2="98.71071%"
       >
         <stop
-          stop-color="#595761"
+          class="dark"
           offset="0%"
         />
         <stop
-          stop-color="#5A5862"
-          offset="3.14339%"
-        />
-        <stop
-          stop-color="#6E7587"
+          class="dark-2"
           offset="100%"
         />
       </linearGradient>

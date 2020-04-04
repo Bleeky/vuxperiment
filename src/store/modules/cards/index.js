@@ -2,7 +2,7 @@ import { API } from 'aws-amplify';
 import req from 'utils/req';
 
 import {
-  Type, Habitat, Ability, Pokemon,
+  Type, Habitat, Ability, Pokemon, Card,
 } from 'models';
 
 const localAPI = {
@@ -88,14 +88,14 @@ const actions = {
     context.commit('loading', p.merge({}));
     API.get('cards', '/cards')
       .then((response) => {
-        context.commit('getCardsFulfilled', p.merge(response));
+        context.commit('getCardsFulfilled', p.merge({ cards: response }));
       })
       .catch((e) => {
         context.commit('error', p.merge(e));
         context.commit('removeLoadingEntry', p.merge({}));
       });
   },
-  addCard: async (context, payload) => {
+  createCard: async (context, payload) => {
     const p = new Payload('addCard');
     context.commit('loading', p.merge({}));
     try {
@@ -138,16 +138,19 @@ const mutations = {
   getPokemonFulfilled: (state, payload) => {
     Pokemon.update({
       where: payload.payload.url,
-      data: { image: payload.pokemon.sprites.front_default },
+      data: {
+        image: payload.pokemon.sprites.front_default,
+        types: payload.pokemon.types.map((type) => type.type),
+      },
     });
   },
-  getCardsFulfilled: (state, cards) => {
-    state.cards = cards;
+  getCardsFulfilled: (state, payload) => {
+    Card.deleteAll();
+    Card.insert({ data: payload.cards });
   },
 };
 
 const getters = {
-  cards: (state) => state.cards,
 };
 
 export default {

@@ -23,6 +23,7 @@ export default class Pokemon extends Model {
       url: this.attr(''),
       name: this.attr(''),
       image: this.attr(''),
+      types: this.attr(''),
     };
   }
 }

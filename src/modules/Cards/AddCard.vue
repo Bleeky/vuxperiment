@@ -62,41 +62,20 @@
               </template>
             </multiselect>
           </div>
-          <div v-if="pokemonDetailed">
+          <div
+            v-if="pokemonDetailed"
+            class="flex justify-center"
+          >
             <Loading
               :reqs="['getPokemon']"
               component="Spinner"
             >
-              <div
-                class="card py-2 px-4 border rounded hover:bg-gray-100 mb-8"
-              >
-                <div
-                  id="pokeName"
-                  class="card__title"
-                >
-                  {{ pokemonDetailed.name }}
-                </div>
-                <p
-                  id="pokeID"
-                  class="card__id"
-                >
-                  #6
-                </p>
-                <div
-                  id="pokeTag"
-                  class="card__tag"
-                >
-                  Fire
-                </div>
-                <div class="card__img">
-                  <img :src="pokemonDetailed.image">
-                </div>
-              </div>
+              <card :card="pokemonDetailed" />
             </Loading>
           </div>
         </Loading>
         <div
-          v-if="selectedPokemon"
+          v-if="pokemonDetailed && pokemonDetailed.name"
           class="flex justify-center"
         >
           <button
@@ -113,9 +92,13 @@
 
 <script>
 import { Pokemon } from 'models';
+import CardView from 'modules/Cards/CardView';
 
 export default {
   name: 'AddCard',
+  components: {
+    Card: CardView,
+  },
   data() {
     return {
       selectedPokemon: null,
@@ -141,11 +124,7 @@ export default {
       this.$store.dispatch('getPokemon', selectedOption);
     },
     async onSubmit() {
-      console.error('form submitted');
-      this.$store.dispatch('addCard', {
-        name: this.name,
-        types: this.types,
-      });
+      this.$store.dispatch('createCard', this.pokemonDetailed);
     },
   },
 };

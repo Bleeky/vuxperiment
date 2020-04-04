@@ -9,11 +9,11 @@
         y2="100%"
       >
         <stop
-          stop-color="#C5B489"
+          class="rock"
           offset="0%"
         />
         <stop
-          stop-color="#D7CD90"
+          class="rock-2"
           offset="100%"
         />
       </linearGradient>

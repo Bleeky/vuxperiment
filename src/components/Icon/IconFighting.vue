@@ -9,11 +9,11 @@
         y2="98.71071%"
       >
         <stop
-          stop-color="#CE4265"
+          class="fighting"
           offset="0%"
         />
         <stop
-          stop-color="#E74347"
+          class="fighting-2"
           offset="100%"
         />
       </linearGradient>

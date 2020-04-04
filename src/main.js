@@ -6,6 +6,7 @@ import Multiselect from 'vue-multiselect';
 import Loading from 'components/Loading';
 import Errors from 'components/Errors';
 import Icon from 'components/Icon';
+import Image from 'components/Image';
 import App from './App';
 import router from './router';
 import store from './store';
@@ -17,6 +18,7 @@ Vue.component('Multiselect', Multiselect);
 Vue.component('Loading', Loading);
 Vue.component('Errors', Errors);
 Vue.component('Icon', Icon);
+Vue.component('S3Image', Image);
 extend('required', {
   ...required,
   message: 'This field is required',

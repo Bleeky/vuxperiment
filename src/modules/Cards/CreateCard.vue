@@ -66,8 +66,11 @@
           v-else-if="currentStep===1"
           key="typeStep"
         >
-          <div class="text-4xl font-extrabold text-blue-900 dark:text-white mb-8">
-            Let's select a type.
+          <div class="text-4xl font-extrabold text-blue-900 dark:text-white mb-2">
+            Let's select your Pokemon types.
+          </div>
+          <div class="font-light text-gray-700 dark:text-gray-400 mb-8">
+            You can chose up to 2 types.
           </div>
           <Loading
             :reqs="['getTypes']"
@@ -77,8 +80,8 @@
               <div
                 v-for="type in types"
                 :key="type.id"
-                :class="['flex items-center cursor-pointer border-gray-400 dark:border-white border-2 rounded p-4 flex flex-col justify-between leading-normal', selectedtype && selectedtype.name === type.name ? 'border-blue-900 bg-gray-200 text-blue-900' : 'text-gray-900 dark:text-white']"
-                @click="selectedtype = type"
+                :class="['flex items-center cursor-pointer border-gray-400 dark:border-white border-2 rounded p-4 flex flex-col justify-between leading-normal', selectedTypes.find(stype => stype.name === type.name) ? 'border-blue-900 bg-gray-200 text-blue-900' : 'text-gray-900 dark:text-white']"
+                @click="selectType(type)"
               >
                 <div class="font-bold text-xl capitalize">
                   {{ type.name }}
@@ -228,30 +231,10 @@
           <div class="text-4xl font-extrabold text-blue-900 dark:text-white mb-8">
             Here is what your new Pokemon will look like!
           </div>
-          <div
-            class="m-2 card py-2 px-4 border rounded hover:bg-gray-100"
-          >
-            <div
-              id="pokeName"
-              class="card__title"
-            >
-              {{ name }}
-            </div>
-            <p
-              id="pokeID"
-              class="card__id"
-            >
-              #6
-            </p>
-            <div
-              id="pokeTag"
-              class="card__tag"
-            >
-              Fire
-            </div>
-            <div class="card__img">
-              <img :src="image.files.file">
-            </div>
+          <div class="flex justify-center ">
+            <card
+              :card="card"
+            />
           </div>
         </div>
       </transition>
@@ -308,13 +291,13 @@
 <script>
 import { Type, Habitat, Ability } from 'models';
 import { Dropzone } from 'components/Inputs';
-
-import { API } from 'aws-amplify';
+import CardView from 'modules/Cards/CardView';
 
 export default {
   name: 'CreateCard',
   components: {
     Dropzone,
+    Card: CardView,
   },
   data() {
     return {
@@ -322,13 +305,13 @@ export default {
       image: null,
       name: null,
       selectedAbilities: [],
-      selectedtype: null,
+      selectedTypes: [],
       selectedHabitat: null,
       currentStep: 0,
       steps: [
         { validator: () => true },
         {
-          validator: () => this.selectedtype,
+          validator: () => this.selectedTypes.length,
           action: () => { this.$store.dispatch('getTypes'); },
         },
         {
@@ -368,6 +351,14 @@ export default {
       if (this.steps[this.currentStep] && !this.steps[this.currentStep].validator()) return false;
       return true;
     },
+    card() {
+      return ({
+        name: this.name,
+        types: this.selectedTypes,
+        abilities: this.abilitiesDetailed,
+        image: this.image.path,
+      });
+    },
   },
   watch: {
     currentStep(newValue) {
@@ -394,12 +385,23 @@ export default {
     this.$store.dispatch('setCreationMode', true);
   },
   methods: {
+    selectType(type) {
+      if (this.selectedTypes.find((stype) => stype.name === type.name)) {
+        this.selectedTypes = this.selectedTypes.filter((stype) => stype.name !== type.name);
+      } else {
+        if (this.selectedTypes.length === 2) {
+          this.selectedTypes.pop();
+        }
+        this.selectedTypes.push(type);
+      }
+    },
     getHabitat(selectedOption) {
       this.$store.dispatch('getAbility', selectedOption);
     },
     onSubmit() {
-      if (this.currentStep === this.steps.length) console.error(this);
-      else if (this.$refs.imageForm) {
+      if (this.currentStep === this.steps.length) {
+        this.$store.dispatch('createCard', this.card);
+      } else if (this.$refs.imageForm) {
         this.$refs.imageForm.validate().then((success) => {
           if (!success) {
             return;

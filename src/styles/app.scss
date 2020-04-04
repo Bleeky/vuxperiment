@@ -23,39 +23,96 @@ html {
   min-height: 100vh;
 }
 
-$primaryColor: #43A047;
+@function blackWhiteSwitch($color) {
+  $sum: red($color) * 0.2126 + green($color) * 0.7152 + blue($color) * 0.0722;
+  @return hsl(0%, 0%, ($sum / 255 - 0.8) * -10000000%);
+}
+
+$colours:
+  "fire" #FB9B51,
+  "fire-2" #FBAE46,
+  "electric" #EDD53E,
+  "electric-2" #FBE273,
+  "flying" #90A7DA,
+  "flying-2" #A6C2F2,
+  "poison" #A864C7,
+  "poison-2" #C261D4,
+  "water" #4A90DD,
+  "water-2" #6CBDE4,
+  "rock" #C5B489,
+  "rock-2" #D7CD90,
+  "normal" #9298A4,
+  "normal-2" #A3A49E,
+  "fairy" #EC8CE5,
+  "fairy-2" #F3A7E7,
+  "bug" #92BC2C,
+  "bug-2" #AFC836,
+  "psychic" #F66F71,
+  "psychic-2" #FE9F92,
+  "ground" #DC7545,
+  "ground-2" #D29463,
+  "fighting" #CE4265,
+  "fighting-2" #E74347,
+  "dark" #595761,
+  "dark-2" #6E7587,
+  "ice" #70CCBD,
+  "ice-2" #8CDDD4,
+  "steel" #52869D,
+  "steel-2" #58A6AA,
+  "ghost" #516AAC,
+  "ghost-2" #7773D4,
+  "dragon" #0C69C8,
+  "dragon-2" #0180C7,
+  "unknown" #68A090,
+  "unknown-2" #7BBFAC,
+  "grass" #5FBC51,
+  "grass-2" #5AC178;
+
+@each $color in $colours {
+  .#{nth($color, 1)} {
+    background-color: nth($color, 2);
+    color: blackWhiteSwitch(nth($color, 2));
+    stop-color: nth($color, 2);
+  }
+}
+
 .card {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  height: 300px;
+  width: 200px;
+  @apply flex flex-col justify-center items-center;
   &:hover {
-    animation: wiggle .3s;
+    @apply bg-gray-100;
+  }
+  &-name {
+    @apply text-black font-extrabold text-xl;
   }
 
-  &__title {
-    color: $primaryColor;
-    font-size: 1.2rem;
-    font-weight: 800;
-  }
-
-  &__tag {
-    background-color: $primaryColor;
+  &-type {
     border-radius: 50px;
-    color: white;
     cursor: pointer;
-    font-size: .6rem;
-    margin: .5rem 1rem;
-    padding: .2rem .5rem;
-    text-transform: uppercase;
+    @apply text-xs uppercase mx-1 my-2 py-1 px-2;
   }
 
-  &__id {
-    color: #666;
-    font-size: .6rem;
+  &-id {
     margin-bottom: .5rem;
+    @apply text-gray-800 text-xs;
   }
 
+  img {
+    max-height: 96px;
+    max-width: 96px;
+  }
+}
+.mode-dark {
+  .card:hover {
+    @apply bg-gray-800;
+  }
+  .card-name {
+    @apply text-white;
+  }
+  .card-id {
+    @apply text-gray-400;
+  }
 }
 
 // Transitions

@@ -5,9 +5,10 @@ export default class Card extends Model {
 
   static fields() {
     return {
-      id: this.attr(null),
+      cardId: this.attr(null),
       name: this.attr(''),
-      type: this.attr(''),
+      types: this.attr(''),
+      image: this.attr(''),
     };
   }
 }
