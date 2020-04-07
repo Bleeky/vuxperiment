@@ -22,7 +22,7 @@ build_app:
 
 # production stage
 production:
-   image: python:alpine
+   image: python:latest
    stage: deploy
    only:
       - master
