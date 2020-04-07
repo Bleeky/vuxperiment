@@ -1,57 +1,31 @@
 stages:
-  - build
-  - deploy
+   - build
+   - deploy
 
-build prod:
-  image: node:10.15.0-stretch
-  stage: build
-  only:
-    - tags
-  script:
-    # Install vuecli
-    - npm install -g @vue/cli@latest
-    # Install dependencies
-    - npm install
-    # Build App
-    - npm run build
-  artifacts:
-    paths:
-      # Build folder
-      - dist/
-    expire_in: 1 hour
+# build stage
+build_app:
+   image: node:alpine
+   stage: build
+   only:
+      - master
+   script:
+      - npm install
+      - npm run build
+   cache:
+     paths:
+       - node_modules/
+   artifacts:
+      paths:
+         # build folder
+         - dist/
+      expire_in: 1 hour
 
-deploy prod:
-  image: python:latest
-  stage: deploy
-  only:
-    - tags
-  script:
-    - pip install awscli
-    - aws s3 sync ./dist s3://pokelib-front
-
-build stage:
-  image: node:10.15.0-stretch
-  stage: build
-  only:
-    - master
-  script:
-    # Install vuecli
-    - npm install -g @vue/cli@latest
-    # Install dependencies
-    - npm install
-    # Build App
-    - npm run build
-  artifacts:
-    paths:
-      # Build folder
-      - dist/
-    expire_in: 1 hour
-
-deploy stage:
-  image: python:latest
-  stage: deploy
-  only:
-    - master
-  script:
-    - pip install awscli
-    - aws s3 sync ./dist s3://pokelib-front
+# production stage
+production:
+   image: python:alpine
+   stage: deploy
+   only:
+      - master
+   script:
+      - pip install awscli
+      - aws s3 sync ./dist s3://"$S3BUCKET"
