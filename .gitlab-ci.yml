@@ -4,7 +4,7 @@ stages:
 
 # build stage
 build_app:
-   image: node:alpine
+   image: node:10.15.0-stretch
    stage: build
    only:
       - master
