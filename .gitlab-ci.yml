@@ -40,7 +40,7 @@ build stage:
     # Install dependencies
     - npm install
     # Build App
-    - npm run build-dev
+    - npm run build
   artifacts:
     paths:
       # Build folder
