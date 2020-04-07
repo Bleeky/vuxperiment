@@ -1,21 +1,26 @@
 <template>
   <div class="cards-list">
-    <Loading
-      :reqs="['getCards']"
-      component="Spinner"
+    <Infinite
+      selector="cards"
+      :lim="10"
+      :data="cards"
+      :get-data="getData"
+      :clear-data="clearData"
     >
-      <transition-group
-        appear
-        name="fade"
-        class="flex flex-wrap justify-center"
+      <template
+        v-slot:default="props"
       >
-        <card
-          v-for="card in cards"
-          :key="card.cardId"
-          :card="card"
-        />
-      </transition-group>
-    </Loading>
+        <transition
+          appear
+          name="fade"
+        >
+          <card
+            :key="props.element.cardId"
+            :card="props.element"
+          />
+        </transition>
+      </template>
+    </Infinite>
     <router-view />
   </div>
 </template>
@@ -23,10 +28,12 @@
 <script>
 import CardView from 'modules/Cards/CardView';
 import { Card } from 'models';
+import Infinite from 'components/Infinite';
 
 export default {
   name: 'CardList',
   components: {
+    Infinite,
     Card: CardView,
   },
   computed: {
@@ -36,7 +43,14 @@ export default {
   },
   beforeCreate() {
     this.$store.dispatch('setCreationMode', false);
-    this.$store.dispatch('getCards');
+  },
+  methods: {
+    clearData() {
+      Card.deleteAll();
+    },
+    getData(params) {
+      this.$store.dispatch('getCards', params);
+    },
   },
 };
 </script>

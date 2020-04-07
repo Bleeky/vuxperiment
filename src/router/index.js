@@ -23,7 +23,7 @@ async function lazyLoadView(AsyncView, AsyncModule, moduleName) {
     loading: Spinner,
     error: ErrorLazy,
     delay: 200,
-    timeout: 10000,
+    timeout: 20000,
   });
 
   return Promise.resolve({

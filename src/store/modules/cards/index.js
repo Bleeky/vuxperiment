@@ -1,5 +1,6 @@
 import { API } from 'aws-amplify';
 import req from 'utils/req';
+import router from 'router';
 
 import {
   Type, Habitat, Ability, Pokemon, Card,
@@ -17,6 +18,14 @@ const localAPI = {
 const defaultState = {
   creationMode: false,
   cards: [],
+};
+
+const queryBuilder = (payload) => {
+  const queryString = Object.keys(payload.next || {}).map((key) => {
+    if (typeof payload.next[key] === 'number') return `${encodeURIComponent(`from-${key}-n`)}=${encodeURIComponent(payload.next[key])}`;
+    return `${encodeURIComponent(`from-${key}`)}=${encodeURIComponent(payload.next[key])}`;
+  }).join('&');
+  return `${payload.lim ? `lim=${payload.lim}` : ''}${queryString ? `&${queryString}` : ''}`;
 };
 
 const actions = {
@@ -83,12 +92,12 @@ const actions = {
       context.commit('removeLoadingEntry', p.merge({}));
     });
   },
-  getCards: (context) => {
+  getCards: (context, payload) => {
     const p = new Payload('getCards');
     context.commit('loading', p.merge({}));
-    API.get('cards', '/cards')
+    API.get('cards', `/cards?${queryBuilder(payload)}`)
       .then((response) => {
-        context.commit('getCardsFulfilled', p.merge({ cards: response }));
+        context.commit('getCardsFulfilled', p.merge({ cards: response.cards, ...payload, newNext: response.next }));
       })
       .catch((e) => {
         context.commit('error', p.merge(e));
@@ -96,12 +105,13 @@ const actions = {
       });
   },
   createCard: async (context, payload) => {
-    const p = new Payload('addCard');
+    const p = new Payload('createCard');
     context.commit('loading', p.merge({}));
     try {
       await API.post('cards', '/cards', {
         body: { ...payload },
       });
+      router.push('/cards');
     } catch (e) {
       context.commit('error', p.merge(e));
     }
@@ -145,7 +155,9 @@ const mutations = {
     });
   },
   getCardsFulfilled: (state, payload) => {
-    Card.deleteAll();
+    if (!Object.keys(payload.next).length) {
+      Card.deleteAll();
+    }
     Card.insert({ data: payload.cards });
   },
 };

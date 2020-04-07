@@ -7,13 +7,20 @@
         appear
         name="fade"
       >
-        <component :is="componentLoader"/>
+        <component :is="componentLoader" />
       </transition>
     </template>
     <template
       v-else
     >
-      <slot />
+      <transition
+        appear
+        name="fade"
+      >
+        <div>
+          <slot />
+        </div>
+      </transition>
     </template>
   </div>
 </template>

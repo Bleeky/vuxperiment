@@ -415,15 +415,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.steps-nav {
-  box-shadow: 0px 0 30px rgba(42, 67, 101, .2);
-  .steps-nav-progress-bar {
-    background-color: #f60a49;
-    transition: width 0.3s ease-out;
-  }
-  .steps-nav-progress-bar-number {
-    color: #f60a49;
-    transition: left 0.3s ease-out;
-  }
-}
 </style>

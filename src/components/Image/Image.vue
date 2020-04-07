@@ -1,9 +1,14 @@
 <template>
-  <div>
+  <transition
+    appear
+    name="fade"
+  >
     <img
+      v-show="loaded"
       :src="url"
+      @load="onLoaded"
     >
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -12,6 +17,10 @@ import { Storage } from 'aws-amplify';
 export default {
   name: 'S3Image',
   props: {
+    s3: {
+      type: Boolean,
+      default: true,
+    },
     imagePath: {
       type: String,
       default: null,
@@ -23,14 +32,19 @@ export default {
   },
   data() {
     return {
+      loaded: false,
       url: null,
       error: '',
     };
   },
   mounted() {
-    this.getImage();
+    if (this.s3) this.getImage();
+    else this.url = this.imagePath;
   },
   methods: {
+    onLoaded() {
+      this.loaded = true;
+    },
     getImage() {
       if (!this.imagePath) {
         this.setError('Image path not provided.');

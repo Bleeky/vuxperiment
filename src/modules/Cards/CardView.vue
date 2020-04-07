@@ -23,18 +23,16 @@
         </span>
       </div>
     </div>
-    <div
-      v-if="card.image"
-      class="card-img"
-    >
-      <template v-if="card.image.includes('PokeAPI')">
-        <img :src="card.image">
-      </template><template v-else>
-        <S3Image
-          :image-path="card.image"
-        />
-      </template>
-    </div>
+    <template v-if="card.image.includes('http')">
+      <S3Image
+        :s3="false"
+        :image-path="card.image"
+      />
+    </template><template v-else>
+      <S3Image
+        :image-path="card.image"
+      />
+    </template>
   </div>
 </template>
 
@@ -51,3 +49,44 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.card {
+  height: 300px;
+  width: 200px;
+  @apply flex flex-col justify-center items-center;
+  &:hover {
+    @apply bg-gray-100;
+  }
+  &-name {
+    @apply text-black font-extrabold text-xl;
+  }
+
+  &-type {
+    border-radius: 50px;
+    cursor: pointer;
+    @apply text-xs uppercase mx-1 my-2 py-1 px-2;
+  }
+
+  &-id {
+    margin-bottom: .5rem;
+    @apply text-gray-800 text-xs;
+  }
+
+  img {
+    max-height: 96px;
+    max-width: 96px;
+  }
+}
+.mode-dark {
+  .card:hover {
+    @apply bg-gray-800;
+  }
+  .card-name {
+    @apply text-white;
+  }
+  .card-id {
+    @apply text-gray-400;
+  }
+}
+</style>

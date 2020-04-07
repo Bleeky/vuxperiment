@@ -11,6 +11,7 @@ import {
 import auth from 'store/modules/auth';
 import loading from 'store/modules/loading';
 import errors from 'store/modules/errors';
+import infinite from 'store/modules/infinite';
 import config from '../../config/aws.config';
 
 Amplify.configure({
@@ -51,6 +52,9 @@ function loadingPlugin() {
     store.subscribe((mutation) => {
       if (mutation.type.includes('Fulfilled') || mutation.type.includes('Failure')) {
         store.commit('removeLoadingEntry', mutation.payload);
+        if (typeof (mutation.payload.selector) !== 'undefined') {
+          store.commit('infinite', mutation.payload);
+        }
       }
     });
   };
@@ -60,6 +64,7 @@ const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   modules: {
     errors,
+    infinite,
     loading,
     auth,
   },
