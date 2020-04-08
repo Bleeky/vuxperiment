@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen p-8 bg-gray-200">
+  <div class="min-h-screen p-8 bg-gray-200 dark:bg-gray-900">
     <div class="container mx-auto w-full sm:max-w-md">
       <Logo :class="'mb-6 justify-center'" />
       <ValidationObserver v-slot="{ handleSubmit }">
@@ -12,7 +12,7 @@
           component="Pokeball"
         >
           <form
-            class="bg-white shadow-md rounded px-8 pt-6 pb-8"
+            class="bg-white dark:bg-gray-800 shadow-md rounded px-8 pt-6 pb-8"
             @submit.prevent="handleSubmit(onSubmit)"
           >
             <template v-if="status==='verify'">
@@ -46,7 +46,7 @@
             <template v-else>
               <div class="mb-4">
                 <label
-                  class="block text-blue-900 text-sm font-bold mb-2"
+                  class="block text-blue-900 text-sm font-bold mb-2 dark:text-white"
                   for="username"
                 >
                   Username
@@ -60,7 +60,7 @@
                     id="username"
                     v-model="username"
                     :class="{ 'border border-red-500': errors[0]}"
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-900"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-900 dark:text-white dark:bg-gray-700 dark:border-gray-700 dark-focus:border-white "
                     type="text"
                     placeholder="Username"
                   >
@@ -71,7 +71,7 @@
               </div>
               <div class="mb-6">
                 <label
-                  class="block text-blue-900 text-sm font-bold mb-2"
+                  class="block text-blue-900 text-sm font-bold mb-2 dark:text-white"
                   for="password"
                 >
                   Password
@@ -85,7 +85,7 @@
                     id="password"
                     v-model="password"
                     :class="{ 'border border-red-500': errors[0]}"
-                    class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-900"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-900 dark:text-white dark:bg-gray-700 dark:border-gray-700 dark-focus:border-white "
                     type="password"
                     placeholder="******************"
                   >
@@ -98,7 +98,7 @@
                 <template v-if="status==='signup'">
                   <div class="mb-6">
                     <label
-                      class="block text-blue-900 text-sm font-bold mb-2"
+                      class="block text-blue-900 text-sm font-bold mb-2 dark:text-white"
                       for="passwordConfirm"
                     >
                       Password confirm
@@ -113,7 +113,7 @@
                         id="passwordConfirm"
                         v-model="passwordConfirm"
                         :class="{ 'border border-red-500': errors[0]}"
-                        class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-900"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-900 dark:text-white dark:bg-gray-700 dark:border-gray-700 dark-focus:border-white "
                         type="password"
                         placeholder="******************"
                       >
@@ -129,13 +129,13 @@
               <template v-if="status==='signup'">
                 <router-link to="/login">
                   <button
-                    class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+                    class="focus:outline-none inline-block align-baseline font-bold text-sm text-blue-900 hover:text-gray-700 dark:text-gray-500 dark-hover:text-white"
                   >
                     Back
                   </button>
                 </router-link>
                 <button
-                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline whitespace-no-wrap"
+                  class="focus:outline-none bg-blue-900 hover:bg-gray-700 text-white font-semibold hover:text-white py-2 px-4 border border-blue-900 hover:border-gray-700 rounded"
                   type="submit"
                 >
                   Create account
@@ -144,7 +144,7 @@
               <template v-else-if="status==='verify'">
                 <router-link to="/login">
                   <button
-                    class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+                    class="focus:outline-none inline-block align-baseline font-bold text-sm text-blue-900 hover:text-gray-700 dark:text-gray-500 dark-hover:text-white"
                   >
                     Back
                   </button>
@@ -166,7 +166,7 @@
                 <router-link to="/signup">
                   <button
                     type="button"
-                    class="focus:outline-none inline-block align-baseline font-bold text-sm text-blue-900 hover:text-gray-700"
+                    class="focus:outline-none inline-block align-baseline font-bold text-sm text-blue-900 hover:text-gray-700 dark:text-gray-500 dark-hover:text-white"
                   >
                     Don't have an account ? Create one here.
                   </button>

@@ -13,7 +13,6 @@ const actions = {
       await Auth.currentAuthenticatedUser({});
       context.commit('loginFulfilled', p.merge({}));
     } catch (e) {
-      context.commit('error', p.merge(e));
       context.commit('removeLoadingEntry', p.merge({}));
     }
   },
@@ -22,7 +21,7 @@ const actions = {
     context.commit('loading', p.merge(payload));
     try {
       await Auth.signIn(payload.username, payload.password);
-      context.commit('loginFulfilled');
+      context.commit('loginFulfilled', p.merge({}));
     } catch (e) {
       context.commit('error', p.merge(e));
       context.commit('removeLoadingEntry', p.merge(payload));

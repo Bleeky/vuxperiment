@@ -4,7 +4,7 @@
     class="bg-white dark:bg-gray-900"
   >
     <Loading
-      :reqs="['checkSession']"
+      :reqs="['checkSession', 'signout']"
       component="Spinner"
     >
       <div v-if="loggedIn">

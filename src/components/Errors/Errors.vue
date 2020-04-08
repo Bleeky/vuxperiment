@@ -23,10 +23,13 @@
             </p>
           </div>
         </div>
-        <span class="px-4 py-3">
+        <span
+          class="px-4 py-3"
+        >
           <Icon
             icon="IconCross"
-            :class="'fill-current h-6 w-6 text-red-500'"
+            :class="'fill-current h-6 w-6 text-red-500 cursor-pointer'"
+            @click.native="removeError(error.uuid)"
           />
         </span>
       </div>
