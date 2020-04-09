@@ -7,7 +7,10 @@ build_app:
    image: node:10.15.0-stretch
    stage: build
    only:
+      refs:
       - master
+      variables:
+      - $CI_COMMIT_MESSAGE =~ /[deploy]/
    script:
       - npm install
       - npm run build
@@ -25,7 +28,10 @@ production:
    image: python:latest
    stage: deploy
    only:
+      refs:
       - master
+      variables:
+      - $CI_COMMIT_MESSAGE =~ /[deploy]/
    script:
       - pip install awscli
       - aws s3 sync ./dist s3://"$S3BUCKET"

@@ -101,6 +101,6 @@ export default {
   }
 }
 .loading {
-  @apply flex justify-center m-32;
+  @apply flex justify-center p-32;
 }
 </style>

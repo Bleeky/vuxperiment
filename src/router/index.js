@@ -43,7 +43,7 @@ const router = new Router({
     },
     {
       path: '/',
-      name: 'Login',
+      name: 'Root',
       component: () => import(/* webpackChunkName: "auth" */ 'modules/Auth/LoginView'),
       props: { status: 'login' },
     },

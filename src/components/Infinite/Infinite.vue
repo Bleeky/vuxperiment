@@ -1,13 +1,13 @@
 <template>
   <div>
     <div class="flex flex-wrap justify-center">
-      <div
+      <template
         v-for="element in data"
-        :key="element.id"
       >
         <slot :element="element" />
-      </div>
+      </template>
     </div>
+
     <div
       ref="observer"
     />
@@ -82,5 +82,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.test{width: 20%;}
 </style>

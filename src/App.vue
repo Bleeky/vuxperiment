@@ -125,7 +125,7 @@ export default {
     creationMode(newValue) {
       if (newValue === true) window.addEventListener('keydown', this.leaveOnEscape);
       else if (this.$route.path !== '/cards') {
-        this.$router.push('/cards');
+        if (this.$route.name !== 'NotFound') this.$router.push('/cards');
         window.removeEventListener('keydown', this.leaveOnEscape);
       }
     },

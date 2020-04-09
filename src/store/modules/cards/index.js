@@ -151,6 +151,7 @@ const mutations = {
       data: {
         image: payload.pokemon.sprites.front_default,
         types: payload.pokemon.types.map((type) => type.type),
+        abilities: payload.pokemon.abilities.map((ability) => ability.ability),
       },
     });
   },

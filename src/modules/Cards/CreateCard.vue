@@ -381,6 +381,9 @@ export default {
       }
     });
   },
+  destroyed() {
+    this.$store.dispatch('setCreationMode', false);
+  },
   beforeCreate() {
     this.$store.dispatch('setCreationMode', true);
   },

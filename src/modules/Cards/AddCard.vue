@@ -140,6 +140,9 @@ export default {
     }
     this.$store.dispatch('setCreationMode', true);
   },
+  destroyed() {
+    this.$store.dispatch('setCreationMode', false);
+  },
   methods: {
     getPokemon(selectedOption) {
       this.$store.dispatch('getPokemon', selectedOption);

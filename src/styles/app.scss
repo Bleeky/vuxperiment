@@ -12,6 +12,8 @@
 
 @import 'multiselect';
 
+@import 'card';
+
 /* purgecss start ignore */
 html {
   box-sizing: border-box;
@@ -103,4 +105,5 @@ $colours:
   opacity: 0;
   transform: translateY(10px);
 }
+
 /* purgecss end ignore */

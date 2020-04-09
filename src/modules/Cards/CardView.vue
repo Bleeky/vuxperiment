@@ -1,5 +1,6 @@
 <template>
   <div
+    :key="card.cardId"
     class="m-2 card py-2 px-4 border rounded hover:bg-gray-100"
   >
     <div
@@ -42,6 +43,10 @@ export default {
   components: {
   },
   props: {
+    class: {
+      type: String,
+      default: '',
+    },
     card: {
       type: Object,
       required: true,
@@ -51,42 +56,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.card {
-  height: 300px;
-  width: 200px;
-  @apply flex flex-col justify-center items-center;
-  &:hover {
-    @apply bg-gray-100;
-  }
-  &-name {
-    @apply text-black font-extrabold text-xl;
-  }
-
-  &-type {
-    border-radius: 50px;
-    cursor: pointer;
-    @apply text-xs uppercase mx-1 my-2 py-1 px-2;
-  }
-
-  &-id {
-    margin-bottom: .5rem;
-    @apply text-gray-800 text-xs;
-  }
-
-  img {
-    max-height: 96px;
-    max-width: 96px;
-  }
-}
-.mode-dark {
-  .card:hover {
-    @apply bg-gray-800;
-  }
-  .card-name {
-    @apply text-white;
-  }
-  .card-id {
-    @apply text-gray-400;
-  }
-}
 </style>

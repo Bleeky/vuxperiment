@@ -24,6 +24,7 @@ export default class Pokemon extends Model {
       name: this.attr(''),
       image: this.attr(''),
       types: this.attr(''),
+      abilities: this.attr(''),
     };
   }
 }
