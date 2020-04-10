@@ -1,15 +1,22 @@
 <template>
   <div
     :key="card.cardId"
-    class="m-2 card py-2 px-4 border rounded hover:bg-gray-100"
+    :class="['card ', !detailed && 'm-2 card-ratio py-2 px-4 border rounded hover:bg-gray-100']"
   >
     <div
-      class="card-name"
+      :class="[
+        'text-black font-extrabold text-xl dark:text-white',
+        detailed && 'text-white text-3xl font-bold'
+      ]"
     >
       {{ card.name }}
     </div>
     <p
-      class="card-id"
+      :class="[
+        'text-xs mb-2',
+        detailed && 'text-gray-400',
+        !detailed && 'text-gray-800 dark:text-gray-400'
+      ]"
     >
       #6
     </p>
@@ -17,7 +24,7 @@
       <div
         v-for="type in card.types"
         :key="type.name"
-        :class="`card-type ${type.name}`"
+        :class="`text-xs uppercase mx-1 my-2 py-1 px-2 rounded-full cursor-pointer ${type.name}`"
       >
         <span class="inline align-middle">
           {{ type.name }}
@@ -34,22 +41,94 @@
         :image-path="card.image"
       />
     </template>
+    <div
+      v-if="detailed"
+      class="flex flex-row items-end relative flex-wrap justify-center"
+    >
+      <div
+        v-for="ability in card.abilities"
+        :key="ability.name"
+        :ref="ability.name"
+        :class="[
+          'card-ability text-center h-20 flex items-end justify-center relative py-4 px-6 text-lg font-thin cursor-pointer',
+          selectedAbility && selectedAbility.name === ability.name ? 'text-2xl font-extrabold' : ''
+        ]"
+        @click="selectAbility(ability)"
+      >
+        {{ ability.name }}
+      </div>
+      <div
+        ref="selectedAbilityUnder"
+        :class="[
+          'card-ability-selected absolute left-0 bottom-0 border-b w-10',
+          selectedAbility ? 'visible' : 'hidden'
+        ]"
+      />
+    </div>
+    <div
+      v-if="selectedAbilityDetailed"
+      class="mt-8"
+    >
+      {{ selectedAbilityDetailed.effect }}
+    </div>
   </div>
 </template>
 
 <script>
+import { Ability } from 'models';
+
 export default {
   name: 'CardView',
-  components: {
-  },
   props: {
-    class: {
-      type: String,
-      default: '',
+    detailed: {
+      type: Boolean,
+      default: false,
     },
     card: {
       type: Object,
       required: true,
+    },
+  },
+  data() {
+    return {
+      selectedAbility: null,
+    };
+  },
+  computed: {
+    selectedAbilityDetailed() {
+      if (this.selectedAbility) return Ability.find(this.selectedAbility.url);
+      return null;
+    },
+  },
+  beforeDestroy() {
+    if (this.detailed) {
+      window.removeEventListener('resize', this.watchResize);
+    }
+  },
+  created() {
+    if (this.detailed) {
+      this.watchResize = () => {
+        if (this.selectedAbility) {
+          this.setAbilitySelectorPosition();
+        }
+      };
+      window.addEventListener('resize', this.watchResize);
+    }
+  },
+  methods: {
+    setAbilitySelectorPosition() {
+      const abilityRef = this.$refs[this.selectedAbility.name][0];
+      const underlineRef = this.$refs.selectedAbilityUnder;
+      if (abilityRef && underlineRef) {
+        underlineRef.style.bottom = `${abilityRef.offsetParent.clientHeight - abilityRef.offsetTop - abilityRef.clientHeight}px`;
+        underlineRef.style.left = `${abilityRef.offsetLeft + abilityRef.clientWidth / 4}px`;
+        underlineRef.style.width = `${abilityRef.clientWidth / 2}px`;
+      }
+    },
+    selectAbility(ability) {
+      this.selectedAbility = ability;
+      this.setAbilitySelectorPosition();
+      this.$store.dispatch('getAbility', ability);
     },
   },
 };

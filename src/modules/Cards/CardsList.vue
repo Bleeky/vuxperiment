@@ -27,48 +27,29 @@
       :visible="details!==null"
       @close="details = null"
     >
-      <div
-        v-if="details"
-        class="modal-content m-2 py-2 px-4 rounded mx-auto flex flex-col items-center text-white"
-        @click.stop
-      >
-        <div class="text-3xl font-bold">
-          {{ details.name }}
-        </div>
-        <p
-          class="card-id"
+      <template v-slot:button>
+        <span
+          class="mr-3 text-white cursor-pointer p-3 border rounded dark:bg-gray-900 bg-white dark:text-white border-blue-900 dark:border-white hover:text-white dark-hover:bg-white dark-hover:text-blue-900 hover:border-transparent hover:bg-blue-900"
+          @click.once="deleteCard(details)"
         >
-          #6
-        </p>
-        <div class="flex">
-          <div
-            v-for="type in details.types"
-            :key="type.name"
-            :class="`card-type ${type.name}`"
-          >
-            <span class="inline align-middle">
-              {{ type.name }}
-            </span>
-          </div>
-        </div>
-        <template v-if="details.image.includes('http')">
-          <S3Image
-            :s3="false"
-            :image-path="details.image"
+          <Icon
+            icon="IconTrash"
+            :class="'stroke-current h-6 w-6'"
           />
-        </template>
-        <template v-else>
-          <S3Image
-            :image-path="details.image"
-          />
-        </template>
+        </span>
+      </template>
+      <template v-slot:content>
         <div
-          v-for="ability in details.abilities"
-          :key="ability.name"
+          v-if="details"
+          @click.stop
         >
-          {{ ability.name }}
+          <card
+            class="text-white"
+            :card="details"
+            detailed
+          />
         </div>
-      </div>
+      </template>
     </Modal>
     <router-view />
   </div>
@@ -92,7 +73,7 @@ export default {
   },
   computed: {
     cards() {
-      return Card.all();
+      return Card.query().with('abilities').get();
     },
   },
   beforeCreate() {
@@ -108,13 +89,12 @@ export default {
     getData(params) {
       this.$store.dispatch('getCards', params);
     },
+    deleteCard(card) {
+      this.$store.dispatch('deleteCard', card);
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.dark-mode {
-
-}
-
 </style>

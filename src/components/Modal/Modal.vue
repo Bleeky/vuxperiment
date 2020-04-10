@@ -8,6 +8,7 @@
       class="bg-gray-900-hue table h-full fixed left-0 top-0 w-full"
     >
       <div class="absolute top-0 right-0 p-6 flex">
+        <slot name="button" />
         <span
           class="cursor-pointer p-3 border rounded dark:bg-gray-900 bg-white dark:text-white border-blue-900 dark:border-white hover:text-white dark-hover:bg-white dark-hover:text-blue-900 hover:border-transparent hover:bg-blue-900"
           @click.once="$emit('close')"
@@ -27,7 +28,7 @@
           class="table-cell align-middle"
           @click="$emit('close')"
         >
-          <slot />
+          <slot name="content" />
         </div>
       </transition>
     </div>

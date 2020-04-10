@@ -117,6 +117,17 @@ const actions = {
     }
     context.commit('removeLoadingEntry', p.merge({}));
   },
+  deleteCard: async (context, payload) => {
+    const p = new Payload('deleteCard');
+    context.commit('loading', p.merge({}));
+    try {
+      await API.del('cards', `/cards/${payload.cardId}`);
+    } catch (e) {
+      console.error(e);
+      context.commit('error', p.merge(e));
+    }
+    context.commit('removeLoadingEntry', p.merge({}));
+  },
 };
 
 const mutations = {
@@ -151,7 +162,7 @@ const mutations = {
       data: {
         image: payload.pokemon.sprites.front_default,
         types: payload.pokemon.types.map((type) => type.type),
-        abilities: payload.pokemon.abilities.map((ability) => ability.ability),
+        abilities: payload.pokemon.abilities.map((ability) => ({ ...ability.ability, cardId: payload.payload.url })),
       },
     });
   },

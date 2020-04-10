@@ -20,9 +20,10 @@ export default class Ability extends Model {
 
     static fields() {
       return {
-        url: this.attr(''),
-        name: this.attr(''),
-        effect: this.attr(''),
+        url: this.attr(null),
+        name: this.attr(null),
+        effect: this.attr(null),
+        cardId: this.attr(null),
       };
     }
 }

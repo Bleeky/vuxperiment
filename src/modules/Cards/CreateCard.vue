@@ -308,6 +308,7 @@ export default {
       selectedTypes: [],
       selectedHabitat: null,
       currentStep: 0,
+      abilitiesFetched: false,
       steps: [
         { validator: () => true },
         {
@@ -321,7 +322,8 @@ export default {
         {
           validator: () => this.selectedAbilities.length,
           action: () => {
-            if (this.abilities.length === 0) {
+            if (!this.abilitiesFetched) {
+              this.abilitiesFetched = true;
               this.$store.dispatch('getAbilities');
             }
           },

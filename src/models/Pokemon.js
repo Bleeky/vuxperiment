@@ -1,4 +1,5 @@
 import { Model } from '@vuex-orm/core';
+import Ability from 'models/Ability';
 
 export default class Pokemon extends Model {
   static entity = 'pokemons'
@@ -24,7 +25,7 @@ export default class Pokemon extends Model {
       name: this.attr(''),
       image: this.attr(''),
       types: this.attr(''),
-      abilities: this.attr(''),
+      abilities: this.hasMany(Ability, 'cardId'),
     };
   }
 }
