@@ -8,9 +8,9 @@ build_app:
    stage: build
    only:
       refs:
-      - master
+        - master
       variables:
-      - $CI_COMMIT_MESSAGE =~ /[deploy]/
+        - $CI_COMMIT_MESSAGE =~ /[deploy]/
    script:
       - npm install
       - npm run build
@@ -29,9 +29,9 @@ production:
    stage: deploy
    only:
       refs:
-      - master
+        - master
       variables:
-      - $CI_COMMIT_MESSAGE =~ /[deploy]/
+        - $CI_COMMIT_MESSAGE =~ /[deploy]/
    script:
       - pip install awscli
       - aws s3 sync ./dist s3://"$S3BUCKET"
