@@ -29,7 +29,7 @@
     >
       <template v-slot:button>
         <span
-          class="mr-3 text-white cursor-pointer p-3 border rounded dark:bg-gray-900 bg-white dark:text-white border-blue-900 dark:border-white hover:text-white dark-hover:bg-white dark-hover:text-blue-900 hover:border-transparent hover:bg-blue-900"
+          class="mr-3 cursor-pointer p-3 border rounded bg-gray-900 text-white border-white hover:bg-white hover:text-blue-900 hover:border-transparent"
           @click.once="deleteCard(details)"
         >
           <Icon
@@ -90,7 +90,16 @@ export default {
       this.$store.dispatch('getCards', params);
     },
     deleteCard(card) {
-      this.$store.dispatch('deleteCard', card);
+      this.details = null;
+      this.$store.dispatch('modal', {
+        type: 'confirm',
+        action: () => {
+          this.$store.dispatch('deleteCard', card);
+        },
+        cancel: () => {
+          this.details = card;
+        },
+      });
     },
   },
 };

@@ -11,6 +11,7 @@ import {
 import auth from 'store/modules/auth';
 import loading from 'store/modules/loading';
 import errors from 'store/modules/errors';
+import modal from 'store/modules/modal';
 import infinite from 'store/modules/infinite';
 import config from '../../config/aws.config';
 
@@ -64,6 +65,7 @@ const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   modules: {
     errors,
+    modal,
     infinite,
     loading,
     auth,

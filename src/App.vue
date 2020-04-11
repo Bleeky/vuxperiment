@@ -85,6 +85,28 @@
           </template>
         </nav>
       </div>
+      <Modal
+        :visible="Object.keys(modal).length > 0"
+        :close-on-outside="false"
+        @close="clearModal"
+      >
+        <template
+          v-if="modal.type === 'confirm'"
+          v-slot:content
+        >
+          <div class="flex justify-center p-4 flex-col items-center">
+            <div class="text-white text-3xl">
+              Are you sure ?
+            </div>
+            <button
+              class="mt-4 focus:outline-none bg-blue-900 hover:bg-gray-700 text-white font-semibold hover:text-white py-2 px-4 border border-blue-900 hover:border-gray-700 rounded"
+              @click.stop="modal.action()"
+            >
+              Yes
+            </button>
+          </div>
+        </template>
+      </Modal>
       <div
         :class="[
           loggedIn ? 'container mx-auto w-full p-4' : '',
@@ -118,6 +140,7 @@ export default {
     };
   },
   computed: mapState({
+    modal: (state) => state.modal.config,
     loggedIn: (state) => state.auth.loggedIn,
     creationMode: (state) => (state.cards ? state.cards.creationMode : false),
   }),
@@ -152,6 +175,11 @@ export default {
     }
   },
   methods: {
+    clearModal() {
+      const { modal } = this;
+      this.$store.dispatch('clearModal');
+      if (modal.cancel) modal.cancel();
+    },
     toggleMode() {
       if (!this.darkmode) {
         document.documentElement.classList.add('mode-dark');

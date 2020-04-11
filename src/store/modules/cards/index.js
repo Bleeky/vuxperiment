@@ -122,10 +122,12 @@ const actions = {
     context.commit('loading', p.merge({}));
     try {
       await API.del('cards', `/cards/${payload.cardId}`);
+      context.commit('deleteCardFulfilled', p.merge(payload));
+      context.commit('clearModal');
     } catch (e) {
       context.commit('error', p.merge(e));
+      context.commit('removeLoadingEntry', p.merge({}));
     }
-    context.commit('removeLoadingEntry', p.merge({}));
   },
 };
 
@@ -173,6 +175,9 @@ const mutations = {
       Card.deleteAll();
     }
     Card.insert({ data: payload.cards });
+  },
+  deleteCardFulfilled: (state, payload) => {
+    Card.delete(payload.cardId);
   },
 };
 

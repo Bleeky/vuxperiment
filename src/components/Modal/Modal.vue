@@ -10,7 +10,7 @@
       <div class="absolute top-0 right-0 p-6 flex">
         <slot name="button" />
         <span
-          class="cursor-pointer p-3 border rounded dark:bg-gray-900 bg-white dark:text-white border-blue-900 dark:border-white hover:text-white dark-hover:bg-white dark-hover:text-blue-900 hover:border-transparent hover:bg-blue-900"
+          class="cursor-pointer p-3 border rounded bg-gray-900 text-white border-white hover:bg-white hover:text-blue-900 hover:border-transparent"
           @click.once="$emit('close')"
         >
           <Icon
@@ -26,7 +26,7 @@
       >
         <div
           class="table-cell align-middle"
-          @click="$emit('close')"
+          @click="closeOnOutside && $emit('close')"
         >
           <slot name="content" />
         </div>
@@ -42,6 +42,10 @@ export default {
     visible: {
       type: Boolean,
       default: false,
+    },
+    closeOnOutside: {
+      type: Boolean,
+      default: true,
     },
   },
   watch: {

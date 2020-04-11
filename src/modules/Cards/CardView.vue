@@ -12,13 +12,14 @@
       {{ card.name }}
     </div>
     <p
+      v-if="card.pokemonId"
       :class="[
         'text-xs mb-2',
         detailed && 'text-gray-400',
         !detailed && 'text-gray-800 dark:text-gray-400'
       ]"
     >
-      #6
+      #{{ card.pokemonId }}
     </p>
     <div class="flex">
       <div
