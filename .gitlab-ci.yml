@@ -7,9 +7,6 @@ build_app:
    image: node:10.15.0-stretch
    stage: build
    only:
-      refs:
-        - schedules
-        - master
       variables:
         - $CI_COMMIT_MESSAGE =~ /[deploy]/
    script:
@@ -29,9 +26,6 @@ production:
    image: python:latest
    stage: deploy
    only:
-      refs:
-        - schedules
-        - master
       variables:
         - $CI_COMMIT_MESSAGE =~ /[deploy]/
    script:
