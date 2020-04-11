@@ -8,6 +8,7 @@ build_app:
    stage: build
    only:
       refs:
+        - schedules
         - master
       variables:
         - $CI_COMMIT_MESSAGE =~ /[deploy]/
@@ -29,6 +30,7 @@ production:
    stage: deploy
    only:
       refs:
+        - schedules
         - master
       variables:
         - $CI_COMMIT_MESSAGE =~ /[deploy]/
