@@ -358,6 +358,7 @@ export default {
         name: this.name,
         types: this.selectedTypes,
         abilities: this.abilitiesDetailed,
+        habitat: this.selectedHabitat,
         image: this.image.path,
       });
     },

@@ -123,7 +123,6 @@ const actions = {
     try {
       await API.del('cards', `/cards/${payload.cardId}`);
     } catch (e) {
-      console.error(e);
       context.commit('error', p.merge(e));
     }
     context.commit('removeLoadingEntry', p.merge({}));
@@ -160,9 +159,12 @@ const mutations = {
     Pokemon.update({
       where: payload.payload.url,
       data: {
+        pokemonId: payload.pokemon.id,
         image: payload.pokemon.sprites.front_default,
         types: payload.pokemon.types.map((type) => type.type),
-        abilities: payload.pokemon.abilities.map((ability) => ({ ...ability.ability, cardId: payload.payload.url })),
+        abilities: payload.pokemon.abilities.map((ability) => (
+          { ...ability.ability, cardId: payload.payload.url }
+        )),
       },
     });
   },

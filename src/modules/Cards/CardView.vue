@@ -50,7 +50,7 @@
         :key="ability.name"
         :ref="ability.name"
         :class="[
-          'card-ability text-center h-20 flex items-end justify-center relative py-4 px-6 text-lg font-thin cursor-pointer',
+          'card-ability text-center h-20 flex items-end justify-center relative py-4 px-6 text-lg font-thin cursor-pointer hover:text-gray-600',
           selectedAbility && selectedAbility.name === ability.name ? 'text-2xl font-extrabold' : ''
         ]"
         @click="selectAbility(ability)"
@@ -66,10 +66,16 @@
       />
     </div>
     <div
-      v-if="selectedAbilityDetailed"
-      class="mt-8"
+      v-if="detailed"
+      class="mt-8 italic h-40"
     >
-      {{ selectedAbilityDetailed.effect }}
+      <template v-if="selectedAbilityDetailed">
+        <Loading
+          :reqs="['getAbility']"
+        >
+          {{ selectedAbilityDetailed.effect }}
+        </Loading>
+      </template>
     </div>
   </div>
 </template>
@@ -128,7 +134,7 @@ export default {
     selectAbility(ability) {
       this.selectedAbility = ability;
       this.setAbilitySelectorPosition();
-      this.$store.dispatch('getAbility', ability);
+      if (!Ability.find(ability.url).effect) this.$store.dispatch('getAbility', ability);
     },
   },
 };

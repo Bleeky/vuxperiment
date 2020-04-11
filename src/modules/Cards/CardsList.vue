@@ -44,7 +44,7 @@
           @click.stop
         >
           <card
-            class="text-white"
+            class="text-white p-4"
             :card="details"
             detailed
           />

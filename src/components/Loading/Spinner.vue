@@ -1,5 +1,5 @@
 <template>
-  <div class="loading dark:text-white">
+  <div class="dark:text-white p-32 flex justify-center">
     <div class="loader">
       <svg viewBox="0 0 80 80">
         <circle
@@ -99,8 +99,5 @@ export default {
   100% {
     stroke-dashoffset: 275;
   }
-}
-.loading {
-  @apply flex justify-center p-32;
 }
 </style>

@@ -23,6 +23,7 @@ export default class Pokemon extends Model {
     return {
       url: this.attr(''),
       name: this.attr(''),
+      pokemonId: this.attr(null),
       image: this.attr(''),
       types: this.attr(''),
       abilities: this.hasMany(Ability, 'cardId'),

@@ -9,11 +9,13 @@
   }
   &-ability {
     transition: all 0.2s ease-in-out;
+    transition-property: font-weight, font-size;
     width: 200px;
   }  
   &-ability-selected {
     height: 1px;
     transition: all 0.2s ease-in-out;  
+    transition-property: left, bottom, width;
   }
   img {
     max-height: 96px;
