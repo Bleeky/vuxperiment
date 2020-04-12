@@ -21,6 +21,9 @@ html {
 *, *:before, *:after {
   box-sizing: inherit;
 }
+a:focus {
+  outline: none;
+}
 #app {
   min-height: 100vh;
 }

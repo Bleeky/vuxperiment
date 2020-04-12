@@ -48,8 +48,9 @@ const actions = {
     context.commit('loading', p.merge(payload));
     try {
       await Auth.confirmSignUp(context.state.newUser.username, payload.code);
-      await Auth.signIn(payload.username, context.state.newUser.password);
+      await Auth.signIn(context.state.newUser.username, context.state.newUser.password);
       context.commit('loginFulfilled', p.merge({}));
+      context.commit('removeLoadingEntry', p.merge(payload));
     } catch (e) {
       context.commit('error', p.merge(e));
       context.commit('removeLoadingEntry', p.merge(payload));

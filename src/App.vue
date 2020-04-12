@@ -26,22 +26,33 @@
             </div>
           </template>
           <template v-else>
-            <div class="block lg:hidden">
-              <button class="flex items-center px-3 py-2 border rounded text-blue-900 border-blue-900 hover:text-blue-900 hover:border-white">
+            <div class="flex lg:hidden items-center">
+              <button
+                class="cursor-pointer p-3 border rounded dark:text-white border-blue-900 dark:border-white hover:text-white dark-hover:bg-white dark-hover:text-blue-900 hover:border-transparent hover:bg-blue-900"
+                @click="menu = !menu"
+              >
                 <svg
-                  class="fill-current h-3 w-3"
+                  :class="'h-3 w-3 fill-current'"
                   viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg"
                 ><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" /></svg>
               </button>
+              <div :class="[darkmode ? 'icon-light' : 'icon-dark']">
+                <Icon
+                  :v-if="!darkmode"
+                  :icon="darkmode ? 'IconNight' : 'IconSun'"
+                  :class="'ml-4 text-blue-900 dark:text-white stroke-current h-6 w-6 cursor-pointer hover:text-gray-600 dark-hover:text-gray-500'"
+                  @click.native="toggleMode"
+                />
+              </div>
             </div>
-            <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+            <div :class="[menu ? 'block' : 'hidden', 'w-full block flex-grow lg:flex lg:items-center lg:w-auto']">
               <div class="text-m font-bold lg:flex-grow text-center text-blue-900 dark:text-white">
                 <router-link
                   to="/cards"
                 >
                   <div
-                    class="block mt-4 lg:inline-block lg:mt-0 hover:text-gray-600 dark-hover:text-gray-500 mr-5"
+                    class="block mt-4 lg:inline-block lg:mt-0 hover:text-gray-600 dark-hover:text-gray-500 lg:mr-5"
                   >
                     My cards
                   </div>
@@ -50,7 +61,7 @@
                   to="/add-card"
                 >
                   <li
-                    class="block mt-4 lg:inline-block lg:mt-0 hover:text-gray-600 dark-hover:text-gray-500 mr-5"
+                    class="block mt-4 lg:inline-block lg:mt-0 hover:text-gray-600 dark-hover:text-gray-500 lg:mr-5"
                   >
                     Add a card
                   </li>
@@ -59,20 +70,20 @@
                   to="/create-card"
                 >
                   <li
-                    class="block mt-4 lg:inline-block lg:mt-0 hover:text-gray-600 dark-hover:text-gray-500 mr-5"
+                    class="block mt-4 lg:inline-block lg:mt-0 hover:text-gray-600 dark-hover:text-gray-500 lg:mr-5"
                   >
                     Create a card
                   </li>
                 </router-link>
               </div>
-              <div class="flex items-center">
+              <div class="flex items-center justify-center">
                 <button
                   class="inline-block text-sm font-bold px-4 py-2 leading-none border rounded text-white dark:text-blue-900 border-blue-900 dark:border-white dark-hover:border-gray-500 hover:border-gray-600 hover:text-white bg-blue-900 dark:bg-white hover:bg-gray-600 dark-hover:bg-gray-500 mt-4 lg:mt-0"
                   @click="signout"
                 >
                   Logout
                 </button>
-                <div :class="[darkmode ? 'icon-light' : 'icon-dark']">
+                <div :class="['hidden lg:block', darkmode ? 'icon-light' : 'icon-dark']">
                   <Icon
                     :v-if="!darkmode"
                     :icon="darkmode ? 'IconNight' : 'IconSun'"
@@ -136,6 +147,7 @@ export default {
   components: { Logo },
   data() {
     return {
+      menu: false,
       darkmode: false,
     };
   },

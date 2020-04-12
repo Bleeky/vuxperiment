@@ -18,7 +18,7 @@
             <template v-if="status==='verify'">
               <div class="mb-6">
                 <label
-                  class="block text-gray-700 text-sm font-bold mb-2"
+                  class="block text-blue-900 text-sm font-bold mb-2 dark:text-white"
                   for="code"
                 >
                   Code
@@ -32,7 +32,7 @@
                     id="code"
                     v-model="code"
                     :class="{ 'border border-red-500': errors[0]}"
-                    class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-900"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-900 dark:text-white dark:bg-gray-700 dark:border-gray-700 dark-focus:border-white "
                     type="text"
                     placeholder="Verification code"
                   >
@@ -150,7 +150,7 @@
                   </button>
                 </router-link>
                 <button
-                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline whitespace-no-wrap"
+                  class="focus:outline-none bg-blue-900 hover:bg-gray-700 text-white font-semibold hover:text-white py-2 px-4 border border-blue-900 hover:border-gray-700 rounded"
                   type="submit"
                 >
                   Verify

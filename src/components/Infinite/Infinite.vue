@@ -14,7 +14,14 @@
     <Loading
       :reqs="['getCards']"
       component="Spinner"
-    />
+    >
+      <div
+        v-if="data.length === 0"
+        class="flex flex-wrap justify-center"
+      >
+        <slot name="empty" />
+      </div>
+    </Loading>
   </div>
 </template>
 

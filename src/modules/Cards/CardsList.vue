@@ -7,6 +7,11 @@
       :get-data="getData"
       :clear-data="clearData"
     >
+      <template v-slot:empty>
+        <div class="text-gray-500 p-16 font-thin">
+          You don't have any cards yet! You can add pre-existing cards or create new ones.
+        </div>
+      </template>
       <template
         v-slot:default="props"
       >
