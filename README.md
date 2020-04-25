@@ -14,5 +14,10 @@ Experimenting with:
 
 > Play around with Pokemons ! Create your own Pokemon cards or add existing Pokemon cards to your deck.
 
-Play around Pokelib **[there](d3croeb3th06hp.cloudfront.net)
+Play with Pokelib [there](d3croeb3th06hp.cloudfront.net)
+
 ![Homescreen Pokelib](/static/screenrecord.gif "Screenrecord")
+
+Credits to:
+- [PokeAPI](https://pokeapi.co/)
+- [Pokeball design](https://codepen.io/diloretodg/pen/bJPeYL)
