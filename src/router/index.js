@@ -16,7 +16,7 @@ async function lazyLoadView(AsyncView, AsyncModule, moduleName) {
         promiseModule = AsyncModule;
       }
       Promise.all([promiseComponent, promiseModule || null]).then((r) => {
-        if (r[1]) store.registerModule('cards', r[1].default);
+        if (r[1]) store.registerModule(moduleName, r[1].default);
         resolve(r[0]);
       }).catch((e) => reject(e));
     })),
@@ -103,6 +103,18 @@ const router = new Router({
         import(/* webpackChunkName: "cards-create" */ 'modules/Cards/CreateCard'),
         import(/* webpackChunkName: "cards-module" */ 'store/modules/cards'),
         'cards',
+      ),
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/profile',
+      name: 'CreateCard',
+      component: () => lazyLoadView(
+        import(/* webpackChunkName: "cards-create" */ 'modules/Profile'),
+        null,
+        'profile',
       ),
       meta: {
         requiresAuth: true,

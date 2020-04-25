@@ -37,12 +37,20 @@
                   xmlns="http://www.w3.org/2000/svg"
                 ><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" /></svg>
               </button>
+              <router-link
+                to="/profile"
+              >
+                <Icon
+                  :icon="'IconUser'"
+                  :class="'ml-4 text-blue-900 dark:text-white stroke-current h-6 w-6 cursor-pointer hover:text-gray-600 dark-hover:text-gray-500'"
+                />
+              </router-link>
               <div :class="[darkmode ? 'icon-light' : 'icon-dark']">
                 <Icon
                   :v-if="!darkmode"
                   :icon="darkmode ? 'IconNight' : 'IconSun'"
                   :class="'ml-4 text-blue-900 dark:text-white stroke-current h-6 w-6 cursor-pointer hover:text-gray-600 dark-hover:text-gray-500'"
-                  @click.native="toggleMode"
+                  @click.stop.native="toggleMode"
                 />
               </div>
             </div>
@@ -83,13 +91,23 @@
                 >
                   Logout
                 </button>
-                <div :class="['hidden lg:block', darkmode ? 'icon-light' : 'icon-dark']">
-                  <Icon
-                    :v-if="!darkmode"
-                    :icon="darkmode ? 'IconNight' : 'IconSun'"
-                    :class="'ml-4 text-blue-900 dark:text-white stroke-current h-6 w-6 cursor-pointer hover:text-gray-600 dark-hover:text-gray-500'"
-                    @click.native="toggleMode"
-                  />
+                <div :class="['hidden lg:flex']">
+                  <router-link
+                    to="/profile"
+                  >
+                    <Icon
+                      :icon="'IconUser'"
+                      :class="'ml-4 text-blue-900 dark:text-white stroke-current h-6 w-6 cursor-pointer hover:text-gray-600 dark-hover:text-gray-500'"
+                    />
+                  </router-link>
+                  <div :class="darkmode ? 'icon-light' : 'icon-dark'">
+                    <Icon
+                      :v-if="!darkmode"
+                      :icon="darkmode ? 'IconNight' : 'IconSun'"
+                      :class="'ml-4 text-blue-900 dark:text-white stroke-current h-6 w-6 cursor-pointer hover:text-gray-600 dark-hover:text-gray-500'"
+                      @click.stop.native="toggleMode"
+                    />
+                  </div>
                 </div>
               </div>
             </div>

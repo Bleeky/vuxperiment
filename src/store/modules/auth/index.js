@@ -67,6 +67,22 @@ const actions = {
       context.commit('removeLoadingEntry', p.merge({}));
     }
   },
+  deleteAccount: async (context) => {
+    const p = new Payload('deleteAccount');
+    context.commit('loading', p.merge({}));
+    try {
+      const user = await Auth.currentAuthenticatedUser({});
+      user.deleteUser((error) => {
+        if (error) {
+          context.commit('error', p.merge(error));
+        }
+        context.commit('signoutFulfilled', p.merge({}));
+      });
+    } catch (e) {
+      context.commit('error', p.merge(e));
+      context.commit('removeLoadingEntry', p.merge({}));
+    }
+  },
 };
 
 const mutations = {

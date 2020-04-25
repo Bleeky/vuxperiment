@@ -98,7 +98,7 @@ export default {
   },
   data() {
     return {
-      selectedAbility: null,
+      selectedAbility: this.card.abilities[0],
     };
   },
   computed: {
@@ -111,6 +111,10 @@ export default {
     if (this.detailed) {
       window.removeEventListener('resize', this.watchResize);
     }
+  },
+  mounted() {
+    if (!Ability.find(this.selectedAbility.url).effect) this.$store.dispatch('getAbility', this.selectedAbility);
+    this.setAbilitySelectorPosition();
   },
   created() {
     if (this.detailed) {
