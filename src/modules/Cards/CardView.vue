@@ -113,7 +113,7 @@ export default {
     }
   },
   mounted() {
-    if (!Ability.find(this.selectedAbility.url).effect) this.$store.dispatch('getAbility', this.selectedAbility);
+    if (this.selectedAbility?.url && !Ability.find(this.selectedAbility.url).effect) this.$store.dispatch('getAbility', this.selectedAbility);
     this.setAbilitySelectorPosition();
   },
   created() {
@@ -128,12 +128,14 @@ export default {
   },
   methods: {
     setAbilitySelectorPosition() {
-      const abilityRef = this.$refs[this.selectedAbility.name][0];
-      const underlineRef = this.$refs.selectedAbilityUnder;
-      if (abilityRef && underlineRef) {
-        underlineRef.style.bottom = `${abilityRef.offsetParent.clientHeight - abilityRef.offsetTop - abilityRef.clientHeight}px`;
-        underlineRef.style.left = `${abilityRef.offsetLeft + abilityRef.clientWidth / 4}px`;
-        underlineRef.style.width = `${abilityRef.clientWidth / 2}px`;
+      if (this.selectedAbility?.name && this.$refs[this.selectedAbility.name]) {
+        const abilityRef = this.$refs[this.selectedAbility.name][0];
+        const underlineRef = this.$refs.selectedAbilityUnder;
+        if (abilityRef && underlineRef) {
+          underlineRef.style.bottom = `${abilityRef.offsetParent.clientHeight - abilityRef.offsetTop - abilityRef.clientHeight}px`;
+          underlineRef.style.left = `${abilityRef.offsetLeft + abilityRef.clientWidth / 4}px`;
+          underlineRef.style.width = `${abilityRef.clientWidth / 2}px`;
+        }
       }
     },
     selectAbility(ability) {

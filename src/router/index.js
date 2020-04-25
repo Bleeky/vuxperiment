@@ -110,7 +110,7 @@ const router = new Router({
     },
     {
       path: '/profile',
-      name: 'CreateCard',
+      name: 'Profile',
       component: () => lazyLoadView(
         import(/* webpackChunkName: "cards-create" */ 'modules/Profile'),
         null,

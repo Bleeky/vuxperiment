@@ -7,7 +7,6 @@
         <slot :element="element" />
       </template>
     </div>
-
     <div
       ref="observer"
     />
