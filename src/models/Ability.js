@@ -1,4 +1,6 @@
 import { Model } from '@vuex-orm/core';
+import Card from './Card';
+import CardAbility from './CardAbility';
 
 export default class Ability extends Model {
     static entity = 'abilities'
@@ -23,7 +25,7 @@ export default class Ability extends Model {
         url: this.attr(null),
         name: this.attr(null),
         effect: this.attr(null),
-        cardId: this.attr(null),
+        cards: this.belongsToMany(Card, CardAbility, 'abilityId', 'cardId', 'url', 'cardId'),
       };
     }
 }
