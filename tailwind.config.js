@@ -8,6 +8,11 @@ function hexToRgb(hex) {
 }
 
 module.exports = {
+  purge: [
+    './src/**/*.html',
+    './src/**/*.vue',
+    './src/**/*.jsx',
+  ],
   theme: {
     backgroundColor: (theme) => ({
       ...theme('colors'),

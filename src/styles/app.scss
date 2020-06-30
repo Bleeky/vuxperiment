@@ -1,9 +1,11 @@
+/* purgecss start ignore */
 @import "tailwindcss/base";
 
 @import "tailwindcss/components";
-
+/* purgecss end ignore */
 @import "tailwindcss/utilities";
 
+/* purgecss start ignore */
 @import "~vue-multiselect/dist/vue-multiselect.min.css";
 
 @import '~vue2-dropzone/dist/vue2Dropzone.min.css';
@@ -14,7 +16,6 @@
 
 @import 'card';
 
-/* purgecss start ignore */
 html {
   box-sizing: border-box;
 }
